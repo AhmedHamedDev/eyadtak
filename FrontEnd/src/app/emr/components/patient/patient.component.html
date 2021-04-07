@@ -35,10 +35,35 @@
                         </span>
                     </div>
                     <div class="p-col-12">
-                        
+                        <p-button label="Submit"  (onClick)="addChiefComplain()" icon="pi pi-check"></p-button>
+                    </div>
+                    <div class="p-col-12">
+                        <p-table  [scrollable]="true" scrollHeight="200px" [resizableColumns]="true"  [value]="products">
+                            <ng-template pTemplate="colgroup">
+                                <colgroup>
+                                    <col style="width:80%">
+                                    <col style="width:20%">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pResizableColumn pSortableColumn="Complain">Complain <p-sortIcon field="Complain"></p-sortIcon></th>
+                                    <th pResizableColumn pSortableColumn="Date">Date <p-sortIcon field="Date"></p-sortIcon></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>{{product.Complain}}</td>
+                                    <td>{{product.Date}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
                 </div>
             </p-panel>
         </div>
     </div>
 </div>
+
+
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>

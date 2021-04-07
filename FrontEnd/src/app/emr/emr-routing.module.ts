@@ -5,6 +5,8 @@ import {PanelModule} from 'primeng/panel';
 import {ButtonModule} from 'primeng/button';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { PatientsGridComponent } from './components/patients-grid/patients-grid.component';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 
@@ -14,7 +16,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), PanelModule, ButtonModule,InputTextareaModule],
-  exports: [RouterModule, PanelModule, ButtonModule, InputTextareaModule]
+  imports: [
+    RouterModule.forChild(routes), 
+    PanelModule, 
+    ButtonModule,
+    InputTextareaModule, 
+    TableModule,
+    ConfirmDialogModule,
+   ],
+  exports: [RouterModule, PanelModule, ButtonModule, InputTextareaModule, TableModule, ConfirmDialogModule],
 })
 export class EmrRoutingModule { }

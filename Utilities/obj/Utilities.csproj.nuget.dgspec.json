@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\Utilities\\Utilities.csproj": {}
+    "D:\\Projects\\Clinic\\Clinic\\Utilities\\Utilities.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\Utilities\\Utilities.csproj": {
+    "D:\\Projects\\Clinic\\Clinic\\Utilities\\Utilities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\Utilities\\Utilities.csproj",
+        "projectUniqueName": "D:\\Projects\\Clinic\\Clinic\\Utilities\\Utilities.csproj",
         "projectName": "Utilities",
-        "projectPath": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\Utilities\\Utilities.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\Utilities\\obj\\",
+        "projectPath": "D:\\Projects\\Clinic\\Clinic\\Utilities\\Utilities.csproj",
+        "packagesPath": "C:\\Users\\t-amhamed\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\Clinic\\Clinic\\Utilities\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\t-amhamed\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +29,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +41,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Independentsoft.Exchange": {
               "target": "Package",
@@ -86,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

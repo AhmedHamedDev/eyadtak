@@ -11,3 +11,8 @@
 .p-float-label{
     margin-top: 2vh;
 }
+
+td{
+    word-break:break-all !important;
+    white-space: normal !important;
+  }

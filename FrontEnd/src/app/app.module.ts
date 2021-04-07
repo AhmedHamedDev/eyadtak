@@ -27,6 +27,9 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {TableModule} from 'primeng/table';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -57,10 +60,12 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     PanelModule,
     ButtonModule,
     InputTextareaModule,
+    TableModule,
+    ConfirmDialogModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
-  exports:[PanelModule,ButtonModule,InputTextareaModule],
-  providers: [],
+  exports:[PanelModule,ButtonModule,InputTextareaModule, TableModule, ConfirmDialogModule],
+  providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
