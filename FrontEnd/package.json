@@ -39,6 +39,7 @@
     "ng2-konva": "^6.0.0",
     "ngx-toastr": "^13.1.0",
     "popper.js": "^1.16.1",
+    "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
     "primeng": "^11.3.2",
     "resize-observer-polyfill": "^1.5.1",

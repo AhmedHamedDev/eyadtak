@@ -19,6 +19,7 @@ export class SidebarComponent implements OnInit {
 
     this.authSubjectService.getSubject().subscribe(res => {
       this.Abilities = res.abilitiesIds;
+      
       this.refresh()
     })
 
@@ -26,6 +27,7 @@ export class SidebarComponent implements OnInit {
 
   refresh(){
     let added: number[] = [];
+    this.level0 = [];
     this.navbarSubjectService.getNavbarMessageSubject().subscribe(res => {
       let level1 = res.level1;
       res.level0?.forEach(lvl0Element => {

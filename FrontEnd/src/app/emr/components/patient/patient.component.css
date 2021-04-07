@@ -1,0 +1,13 @@
+.container{
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}
+
+.userInfoLable{
+    font-weight: 500;
+    width: 70px;
+}
+
+.p-float-label{
+    margin-top: 2vh;
+}

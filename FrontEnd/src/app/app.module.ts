@@ -24,6 +24,11 @@ import { AdminModule } from './admin/admin.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
+import { PanelModule } from 'primeng/panel';
+import { ButtonModule } from 'primeng/button';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,9 +54,12 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
     FormsModule,
     ReactiveFormsModule,
     AdminModule,
+    PanelModule,
+    ButtonModule,
+    InputTextareaModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
-  exports:[],
+  exports:[PanelModule,ButtonModule,InputTextareaModule],
   providers: [],
   bootstrap: [AppComponent]
 })
