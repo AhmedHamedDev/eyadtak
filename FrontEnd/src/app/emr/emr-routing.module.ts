@@ -4,10 +4,12 @@ import { PatientComponent } from './components/patient/patient.component';
 import {PanelModule} from 'primeng/panel';
 import {ButtonModule} from 'primeng/button';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { PatientsGridComponent } from './components/patients-grid/patients-grid.component';
 
 
 
 const routes: Routes = [
+  { path:'patients', component: PatientsGridComponent},
   { path:'patient/:id', component: PatientComponent},
 ];
 

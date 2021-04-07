@@ -18098,23 +18098,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\t-amhamed\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\hp\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\QueuesGeneratorBackEnd\\ClinicBackEnd.csproj",
+      "projectUniqueName": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\QueuesGeneratorBackEnd\\ClinicBackEnd.csproj",
       "projectName": "ClinicBackEnd",
-      "projectPath": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\QueuesGeneratorBackEnd\\ClinicBackEnd.csproj",
-      "packagesPath": "C:\\Users\\t-amhamed\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\QueuesGeneratorBackEnd\\obj\\",
+      "projectPath": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\QueuesGeneratorBackEnd\\ClinicBackEnd.csproj",
+      "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\QueuesGeneratorBackEnd\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\t-amhamed\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -18126,13 +18122,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\Projects\\Clinic\\Clinic\\BackEnd\\DAL\\DAL.csproj": {
-              "projectPath": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\DAL\\DAL.csproj"
+            "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\DAL\\DAL.csproj"
             },
-            "D:\\Projects\\Clinic\\Clinic\\Utilities\\Utilities.csproj": {
-              "projectPath": "D:\\Projects\\Clinic\\Clinic\\Utilities\\Utilities.csproj"
+            "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\Utilities\\Utilities.csproj": {
+              "projectPath": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\Utilities\\Utilities.csproj"
             }
           }
         }
@@ -18145,7 +18140,6 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
-        "targetAlias": "netcoreapp3.1",
         "imports": [
           "net461",
           "net462",
@@ -18164,7 +18158,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

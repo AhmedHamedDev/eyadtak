@@ -93,16 +93,14 @@ namespace ClientBackEnd.Controllers
                     PhoneNumber = userRegisterDto.PhoneNumber
                 };
 
-                _clinicDbContext.Users.Add(user);
-                _clinicDbContext.SaveChanges();
-
-                User_Role user_Role = new User_Role()
+                user.User_Role = new List<User_Role>();
+                user.User_Role.Add(new User_Role()
                 {
                     RoleId = userRegisterDto.RoleId,
                     UserId = user.UserId
-                };
+                });
 
-                _clinicDbContext.Users_Roles.Add(user_Role);
+                _clinicDbContext.Users.Add(user);
                 _clinicDbContext.SaveChanges();
 
                 string token = _jwt.GenerateToken(user.UserId);

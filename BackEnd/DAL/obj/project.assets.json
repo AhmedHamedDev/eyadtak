@@ -7165,23 +7165,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\t-amhamed\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\hp\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\DAL\\DAL.csproj",
+      "projectUniqueName": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\DAL\\DAL.csproj",
       "projectName": "DAL",
-      "projectPath": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\DAL\\DAL.csproj",
-      "packagesPath": "C:\\Users\\t-amhamed\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\DAL\\obj\\",
+      "projectPath": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\DAL\\DAL.csproj",
+      "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\DAL\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\t-amhamed\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7193,10 +7189,9 @@
       },
       "frameworks": {
         "netstandard2.1": {
-          "targetAlias": "netstandard2.1",
           "projectReferences": {
-            "D:\\Projects\\Clinic\\Clinic\\BackEnd\\Models\\Models.csproj": {
-              "projectPath": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\Models\\Models.csproj"
+            "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\Models\\Models.csproj": {
+              "projectPath": "C:\\Users\\hp\\Desktop\\Eyadtak\\eyadtak\\BackEnd\\Models\\Models.csproj"
             }
           }
         }
@@ -7209,7 +7204,6 @@
     },
     "frameworks": {
       "netstandard2.1": {
-        "targetAlias": "netstandard2.1",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
@@ -7235,7 +7229,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
