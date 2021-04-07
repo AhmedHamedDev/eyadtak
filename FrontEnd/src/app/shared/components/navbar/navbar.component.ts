@@ -35,15 +35,17 @@ export class NavbarComponent implements OnInit {
       this.userName = res.name;
       this.userEmail = res.email;
 
-      this.navbarSubjectService.getSidebarLinkSelectedSubject().subscribe(parentId => {
-        this.navbarSubjectService.getNavbarMessageSubject().subscribe(res => {
-          this.level1 = res.level1?.filter(x=>x.parentId == parentId);
-        })
-      })
+      this.refresh()
     })
   }
 
-
+  refresh(){
+    this.navbarSubjectService.getSidebarLinkSelectedSubject().subscribe(parentId => {
+      this.navbarSubjectService.getNavbarMessageSubject().subscribe(res => {
+        this.level1 = res.level1?.filter(x=>x.parentId == parentId);
+      })
+    })
+  }
 
   logout() {
     let token = localStorage.getItem("token");

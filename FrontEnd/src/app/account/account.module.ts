@@ -10,6 +10,8 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 import { BeforeRegisterComponent } from './components/before-register/before-register.component';
+import { SidebarComponent } from '../shared/components/sidebar/sidebar.component';
+import { NavbarComponent } from '../shared/components/navbar/navbar.component';
 
 
 @NgModule({
@@ -19,6 +21,7 @@ import { BeforeRegisterComponent } from './components/before-register/before-reg
     AccountRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-  ]
+  ],
+  providers: [SidebarComponent, NavbarComponent],
 })
 export class AccountModule { }

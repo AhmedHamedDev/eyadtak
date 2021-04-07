@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HitCanvas } from 'konva/types/Canvas';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { NavbarComponent } from 'src/app/shared/components/navbar/navbar.component';
+import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 import { AuthSubjectService } from 'src/app/shared/services/auth-subject/auth-subject.service';
 import { AccountService } from '../../services/account/account.service';
 
@@ -21,6 +24,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AccountService,
     private toastr: ToastrService,
     private authSubjectService: AuthSubjectService,
+    private navbarComp: NavbarComponent,
+    private sidebarComp: SidebarComponent,
     private router: Router) { }
 
   loginForm = new FormGroup({
@@ -54,6 +59,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           localStorage.setItem('userEmail', response.userEmail);
           localStorage.setItem('abilitiesIds', response.abilitiesIds);
           this.authSubjectService.next({abilitiesIds: response.abilitiesIds, name: response.userName, email: response.userEmail});
+          this.navbarComp.refresh();
+          this.sidebarComp.refresh();
           this.router.navigateByUrl('/admin/holidays');
         }
       })

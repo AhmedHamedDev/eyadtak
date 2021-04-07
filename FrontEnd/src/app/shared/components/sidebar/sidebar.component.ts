@@ -11,29 +11,33 @@ import { NavbarSubjectService } from '../../services/navbar-subject/navbar-subje
 export class SidebarComponent implements OnInit {
 
   level0: NavbarElement[] = [];
+  Abilities
 
   constructor(private navbarSubjectService: NavbarSubjectService, private authSubjectService: AuthSubjectService) { }
 
   ngOnInit(): void {
 
     this.authSubjectService.getSubject().subscribe(res => {
-      let abilites = res.abilitiesIds;
-      let added: number[] = [];
-
-      this.navbarSubjectService.getNavbarMessageSubject().subscribe(res => {
-        let level1 = res.level1;
-        res.level0?.forEach(lvl0Element => {
-          let lvl1 = level1.filter(x => x.parentId == lvl0Element.id);
-          lvl1.forEach(lvl1Element => {
-            if (abilites.includes(lvl1Element.abilityId) && !added.includes(lvl0Element.id)){
-              this.level0.push(lvl0Element);
-              added.push(lvl0Element.id)
-            }
-          });
-        });
-      })
+      this.Abilities = res.abilitiesIds;
+      this.refresh()
     })
 
+  }
+
+  refresh(){
+    let added: number[] = [];
+    this.navbarSubjectService.getNavbarMessageSubject().subscribe(res => {
+      let level1 = res.level1;
+      res.level0?.forEach(lvl0Element => {
+        let lvl1 = level1.filter(x => x.parentId == lvl0Element.id);
+        lvl1.forEach(lvl1Element => {
+          if ( this.Abilities.includes(lvl1Element.abilityId) && !added.includes(lvl0Element.id)){
+            this.level0.push(lvl0Element);
+            added.push(lvl0Element.id)
+          }
+        });
+      });
+    })
   }
 
   openNav() {
