@@ -1,0 +1,15 @@
+<div id="mySidenav" class="sidenav">
+    <span href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</span>
+
+    <ng-container *ngFor="let item of level0">
+            <a (mouseout)="mouseout($event)" (mouseover)="mouseover($event)" (click)="sidebarLinkClick(item.id)" class="nav-link">
+              <span style="margin-right: 5px;" class="{{item.icon}}"></span>
+              {{item.name}}
+            </a>
+    </ng-container>
+</div>
+
+<!-- Use any element to open the sidenav -->
+<span class="openSideBar" (click)="openNav()">
+    <span class="fa fa-bars"></span>
+</span>

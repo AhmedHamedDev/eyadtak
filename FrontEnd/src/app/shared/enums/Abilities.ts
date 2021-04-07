@@ -1,0 +1,16 @@
+export enum Abilities {
+  Logout = 1,
+  Change_Password = 2,
+  Get_Roles = 3,
+  Get_Role = 4,
+  Add_Role = 5,
+  Delete_Role = 6,
+  Update_Role = 7,
+  Get_User_Roles = 8,
+  Update_User_Roles = 9,
+  Home_Sub1 = 1002,
+  Home_Sub2 = 1003,
+  About_Sub1 = 1004,
+  About_Sub2 = 1005,
+  About_Sub3 = 1006,
+}

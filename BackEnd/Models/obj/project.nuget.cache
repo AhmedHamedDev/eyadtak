@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "RsPrWsRWzXZ7NFT9sHAOxCl66gH6a2EFA1UrED1PqDyMfEVnw4eP0cCSHB1sN7h2+MA5l2tR0whrdMZj3nXs6A==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\Models\\Models.csproj",
+  "expectedPackageFiles": [
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
