@@ -2,7 +2,7 @@
     <div class="p-grid">
 
         <div class="p-col-12">
-            <p-panel header="User Info" [toggleable]="true">
+            <p-panel header="User Info" [toggleable]="true" [collapsed]="true">
                 <div class="p-grid">
                     <div class="p-col-6">
                         <label class="userInfoLable">Name: </label>
@@ -26,7 +26,7 @@
 
 
         <div class="p-col-12">
-            <p-panel header="Chief Complaint" [toggleable]="true">
+            <p-panel header="Chief Complains" [toggleable]="true" [collapsed]="false">
                 <div class="p-grid">
                     <div class="p-col-12">
                         <span class="p-float-label">
@@ -35,10 +35,10 @@
                         </span>
                     </div>
                     <div class="p-col-12">
-                        <p-button label="Submit"  (onClick)="addChiefComplain()" icon="pi pi-check"></p-button>
+                        <p-button label="Add Complain" (onClick)="addChiefComplain()" icon="pi pi-check"></p-button>
                     </div>
                     <div class="p-col-12">
-                        <p-table  [scrollable]="true" scrollHeight="200px" [resizableColumns]="true"  [value]="products">
+                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="products">
                             <ng-template pTemplate="colgroup">
                                 <colgroup>
                                     <col style="width:80%">
@@ -49,6 +49,53 @@
                                 <tr>
                                     <th pResizableColumn pSortableColumn="Complain">Complain <p-sortIcon field="Complain"></p-sortIcon></th>
                                     <th pResizableColumn pSortableColumn="Date">Date <p-sortIcon field="Date"></p-sortIcon></th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>{{product.Complain}}</td>
+                                    <td>{{product.Date}}</td>
+                                    <td>
+                                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteComplain(product)"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+
+
+        <div class="p-col-12">
+            <p-panel header="Notes" [toggleable]="true" [collapsed]="true">
+                <div class="p-grid">
+                    <div class="p-col-12">
+                        <span class="p-float-label">
+                            <textarea rows="5" style="width:100%;" pInputTextarea autoResize="autoResize"></textarea>
+                            <label for="float-input">Enter Note</label>
+                        </span>
+                    </div>
+                    <div class="p-col-12">
+                        <p-button label="Add Note" (onClick)="addNote()" icon="pi pi-check"></p-button>
+                    </div>
+                    <div class="p-col-12">
+                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="products">
+                            <ng-template pTemplate="colgroup">
+                                <colgroup>
+                                    <col style="width:80%">
+                                    <col style="width:20%">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pResizableColumn pSortableColumn="Complain">Note <p-sortIcon field="Complain">
+                                        </p-sortIcon>
+                                    </th>
+                                    <th pResizableColumn pSortableColumn="Date">Date <p-sortIcon field="Date">
+                                        </p-sortIcon>
+                                    </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-product>
@@ -62,8 +109,83 @@
                 </div>
             </p-panel>
         </div>
+
+        <div class="p-col-12">
+            <p-panel header="Allergies" [toggleable]="true" [collapsed]="true">
+                <div class="p-grid">
+                    <div class="p-col-4">
+                        <p-multiSelect (onChange)="onSelectAllergy($event.value)"
+                            (onFilter)="filterAllergies($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
+                            [options]="allergies" [(ngModel)]="selectedAlleries" defaultLabel="Select an Allergy"
+                            optionLabel="name" display="chip"></p-multiSelect>
+                    </div>
+
+                    <div class="p-col-8">
+                        <p-chips [allowDuplicate]="false" (onAdd)="addAllergy($event.value)"
+                            (onRemove)="removeAllergy($event.value)" [(ngModel)]="allergiesChips" separator=",">
+                        </p-chips>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+
+        <div class="p-col-12">
+            <p-panel header="Signs" [toggleable]="true" [collapsed]="true">
+                <div class="p-grid">
+                    <div class="p-col-4">
+                        <p-multiSelect (onChange)="onSelectSign($event.value)" (onFilter)="filterSigns($event.filter)"
+                            autoWidth="false" [style]="{'width':'100%'}" [options]="signs" [(ngModel)]="selectedSigns"
+                            defaultLabel="Select a Sign" optionLabel="name" display="chip"></p-multiSelect>
+                    </div>
+
+                    <div class="p-col-8">
+                        <p-chips [allowDuplicate]="false" (onAdd)="addSign($event.value)"
+                            (onRemove)="removeSign($event.value)" [(ngModel)]="signsChips" separator=","></p-chips>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+
+        <div class="p-col-12">
+            <p-panel header="Symptoms" [toggleable]="true" [collapsed]="true">
+                <div class="p-grid">
+                    <div class="p-col-4">
+                        <p-multiSelect (onChange)="onSelectSymptom($event.value)"
+                            (onFilter)="filterSymptoms($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
+                            [options]="symptoms" [(ngModel)]="selectedSymptoms" defaultLabel="Select a Symptom"
+                            optionLabel="name" display="chip"></p-multiSelect>
+                    </div>
+
+                    <div class="p-col-8">
+                        <p-chips [allowDuplicate]="false" (onAdd)="addSymptom($event.value)"
+                            (onRemove)="removeSymptom($event.value)" [(ngModel)]="symptomsChips" separator=",">
+                        </p-chips>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+
+        <div class="p-col-12">
+            <p-panel header="Diagnoses" [toggleable]="true" [collapsed]="true">
+                <div class="p-grid">
+                    <div class="p-col-4">
+                        <p-multiSelect (onChange)="onSelectDiagnosis($event.value)"
+                            (onFilter)="filterDiagnoses($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
+                            [options]="diagnoses" [(ngModel)]="selectedDiagnoses" defaultLabel="Select a Diagnosis"
+                            optionLabel="name" display="chip"></p-multiSelect>
+                    </div>
+
+                    <div class="p-col-8">
+                        <p-chips [allowDuplicate]="false" (onAdd)="addDiagnosis($event.value)"
+                            (onRemove)="removeDiagnosis($event.value)" [(ngModel)]="diagnosesChips" separator=",">
+                        </p-chips>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
     </div>
 </div>
 
 
-<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text">
+</p-confirmDialog>
