@@ -24,40 +24,40 @@
             </p-panel>
         </div>
 
-
         <div class="p-col-12">
-            <p-panel header="Chief Complains" [toggleable]="true" [collapsed]="false">
+            <p-panel header="Chief Complaints" [toggleable]="true" [collapsed]="true">
                 <div class="p-grid">
                     <div class="p-col-12">
                         <span class="p-float-label">
-                            <textarea rows="5" style="width:100%;" pInputTextarea autoResize="autoResize"></textarea>
+                            <textarea [(ngModel)]="newComplaint" rows="5" style="width:100%;" pInputTextarea autoResize="autoResize"></textarea>
                             <label for="float-input">Enter Chief Complaint</label>
                         </span>
                     </div>
                     <div class="p-col-12">
-                        <p-button label="Add Complain" (onClick)="addChiefComplain()" icon="pi pi-check"></p-button>
+                        <p-button label="Add Complaint" (onClick)="addChiefComplaint()" icon="pi pi-check"></p-button>
                     </div>
                     <div class="p-col-12">
-                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="products">
+                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="complaints">
                             <ng-template pTemplate="colgroup">
                                 <colgroup>
                                     <col style="width:80%">
-                                    <col style="width:20%">
+                                    <col style="width:10%">
+                                    <col style="width:10%">
                                 </colgroup>
                             </ng-template>
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th pResizableColumn pSortableColumn="Complain">Complain <p-sortIcon field="Complain"></p-sortIcon></th>
-                                    <th pResizableColumn pSortableColumn="Date">Date <p-sortIcon field="Date"></p-sortIcon></th>
+                                    <th pResizableColumn pSortableColumn="complaint">Complaint <p-sortIcon field="complain"></p-sortIcon></th>
+                                    <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
                                     <th></th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-product>
+                            <ng-template pTemplate="body" let-complaint>
                                 <tr>
-                                    <td>{{product.Complain}}</td>
-                                    <td>{{product.Date}}</td>
+                                    <td>{{complaint.complaint}}</td>
+                                    <td>{{complaint.date}}</td>
                                     <td>
-                                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteComplain(product)"></button>
+                                        <button *ngIf="complaint.isNew" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteComplaint(complaint)"></button>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -67,13 +67,12 @@
             </p-panel>
         </div>
 
-
         <div class="p-col-12">
             <p-panel header="Notes" [toggleable]="true" [collapsed]="true">
                 <div class="p-grid">
                     <div class="p-col-12">
                         <span class="p-float-label">
-                            <textarea rows="5" style="width:100%;" pInputTextarea autoResize="autoResize"></textarea>
+                            <textarea [(ngModel)]="newNote"  rows="5" style="width:100%;" pInputTextarea autoResize="autoResize"></textarea>
                             <label for="float-input">Enter Note</label>
                         </span>
                     </div>
@@ -81,27 +80,28 @@
                         <p-button label="Add Note" (onClick)="addNote()" icon="pi pi-check"></p-button>
                     </div>
                     <div class="p-col-12">
-                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="products">
+                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="notes">
                             <ng-template pTemplate="colgroup">
                                 <colgroup>
                                     <col style="width:80%">
-                                    <col style="width:20%">
+                                    <col style="width:10%">
+                                    <col style="width:10%">
                                 </colgroup>
                             </ng-template>
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th pResizableColumn pSortableColumn="Complain">Note <p-sortIcon field="Complain">
-                                        </p-sortIcon>
-                                    </th>
-                                    <th pResizableColumn pSortableColumn="Date">Date <p-sortIcon field="Date">
-                                        </p-sortIcon>
-                                    </th>
+                                    <th pResizableColumn pSortableColumn="note">Note <p-sortIcon field="note"></p-sortIcon></th>
+                                    <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                                    <th></th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-product>
+                            <ng-template pTemplate="body" let-note>
                                 <tr>
-                                    <td>{{product.Complain}}</td>
-                                    <td>{{product.Date}}</td>
+                                    <td>{{note.note}}</td>
+                                    <td>{{note.date}}</td>
+                                    <td>
+                                        <button *ngIf="note.isNew" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteNote(note)"></button>
+                                    </td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -182,6 +182,57 @@
                     </div>
                 </div>
             </p-panel>
+        </div>
+
+        <div class="p-col-12">
+            <p-panel header="Medication " [toggleable]="true" [collapsed]="true">
+                <div class="p-grid">
+                    <div class="p-col-4">
+                        <p-multiSelect (onChange)="onSelectMedicine($event.value)"
+                            (onFilter)="filterMedicines($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
+                            [options]="medicines" [(ngModel)]="selectedMedicines" defaultLabel="Select a Medicine"
+                            optionLabel="name" display="chip"></p-multiSelect>
+                    </div>
+
+                    <div class="p-col-8">
+                        <p-chips [allowDuplicate]="false" (onAdd)="addMedicine($event.value)"
+                            (onRemove)="removeMedicine($event.value)" [(ngModel)]="medicinesChips" separator=",">
+                        </p-chips>
+                    </div>
+
+                    <div class="p-col-12">
+                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single" (onSort)="onSort()" scrollHeight="200px" [value]="medicinesHistory">
+                            <ng-template pTemplate="colgroup">
+                                <colgroup>
+                                    <col style="width:100%">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pResizableColumn pSortableColumn="medicine">Medicine</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-medicine let-rowIndex="rowIndex" let-expanded="expanded">
+                                <tr *ngIf="rowGroupMetadata[medicine.date].index === rowIndex">
+                                    <td colspan="3">
+                                        <button type="button" pButton pRipple [pRowToggler]="medicine" class="p-button-text p-button-rounded p-button-plain p-mr-2" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                        <span class="p-text-bold p-ml-2">{{medicine.date}}</span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="rowexpansion" let-medicine>
+                                <tr>
+                                    <td>{{medicine.name}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+
+        <div class="p-col-12">
+            <p-button label="Submit" (onClick)="submit()" icon="pi pi-check"></p-button>
         </div>
     </div>
 </div>
