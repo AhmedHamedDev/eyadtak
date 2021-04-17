@@ -1,163 +1,192 @@
-import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import { Allergy } from '../../models/Allergy';
+import { Diagnosis } from '../../models/Diagnosis';
+import { Medicine } from '../../models/Medicine';
+import { Sign } from '../../models/Sign';
+import { Symptom } from '../../models/Symptom';
+import { AllergiesService } from '../../services/allergies-service/allergies.service';
+import { AllergiesSubjectService } from '../../services/basic-data-subjects/allergies-subject.service';
+import { DiagnosesSubjectService } from '../../services/basic-data-subjects/diagnoses-subject.service';
+import { MedicinesSubjectService } from '../../services/basic-data-subjects/medicines-subject.service';
+import { SignsSubjectService } from '../../services/basic-data-subjects/signs-subject.service';
+import { SymptomsSubjectService } from '../../services/basic-data-subjects/symptoms-subject.service';
+import { DiagnosesService } from '../../services/diagnoses-service/diagnoses.service';
+import { EmrService } from '../../services/emr-service/emr.service';
+import { MedicinesService } from '../../services/medicines-service/medicines.service';
+import { SignsService } from '../../services/signs-service/signs.service';
+import { SymptomsService } from '../../services/symptoms-service/symptoms.service';
 
 @Component({
   selector: 'app-patient',
   templateUrl: './patient.component.html',
   styleUrls: ['./patient.component.css']
 })
-export class PatientComponent implements OnInit {
-  rowGroupMetadata: any;
+export class PatientComponent implements OnInit, OnDestroy {
+
+  rowGroupMetadataMedicine: any;
+  rowGroupMetadataSymptom: any;
+  rowGroupMetadataAllergy: any;
+  rowGroupMetadataSign: any;
+  rowGroupMetadataDiagnosis: any;
+
+  userInfo: any;
+  patientId: number;
 
   complaints: any[] = [];
   newComplaint: string;
+  disableChiefComplaint: boolean = false;
 
-  notes: any[] = [];
+  notes: any[];
   newNote: string;
+  disableNote: boolean = false;
 
+  allergiesHistory: Allergy[];
   allergies: Allergy[] = [];
   selectedAlleries: Allergy[] = [];
   allergiesChips: string[] = [];
 
-  signs: Allergy[] = [];
-  selectedSigns: Allergy[] = [];
+  signsHistory: Sign[];
+  signs: Sign[] = [];
+  selectedSigns: Sign[] = [];
   signsChips: string[] = [];
 
-  symptoms: Allergy[] = [];
-  selectedSymptoms: Allergy[] = [];
-  symptomsChips: string[] = [];
+  symptomsHistory: Symptom[];
+  symptoms: Symptom[] = [];
+  selectedSymptoms: Symptom[] = [];
+  symptomsChips: string[];
 
-  diagnoses: Allergy[] = [];
-  selectedDiagnoses: Allergy[] = [];
+  diagnosesHistory: Diagnosis[];
+  diagnoses: Diagnosis[] = [];
+  selectedDiagnoses: Diagnosis[] = [];
   diagnosesChips: string[] = [];
 
-  medicinesHistory: Medicine[] = [];
+  medicinesHistory: Medicine[];
   medicines: Medicine[] = [];
   selectedMedicines: Medicine[] = [];
   medicinesChips: string[] = [];
 
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) { }
+  timeout: any = null;
+
+  private routeSub: Subscription;
+
+  constructor(
+    private confirmationService: ConfirmationService,
+    private emrService: EmrService,
+    private route: ActivatedRoute,
+    private toastr: ToastrService,
+    private symptomsService: SymptomsService,
+    private symptomsSubject: SymptomsSubjectService,
+    private allergiesService: AllergiesService,
+    private allergiesSubject: AllergiesSubjectService,
+    private signsService: SignsService,
+    private signsSubject: SignsSubjectService,
+    private diagnosesService: DiagnosesService,
+    private diagnosesSubject: DiagnosesSubjectService,
+    private medicinesService: MedicinesService,
+    private medicinesSubject: MedicinesSubjectService,
+  ) { }
+
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.complaints.push({ complaint: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 1.", date: "10/5/2010", isNew: false });
-    this.complaints.push({ complaint: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 2.", date: "10/6/2010", isNew: false });
-    this.complaints.push({ complaint: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 3.", date: "10/7/2010", isNew: false });
-    this.complaints.push({ complaint: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 4.", date: "10/8/2010", isNew: false });
-    this.complaints.push({ complaint: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 5.", date: "10/9/2010", isNew: false });
 
-    this.notes.push({ note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 1.", date: "10/5/2010", isNew: false });
-    this.notes.push({ note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 2.", date: "10/6/2010", isNew: false });
-    this.notes.push({ note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 3.", date: "10/7/2010", isNew: false });
-    this.notes.push({ note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 4.", date: "10/8/2010", isNew: false });
-    this.notes.push({ note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries 5.", date: "10/9/2010", isNew: false });
+    this.routeSub = this.route.params.subscribe(params => {
+      this.patientId = params['id'];
 
-    this.medicinesHistory.push({ name: "Australia", date: "10/5/2010", id: 1 });
-    this.medicinesHistory.push({ name: "Brazil", date: "10/5/2010", id: 2 });
-    this.medicinesHistory.push({ name: "China", date: "10/6/2010", id: 3});
-    this.medicinesHistory.push({ name: "Egypt", date: "10/6/2010", id: 4});
-    this.medicinesHistory.push({ name: "France", date: "10/6/2010", id: 5});
+      this.emrService.GetPatientInfo(params['id']).subscribe(resp => {
+        if (resp.errorHappen == true)
+          this.toastr.error(resp.message, "Sorry :(")
+        else if (resp.errorHappen == false)
+          this.userInfo = resp.message;
+      })
 
-    this.allergies = [
-      { name: "Australia", id: 1 },
-      { name: "Brazil", id: 2 },
-      { name: "China", id: 3 },
-      { name: "Egypt", id: 4 },
-      { name: "France", id: 5 },
-      { name: "Germany", id: 6 },
-      { name: "India", id: 7 },
-      { name: "Japan", id: 8 },
-      { name: "Spain", id: 9 },
-      { name: "United States", id: 10 }
-    ];
+      this.emrService.GetPatientHistoryNotes(params['id']).subscribe(resp => {
+        if (resp.errorHappen == true)
+          this.toastr.error(resp.message, "Sorry :(")
+        else if (resp.errorHappen == false)
+          this.notes = resp.message;
+      })
 
-    this.selectedAlleries = [
-      { name: "Australia", id: 1 },
-      { name: "France", id: 5 },
-    ]
+      this.emrService.GetPatientHistoryChiefComplaints(params['id']).subscribe(resp => {
+        if (resp.errorHappen == true)
+          this.toastr.error(resp.message, "Sorry :(")
+        else if (resp.errorHappen == false)
+          this.complaints = resp.message;
+      })
 
-    this.allergiesChips = ["Australia", "France"]
+      this.symptomsService.GetPatientSymptoms(params['id']).subscribe(resp => {
+        if (resp.errorHappen == true)
+          this.toastr.error(resp.message, "Sorry :(")
+        else if (resp.errorHappen == false) {
+          this.symptomsHistory = resp.message;
 
-    this.signs = [
-      { name: "Australia", id: 1 },
-      { name: "Brazil", id: 2 },
-      { name: "China", id: 3 },
-      { name: "Egypt", id: 4 },
-      { name: "France", id: 5 },
-      { name: "Germany", id: 6 },
-      { name: "India", id: 7 },
-      { name: "Japan", id: 8 },
-      { name: "Spain", id: 9 },
-      { name: "United States", id: 10 }
-    ];
+          this.symptomsSubject.getSubject().subscribe(data => {
+              this.symptoms = data;
+          })
+        }
+      })
 
-    this.selectedSigns = [
-      { name: "Australia", id: 1 },
-      { name: "France", id: 5 },
-    ]
+      this.allergiesService.GetPatientAllergies(params['id']).subscribe(resp => {
+        if (resp.errorHappen == true)
+          this.toastr.error(resp.message, "Sorry :(")
+        else if (resp.errorHappen == false) {
+          this.allergiesHistory = resp.message;
 
-    this.signsChips = ["Australia", "France"]
+          this.allergiesSubject.getSubject().subscribe(data => {
+            this.allergies = data;
+          })
+        }
+      })
 
-    this.symptoms = [
-      { name: "Australia", id: 1 },
-      { name: "Brazil", id: 2 },
-      { name: "China", id: 3 },
-      { name: "Egypt", id: 4 },
-      { name: "France", id: 5 },
-      { name: "Germany", id: 6 },
-      { name: "India", id: 7 },
-      { name: "Japan", id: 8 },
-      { name: "Spain", id: 9 },
-      { name: "United States", id: 10 }
-    ];
+      this.signsService.GetPatientSigns(params['id']).subscribe(resp => {
+        if (resp.errorHappen == true)
+          this.toastr.error(resp.message, "Sorry :(")
+        else if (resp.errorHappen == false) {
+          this.signsHistory = resp.message;
 
-    this.selectedSymptoms = [
-      { name: "Australia", id: 1 },
-      { name: "France", id: 5 },
-    ]
+          this.signsSubject.getSubject().subscribe(data => {
+            this.signs = data;
+          })
+        }
+      })
 
-    this.symptomsChips = ["Australia", "France"]
+      this.diagnosesService.GetPatientDiagnoses(params['id']).subscribe(resp => {
+        if (resp.errorHappen == true)
+          this.toastr.error(resp.message, "Sorry :(")
+        else if (resp.errorHappen == false) {
+          this.diagnosesHistory = resp.message;
 
-    this.diagnoses = [
-      { name: "Australia", id: 1 },
-      { name: "Brazil", id: 2 },
-      { name: "China", id: 3 },
-      { name: "Egypt", id: 4 },
-      { name: "France", id: 5 },
-      { name: "Germany", id: 6 },
-      { name: "India", id: 7 },
-      { name: "Japan", id: 8 },
-      { name: "Spain", id: 9 },
-      { name: "United States", id: 10 }
-    ];
+          this.diagnosesSubject.getSubject().subscribe(data => {
+            this.diagnoses = data;
+          })
+        }
+      })
 
-    this.selectedDiagnoses = [
-      { name: "Australia", id: 1 },
-      { name: "France", id: 5 },
-    ]
+      this.medicinesService.GetPatientMedicines(params['id']).subscribe(resp => {
+        if (resp.errorHappen == true)
+          this.toastr.error(resp.message, "Sorry :(")
+        else if (resp.errorHappen == false) {
+          this.medicinesHistory = resp.message;
 
-    this.diagnosesChips = ["Australia", "France"]
+          this.medicinesSubject.getSubject().subscribe(data => {
+            this.medicines = data;
+          })
+        }
+      })
 
-    this.medicines = [
-      { name: "Australia", id: 1, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "Brazil", id: 2, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "China", id: 3, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "Egypt", id: 4, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "France", id: 5, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "Germany", id: 6, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "India", id: 7, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "Japan", id: 8, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "Spain", id: 9, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "United States", id: 10, date: this.formatDate(new Date(), "dd/mm/yyyy") }
-    ];
+    });
 
-    this.selectedMedicines = [
-      { name: "Australia", id: 1, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-      { name: "France", id: 5, date: this.formatDate(new Date(), "dd/mm/yyyy") },
-    ]
-
-    this.medicinesChips = ["Australia", "France"]
-
-    this.updateRowGroupMetaData();
+    this.updateRowGroupMetaDataMedicine();
+    this.updateRowGroupMetaDataAllergy();
+    this.updateRowGroupMetaDataSymptom();
+    this.updateRowGroupMetaDataDiagnosis();
+    this.updateRowGroupMetaDataSign();
   }
 
   formatDate(date, format) {
@@ -181,6 +210,7 @@ export class PatientComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.complaints.unshift({ complaint: this.newComplaint, date: this.formatDate(new Date(), "dd/mm/yyyy"), isNew: true })
+          this.disableChiefComplaint = true;
         },
       });
     }
@@ -196,6 +226,7 @@ export class PatientComponent implements OnInit {
         const index = this.complaints.indexOf(matches[0]);
         if (index > -1) {
           this.complaints.splice(index, 1);
+          this.disableChiefComplaint = false;
         }
       },
     });
@@ -210,6 +241,7 @@ export class PatientComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.notes.unshift({ note: this.newNote, date: this.formatDate(new Date(), "dd/mm/yyyy"), isNew: true })
+          this.disableNote = true;
         },
       });
     }
@@ -225,6 +257,7 @@ export class PatientComponent implements OnInit {
         const index = this.notes.indexOf(matches[0]);
         if (index > -1) {
           this.notes.splice(index, 1);
+          this.disableNote = false;
         }
       },
     });
@@ -232,29 +265,34 @@ export class PatientComponent implements OnInit {
   ////////////////////////////////////////////
 
   addAllergy(allergy) {
-    let matches: Allergy[] = this.allergies.filter(x => x.name == allergy);
+    let chipsMatch = this.allergiesChips.filter(x => x.toLowerCase() == allergy.toLowerCase())
+    if (chipsMatch.length > 1) {
+      this.allergiesChips.splice(this.selectedAlleries.indexOf(allergy));
+      return;
+    }
+
+    let matches: Allergy[] = this.allergies.filter(x => x.name.toLowerCase() == allergy.toLowerCase());
     if (matches.length < 1) {
-      this.allergies.push({ name: allergy, id: 0 });
-      this.selectedAlleries.push({ name: allergy, id: 0 });
+      this.allergies.push({ name: allergy, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
+      this.selectedAlleries.push({ name: allergy, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
+      this.allergiesSubject.next(this.allergies);
     }
     else
-      this.allergies.push(matches[0]);
+      this.selectedAlleries.push(matches[0]);
 
     this.allergies = [...this.allergies]
   }
 
   removeAllergy(allergy) {
-    let matches: Allergy[] = this.selectedAlleries.filter(x => x.name == allergy);
+    let matches: Allergy[] = this.selectedAlleries.filter(x => x.name.toLowerCase() == allergy.toLowerCase());
     const index = this.selectedAlleries.indexOf(matches[0]);
-    if (index > -1) {
+    if (index > -1)
       this.selectedAlleries.splice(index, 1);
-    }
 
     this.allergies = [...this.allergies]
   }
 
   filterAllergies(allergy) {
-    console.log(allergy)
   }
 
   onSelectAllergy(allergysSelected: Allergy[]) {
@@ -266,16 +304,51 @@ export class PatientComponent implements OnInit {
     this.allergiesChips = [...this.allergiesChips];
   }
 
+
+  onSortAllergy() {
+    this.updateRowGroupMetaDataAllergy();
+  }
+
+  updateRowGroupMetaDataAllergy() {
+    this.rowGroupMetadataAllergy = {};
+
+    if (this.allergiesHistory) {
+      for (let i = 0; i < this.allergiesHistory.length; i++) {
+        let rowData = this.allergiesHistory[i];
+        let representativeDate = rowData.date;
+
+        if (i == 0) {
+          this.rowGroupMetadataAllergy[representativeDate] = { index: 0, size: 1 };
+        }
+        else {
+          let previousRowData = this.allergiesHistory[i - 1];
+          let previousRowGroup = previousRowData.date;
+          if (representativeDate === previousRowGroup)
+            this.rowGroupMetadataAllergy[representativeDate].size++;
+          else
+            this.rowGroupMetadataAllergy[representativeDate] = { index: i, size: 1 };
+        }
+      }
+    }
+  }
+
   ////////////////////////////////////////////
 
   addSign(sign) {
-    let matches: Sign[] = this.signs.filter(x => x.name == sign);
+    let chipsMatch = this.signsChips.filter(x => x.toLowerCase() == sign.toLowerCase())
+    if (chipsMatch.length > 1) {
+      this.signsChips.splice(this.selectedSigns.indexOf(sign));
+      return;
+    }
+
+    let matches: Sign[] = this.signs.filter(x => x.name.toLowerCase() == sign.toLowerCase());
     if (matches.length < 1) {
-      this.signs.push({ name: sign, id: 0 });
-      this.selectedSigns.push({ name: sign, id: 0 });
+      this.signs.push({ name: sign, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
+      this.selectedSigns.push({ name: sign, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
+      this.signsSubject.next(this.signs);
     }
     else
-      this.signs.push(matches[0]);
+      this.selectedSigns.push(matches[0]);
 
     this.signs = [...this.signs]
   }
@@ -291,7 +364,6 @@ export class PatientComponent implements OnInit {
   }
 
   filterSigns(sign) {
-    console.log(sign)
   }
 
   onSelectSign(signsSelected: Sign[]) {
@@ -303,22 +375,56 @@ export class PatientComponent implements OnInit {
     this.signsChips = [...this.signsChips];
   }
 
+  onSortSign() {
+    this.updateRowGroupMetaDataSign();
+  }
+
+  updateRowGroupMetaDataSign() {
+    this.rowGroupMetadataSign = {};
+
+    if (this.signsHistory) {
+      for (let i = 0; i < this.signsHistory.length; i++) {
+        let rowData = this.signsHistory[i];
+        let representativeDate = rowData.date;
+
+        if (i == 0) {
+          this.rowGroupMetadataSign[representativeDate] = { index: 0, size: 1 };
+        }
+        else {
+          let previousRowData = this.signsHistory[i - 1];
+          let previousRowGroup = previousRowData.date;
+          if (representativeDate === previousRowGroup)
+            this.rowGroupMetadataSign[representativeDate].size++;
+          else
+            this.rowGroupMetadataSign[representativeDate] = { index: i, size: 1 };
+        }
+      }
+    }
+  }
+
   ////////////////////////////////////////////
 
   addSymptom(symptom) {
-    let matches: Symptom[] = this.symptoms.filter(x => x.name == symptom);
+    let chipsMatch = this.symptomsChips.filter(x => x.toLowerCase() == symptom.toLowerCase())
+    if (chipsMatch.length > 1) {
+      this.symptomsChips.splice(this.selectedSymptoms.indexOf(symptom));
+      return;
+    }
+
+    let matches: Symptom[] = this.symptoms.filter(x => x.name.toLowerCase() == symptom.toLowerCase());
     if (matches.length < 1) {
-      this.symptoms.push({ name: symptom, id: 0 });
-      this.selectedSymptoms.push({ name: symptom, id: 0 });
+      this.symptoms.push({ name: symptom, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
+      this.selectedSymptoms.push({ name: symptom, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
+      this.symptomsSubject.next(this.symptoms);
     }
     else
-      this.symptoms.push(matches[0]);
+      this.selectedSymptoms.push(matches[0]);
 
     this.symptoms = [...this.symptoms]
   }
 
   removeSymptom(symptom) {
-    let matches: Symptom[] = this.selectedSymptoms.filter(x => x.name == symptom);
+    let matches: Symptom[] = this.selectedSymptoms.filter(x => x.name.toLowerCase() == symptom.toLowerCase());
     const index = this.selectedSymptoms.indexOf(matches[0]);
     if (index > -1) {
       this.selectedSymptoms.splice(index, 1);
@@ -328,7 +434,6 @@ export class PatientComponent implements OnInit {
   }
 
   filterSymptoms(symptom) {
-    console.log(symptom)
   }
 
   onSelectSymptom(symptomsSelected: Sign[]) {
@@ -340,16 +445,50 @@ export class PatientComponent implements OnInit {
     this.symptomsChips = [...this.symptomsChips];
   }
 
+  onSortSymptom() {
+    this.updateRowGroupMetaDataSymptom();
+  }
+
+  updateRowGroupMetaDataSymptom() {
+    this.rowGroupMetadataSymptom = {};
+
+    if (this.symptomsHistory) {
+      for (let i = 0; i < this.symptomsHistory.length; i++) {
+        let rowData = this.symptomsHistory[i];
+        let representativeDate = rowData.date;
+
+        if (i == 0) {
+          this.rowGroupMetadataSymptom[representativeDate] = { index: 0, size: 1 };
+        }
+        else {
+          let previousRowData = this.symptomsHistory[i - 1];
+          let previousRowGroup = previousRowData.date;
+          if (representativeDate === previousRowGroup)
+            this.rowGroupMetadataSymptom[representativeDate].size++;
+          else
+            this.rowGroupMetadataSymptom[representativeDate] = { index: i, size: 1 };
+        }
+      }
+    }
+  }
+
   ////////////////////////////////////////////
 
   addDiagnosis(diagnosis) {
-    let matches: Diagnosis[] = this.diagnoses.filter(x => x.name == diagnosis);
+    let chipsMatch = this.diagnosesChips.filter(x => x.toLowerCase() == diagnosis.toLowerCase())
+    if (chipsMatch.length > 1) {
+      this.diagnosesChips.splice(this.selectedDiagnoses.indexOf(diagnosis));
+      return;
+    }
+
+    let matches: Diagnosis[] = this.diagnoses.filter(x => x.name.toLowerCase() == diagnosis.toLowerCase());
     if (matches.length < 1) {
-      this.diagnoses.push({ name: diagnosis, id: 0 });
-      this.selectedDiagnoses.push({ name: diagnosis, id: 0 });
+      this.diagnoses.push({ name: diagnosis, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
+      this.selectedDiagnoses.push({ name: diagnosis, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
+      this.diagnosesSubject.next(this.diagnoses);
     }
     else
-      this.diagnoses.push(matches[0]);
+      this.selectedDiagnoses.push(matches[0]);
 
     this.diagnoses = [...this.diagnoses]
   }
@@ -365,7 +504,6 @@ export class PatientComponent implements OnInit {
   }
 
   filterDiagnoses(diagnosis) {
-    console.log(diagnosis)
   }
 
   onSelectDiagnosis(diagnosesSelected: Diagnosis[]) {
@@ -377,16 +515,50 @@ export class PatientComponent implements OnInit {
     this.diagnosesChips = [...this.diagnosesChips];
   }
 
+  onSortDiagnosis() {
+    this.updateRowGroupMetaDataDiagnosis();
+  }
+
+  updateRowGroupMetaDataDiagnosis() {
+    this.rowGroupMetadataDiagnosis = {};
+
+    if (this.diagnosesHistory) {
+      for (let i = 0; i < this.diagnosesHistory.length; i++) {
+        let rowData = this.diagnosesHistory[i];
+        let representativeDate = rowData.date;
+
+        if (i == 0) {
+          this.rowGroupMetadataDiagnosis[representativeDate] = { index: 0, size: 1 };
+        }
+        else {
+          let previousRowData = this.diagnosesHistory[i - 1];
+          let previousRowGroup = previousRowData.date;
+          if (representativeDate === previousRowGroup)
+            this.rowGroupMetadataDiagnosis[representativeDate].size++;
+          else
+            this.rowGroupMetadataDiagnosis[representativeDate] = { index: i, size: 1 };
+        }
+      }
+    }
+  }
+
   ////////////////////////////////////////////
 
   addMedicine(medicine) {
-    let matches: Medicine[] = this.medicines.filter(x => x.name == medicine);
+    let chipsMatch = this.medicinesChips.filter(x => x.toLowerCase() == medicine.toLowerCase())
+    if (chipsMatch.length > 1) {
+      this.medicinesChips.splice(this.selectedMedicines.indexOf(medicine));
+      return;
+    }
+
+    let matches: Medicine[] = this.medicines.filter(x => x.name.toLowerCase() == medicine.toLowerCase());
     if (matches.length < 1) {
       this.medicines.push({ name: medicine, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
       this.selectedMedicines.push({ name: medicine, id: 0, date: this.formatDate(new Date(), "dd/mm/yyyy") });
+      this.medicinesSubject.next(this.medicines);
     }
     else
-      this.medicines.push(matches[0]);
+      this.selectedMedicines.push(matches[0]);
 
     this.medicines = [...this.medicines]
   }
@@ -414,12 +586,12 @@ export class PatientComponent implements OnInit {
     this.medicinesChips = [...this.medicinesChips];
   }
 
-  onSort() {
-    this.updateRowGroupMetaData();
+  onSortMedicine() {
+    this.updateRowGroupMetaDataMedicine();
   }
 
-  updateRowGroupMetaData() {
-    this.rowGroupMetadata = {};
+  updateRowGroupMetaDataMedicine() {
+    this.rowGroupMetadataMedicine = {};
 
     if (this.medicinesHistory) {
       for (let i = 0; i < this.medicinesHistory.length; i++) {
@@ -427,57 +599,48 @@ export class PatientComponent implements OnInit {
         let representativeDate = rowData.date;
 
         if (i == 0) {
-          this.rowGroupMetadata[representativeDate] = { index: 0, size: 1 };
+          this.rowGroupMetadataMedicine[representativeDate] = { index: 0, size: 1 };
         }
         else {
           let previousRowData = this.medicinesHistory[i - 1];
           let previousRowGroup = previousRowData.date;
           if (representativeDate === previousRowGroup)
-            this.rowGroupMetadata[representativeDate].size++;
+            this.rowGroupMetadataMedicine[representativeDate].size++;
           else
-            this.rowGroupMetadata[representativeDate] = { index: i, size: 1 };
+            this.rowGroupMetadataMedicine[representativeDate] = { index: i, size: 1 };
         }
       }
     }
   }
 
-   ////////////////////////////////////////////
+  ////////////////////////////////////////////
 
-   submit(){
+  submit() {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        
+        var data = {
+          PatientId: +this.patientId,
+          Complaint: this.disableChiefComplaint == true ? this.newComplaint : null,
+          Note: this.disableNote == true ? this.newNote : null,
+          Signs: this.selectedSigns,
+          Allergies: this.selectedAlleries,
+          Diagnoses: this.selectedDiagnoses,
+          Medicines: this.selectedMedicines,
+          Symptoms: this.selectedSymptoms
+        }
+
+        this.emrService.SavePatientHistory(data).subscribe(resp => {
+          if (resp.errorHappen == true)
+            this.toastr.error(resp.message, "Sorry :(")
+          else if (resp.errorHappen == false)
+            this.toastr.success(resp.message, "Done")
+        })
+
       },
     });
-   }
+  }
 
-}
-
-interface Allergy {
-  name: string,
-  id: number
-}
-
-interface Sign {
-  name: string,
-  id: number
-}
-
-interface Symptom {
-  name: string,
-  id: number
-}
-
-interface Diagnosis {
-  name: string,
-  id: number
-}
-
-interface Medicine {
-  name: string,
-  id: number,
-  date: string
 }

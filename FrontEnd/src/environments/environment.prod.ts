@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiEndpoint: 'http://10.4.4.120:5001'
+  apiEndpoint: 'http://10.4.4.120:5001',
+  take: 6
 };

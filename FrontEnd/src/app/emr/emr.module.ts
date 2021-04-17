@@ -12,6 +12,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ChipsModule } from 'primeng/chips';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     TableModule,
     ConfirmDialogModule,
     MultiSelectModule,
-    ChipsModule
+    ChipsModule,
+    ProgressSpinnerModule
   ]
 })
 export class EmrModule { }

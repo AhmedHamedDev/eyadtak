@@ -8,6 +8,11 @@ import { Abilities } from '../../enums/Abilities'
 import { NavbarSubjectService } from '../../services/navbar-subject/navbar-subject.service';
 import { NavbarElement } from '../../models/Navbar';
 import { HitCanvas } from 'konva/types/Canvas';
+import { SymptomsSubjectService } from 'src/app/emr/services/basic-data-subjects/symptoms-subject.service';
+import { SignsSubjectService } from 'src/app/emr/services/basic-data-subjects/signs-subject.service';
+import { DiagnosesSubjectService } from 'src/app/emr/services/basic-data-subjects/diagnoses-subject.service';
+import { AllergiesSubjectService } from 'src/app/emr/services/basic-data-subjects/allergies-subject.service';
+import { MedicinesSubjectService } from 'src/app/emr/services/basic-data-subjects/medicines-subject.service';
 
 @Component({
   selector: 'app-navbar',
@@ -27,7 +32,17 @@ export class NavbarComponent implements OnInit {
   userEmail: string;
   level1: NavbarElement[];
 
-  constructor(private navbarSubjectService: NavbarSubjectService, private toastr: ToastrService, private router: Router, private authSubjectService: AuthSubjectService, private accountService: AccountService) { }
+  constructor(
+    private navbarSubjectService: NavbarSubjectService, 
+    private toastr: ToastrService, private router: Router, 
+    private authSubjectService: AuthSubjectService, 
+    private accountService: AccountService,
+    private symptomsSubject: SymptomsSubjectService,
+    private signsSubject: SignsSubjectService,
+    private diagnosesSubject: DiagnosesSubjectService,
+    private allergiesSubject: AllergiesSubjectService,
+    private medicinesSubject: MedicinesSubjectService,
+    ) { }
 
   ngOnInit(): void {
     this.authSubjectService.getSubject().subscribe(res => {

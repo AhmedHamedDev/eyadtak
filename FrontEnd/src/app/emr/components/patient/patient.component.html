@@ -3,33 +3,39 @@
 
         <div class="p-col-12">
             <p-panel header="User Info" [toggleable]="true" [collapsed]="true">
-                <div class="p-grid">
+                <div *ngIf="userInfo" class="p-grid">
                     <div class="p-col-6">
                         <label class="userInfoLable">Name: </label>
-                        <span> Ahmed Hamed </span>
+                        <span> {{userInfo.name}} </span>
                     </div>
                     <div class="p-col-6">
                         <label class="userInfoLable">Email: </label>
-                        <span> AhmedHamed@yahoo.com </span>
+                        <span> {{userInfo.email}} </span>
                     </div>
                     <div class="p-col-6">
                         <label class="userInfoLable">Number: </label>
-                        <span> 01145226681 </span>
+                        <span> {{userInfo.number}} </span>
                     </div>
                     <div class="p-col-6">
                         <label class="userInfoLable">Gender: </label>
                         <span> Male </span>
                     </div>
                 </div>
+
+                <div *ngIf="!userInfo" class="p-grid p-jc-center p-ai-center vertical-container">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                </div>
             </p-panel>
         </div>
 
         <div class="p-col-12">
             <p-panel header="Chief Complaints" [toggleable]="true" [collapsed]="true">
-                <div class="p-grid">
+                <div *ngIf="complaints" class="p-grid">
                     <div class="p-col-12">
                         <span class="p-float-label">
-                            <textarea [(ngModel)]="newComplaint" rows="5" style="width:100%;" pInputTextarea autoResize="autoResize"></textarea>
+                            <textarea [disabled]="disableChiefComplaint" [(ngModel)]="newComplaint" rows="5"
+                                style="width:100%;" pInputTextarea autoResize="autoResize"></textarea>
                             <label for="float-input">Enter Chief Complaint</label>
                         </span>
                     </div>
@@ -37,18 +43,23 @@
                         <p-button label="Add Complaint" (onClick)="addChiefComplaint()" icon="pi pi-check"></p-button>
                     </div>
                     <div class="p-col-12">
-                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="complaints">
+                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true"
+                            [value]="complaints">
                             <ng-template pTemplate="colgroup">
                                 <colgroup>
-                                    <col style="width:80%">
-                                    <col style="width:10%">
+                                    <col style="width:75%">
+                                    <col style="width:15%">
                                     <col style="width:10%">
                                 </colgroup>
                             </ng-template>
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th pResizableColumn pSortableColumn="complaint">Complaint <p-sortIcon field="complain"></p-sortIcon></th>
-                                    <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                                    <th pResizableColumn pSortableColumn="complaint">Complaint <p-sortIcon
+                                            field="complain"></p-sortIcon>
+                                    </th>
+                                    <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date">
+                                        </p-sortIcon>
+                                    </th>
                                     <th></th>
                                 </tr>
                             </ng-template>
@@ -57,22 +68,30 @@
                                     <td>{{complaint.complaint}}</td>
                                     <td>{{complaint.date}}</td>
                                     <td>
-                                        <button *ngIf="complaint.isNew" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteComplaint(complaint)"></button>
+                                        <button *ngIf="complaint.isNew" pButton pRipple icon="pi pi-trash"
+                                            class="p-button-rounded p-button-warning"
+                                            (click)="deleteComplaint(complaint)"></button>
                                     </td>
                                 </tr>
                             </ng-template>
                         </p-table>
                     </div>
                 </div>
+
+                <div *ngIf="!complaints" class="p-grid p-jc-center p-ai-center vertical-container">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                </div>
             </p-panel>
         </div>
 
         <div class="p-col-12">
             <p-panel header="Notes" [toggleable]="true" [collapsed]="true">
-                <div class="p-grid">
+                <div *ngIf="notes" class="p-grid">
                     <div class="p-col-12">
                         <span class="p-float-label">
-                            <textarea [(ngModel)]="newNote"  rows="5" style="width:100%;" pInputTextarea autoResize="autoResize"></textarea>
+                            <textarea [disabled]="disableNote" [(ngModel)]="newNote" rows="5" style="width:100%;"
+                                pInputTextarea autoResize="autoResize"></textarea>
                             <label for="float-input">Enter Note</label>
                         </span>
                     </div>
@@ -83,15 +102,19 @@
                         <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="notes">
                             <ng-template pTemplate="colgroup">
                                 <colgroup>
-                                    <col style="width:80%">
-                                    <col style="width:10%">
+                                    <col style="width:75%">
+                                    <col style="width:15%">
                                     <col style="width:10%">
                                 </colgroup>
                             </ng-template>
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th pResizableColumn pSortableColumn="note">Note <p-sortIcon field="note"></p-sortIcon></th>
-                                    <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                                    <th pResizableColumn pSortableColumn="note">Note <p-sortIcon field="note">
+                                        </p-sortIcon>
+                                    </th>
+                                    <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date">
+                                        </p-sortIcon>
+                                    </th>
                                     <th></th>
                                 </tr>
                             </ng-template>
@@ -100,19 +123,26 @@
                                     <td>{{note.note}}</td>
                                     <td>{{note.date}}</td>
                                     <td>
-                                        <button *ngIf="note.isNew" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteNote(note)"></button>
+                                        <button *ngIf="note.isNew" pButton pRipple icon="pi pi-trash"
+                                            class="p-button-rounded p-button-warning"
+                                            (click)="deleteNote(note)"></button>
                                     </td>
                                 </tr>
                             </ng-template>
                         </p-table>
                     </div>
                 </div>
+
+                <div *ngIf="!notes" class="p-grid p-jc-center p-ai-center vertical-container">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                </div>
             </p-panel>
         </div>
 
         <div class="p-col-12">
             <p-panel header="Allergies" [toggleable]="true" [collapsed]="true">
-                <div class="p-grid">
+                <div *ngIf="allergiesHistory" class="p-grid">
                     <div class="p-col-4">
                         <p-multiSelect (onChange)="onSelectAllergy($event.value)"
                             (onFilter)="filterAllergies($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
@@ -125,13 +155,49 @@
                             (onRemove)="removeAllergy($event.value)" [(ngModel)]="allergiesChips" separator=",">
                         </p-chips>
                     </div>
+
+                    <div class="p-col-12">
+                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                            (onSort)="onSortAllergy()" scrollHeight="200px" [value]="allergiesHistory">
+                            <ng-template pTemplate="colgroup">
+                                <colgroup>
+                                    <col style="width:100%">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pResizableColumn pSortableColumn="allergy">Allergy</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-allergy let-rowIndex="rowIndex" let-expanded="expanded">
+                                <tr *ngIf="rowGroupMetadataAllergy[allergy.date].index === rowIndex">
+                                    <td colspan="3">
+                                        <button type="button" pButton pRipple [pRowToggler]="allergy"
+                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                        <span class="p-text-bold p-ml-2">{{allergy.date}}</span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="rowexpansion" let-allergy>
+                                <tr>
+                                    <td>{{allergy.name}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+
+                <div *ngIf="!allergiesHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
                 </div>
             </p-panel>
         </div>
 
         <div class="p-col-12">
             <p-panel header="Signs" [toggleable]="true" [collapsed]="true">
-                <div class="p-grid">
+                <div *ngIf="signsHistory" class="p-grid">
                     <div class="p-col-4">
                         <p-multiSelect (onChange)="onSelectSign($event.value)" (onFilter)="filterSigns($event.filter)"
                             autoWidth="false" [style]="{'width':'100%'}" [options]="signs" [(ngModel)]="selectedSigns"
@@ -142,13 +208,49 @@
                         <p-chips [allowDuplicate]="false" (onAdd)="addSign($event.value)"
                             (onRemove)="removeSign($event.value)" [(ngModel)]="signsChips" separator=","></p-chips>
                     </div>
+
+                    <div class="p-col-12">
+                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                            (onSort)="onSortSign()" scrollHeight="200px" [value]="signsHistory">
+                            <ng-template pTemplate="colgroup">
+                                <colgroup>
+                                    <col style="width:100%">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pResizableColumn pSortableColumn="sign">Sign</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-sign let-rowIndex="rowIndex" let-expanded="expanded">
+                                <tr *ngIf="rowGroupMetadataSign[sign.date].index === rowIndex">
+                                    <td colspan="3">
+                                        <button type="button" pButton pRipple [pRowToggler]="sign"
+                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                        <span class="p-text-bold p-ml-2">{{sign.date}}</span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="rowexpansion" let-sign>
+                                <tr>
+                                    <td>{{sign.name}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+
+                <div *ngIf="!signsHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
                 </div>
             </p-panel>
         </div>
 
         <div class="p-col-12">
             <p-panel header="Symptoms" [toggleable]="true" [collapsed]="true">
-                <div class="p-grid">
+                <div  *ngIf="symptomsHistory" class="p-grid">
                     <div class="p-col-4">
                         <p-multiSelect (onChange)="onSelectSymptom($event.value)"
                             (onFilter)="filterSymptoms($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
@@ -161,13 +263,49 @@
                             (onRemove)="removeSymptom($event.value)" [(ngModel)]="symptomsChips" separator=",">
                         </p-chips>
                     </div>
+
+                    <div class="p-col-12">
+                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                            (onSort)="onSortSymptom()" scrollHeight="200px" [value]="symptomsHistory">
+                            <ng-template pTemplate="colgroup">
+                                <colgroup>
+                                    <col style="width:100%">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pResizableColumn pSortableColumn="symptom">Symptom</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-symptom let-rowIndex="rowIndex" let-expanded="expanded">
+                                <tr *ngIf="rowGroupMetadataSymptom[symptom.date].index === rowIndex">
+                                    <td colspan="3">
+                                        <button type="button" pButton pRipple [pRowToggler]="symptom"
+                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                        <span class="p-text-bold p-ml-2">{{symptom.date}}</span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="rowexpansion" let-symptom>
+                                <tr>
+                                    <td>{{symptom.name}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+
+                <div *ngIf="!symptomsHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
                 </div>
             </p-panel>
         </div>
 
         <div class="p-col-12">
             <p-panel header="Diagnoses" [toggleable]="true" [collapsed]="true">
-                <div class="p-grid">
+                <div  *ngIf="diagnosesHistory" class="p-grid">
                     <div class="p-col-4">
                         <p-multiSelect (onChange)="onSelectDiagnosis($event.value)"
                             (onFilter)="filterDiagnoses($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
@@ -180,13 +318,49 @@
                             (onRemove)="removeDiagnosis($event.value)" [(ngModel)]="diagnosesChips" separator=",">
                         </p-chips>
                     </div>
+
+                    <div class="p-col-12">
+                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                            (onSort)="onSortDiagnosis()" scrollHeight="200px" [value]="diagnosesHistory">
+                            <ng-template pTemplate="colgroup">
+                                <colgroup>
+                                    <col style="width:100%">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pResizableColumn pSortableColumn="diagnosis">Diagnosis</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-diagnosis let-rowIndex="rowIndex" let-expanded="expanded">
+                                <tr *ngIf="rowGroupMetadataDiagnosis[diagnosis.date].index === rowIndex">
+                                    <td colspan="3">
+                                        <button type="button" pButton pRipple [pRowToggler]="diagnosis"
+                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                        <span class="p-text-bold p-ml-2">{{diagnosis.date}}</span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="rowexpansion" let-diagnosis>
+                                <tr>
+                                    <td>{{diagnosis.name}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+
+                <div *ngIf="!diagnosesHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
                 </div>
             </p-panel>
         </div>
 
         <div class="p-col-12">
             <p-panel header="Medication " [toggleable]="true" [collapsed]="true">
-                <div class="p-grid">
+                <div  *ngIf="medicinesHistory"  class="p-grid">
                     <div class="p-col-4">
                         <p-multiSelect (onChange)="onSelectMedicine($event.value)"
                             (onFilter)="filterMedicines($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
@@ -201,7 +375,8 @@
                     </div>
 
                     <div class="p-col-12">
-                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single" (onSort)="onSort()" scrollHeight="200px" [value]="medicinesHistory">
+                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                            (onSort)="onSortMedicine()" scrollHeight="200px" [value]="medicinesHistory">
                             <ng-template pTemplate="colgroup">
                                 <colgroup>
                                     <col style="width:100%">
@@ -213,9 +388,11 @@
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-medicine let-rowIndex="rowIndex" let-expanded="expanded">
-                                <tr *ngIf="rowGroupMetadata[medicine.date].index === rowIndex">
+                                <tr *ngIf="rowGroupMetadataMedicine[medicine.date].index === rowIndex">
                                     <td colspan="3">
-                                        <button type="button" pButton pRipple [pRowToggler]="medicine" class="p-button-text p-button-rounded p-button-plain p-mr-2" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                        <button type="button" pButton pRipple [pRowToggler]="medicine"
+                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                                         <span class="p-text-bold p-ml-2">{{medicine.date}}</span>
                                     </td>
                                 </tr>
@@ -227,6 +404,11 @@
                             </ng-template>
                         </p-table>
                     </div>
+                </div>
+
+                <div *ngIf="!medicinesHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
                 </div>
             </p-panel>
         </div>
