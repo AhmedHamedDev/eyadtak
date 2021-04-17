@@ -17,11 +17,14 @@ namespace ClinicBackEnd.Controllers
 
         private readonly ClinicContext _clinicDbContext;
         private IConfiguration _configuration;
+        private static List<Symptom> Symptoms;
 
         public SymptomsController(ClinicContext clinicDbContext, IConfiguration configuration)
         {
             _clinicDbContext = clinicDbContext;
             _configuration = configuration;
+
+            Symptoms = _clinicDbContext.Symptoms.ToList();
         }
 
         [HttpGet("GetSymptoms")]
@@ -31,13 +34,13 @@ namespace ClinicBackEnd.Controllers
             {
                 bool IsReachEnd = false;
                 List<Symptom> Symptoms = null;
-                int count = _clinicDbContext.Symptoms.Count();
+                int count = SymptomsController.Symptoms.Count();
 
                 if (count > Skip + Take)
-                    Symptoms = _clinicDbContext.Symptoms.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
+                    Symptoms = SymptomsController.Symptoms.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
                 else if (count > Skip)
                 {
-                    Symptoms = _clinicDbContext.Symptoms.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
+                    Symptoms = SymptomsController.Symptoms.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
                     IsReachEnd = true;
                 }
                 else
@@ -69,27 +72,10 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
+        public static void AddSymptoms(List<Symptom> symptoms)
+        {
+            SymptomsController.Symptoms.AddRange(symptoms);
+        }
 
-        //[HttpPost("AddSymptom")]
-        //public IActionResult AddSymptom([FromBody] string Name)
-        //{
-        //    try
-        //    {
-        //        if (string.IsNullOrWhiteSpace(Name))
-        //        {
-        //            return Ok(new { message = "Name Can't be Empty", ErrorHappen = true });
-        //        }
-
-        //        Symptom symptom = new Symptom() { Name = Name, NumberOfUse = 0 };
-
-        //        _clinicDbContext.Symptoms.Add(symptom);
-
-        //        return Ok(new { message = symptom.SymptomId, ErrorHappen = false });
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Ok(new { message = "Something went wrong", ErrorHappen = true });
-        //    }
-        //}
     }
 }

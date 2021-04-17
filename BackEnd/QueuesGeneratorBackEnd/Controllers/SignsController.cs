@@ -17,11 +17,15 @@ namespace ClinicBackEnd.Controllers
 
         private readonly ClinicContext _clinicDbContext;
         private IConfiguration _configuration;
+        private static List<Sign> Signs;
+
 
         public SignsController(ClinicContext clinicDbContext, IConfiguration configuration)
         {
             _clinicDbContext = clinicDbContext;
             _configuration = configuration;
+
+            Signs = _clinicDbContext.Signs.ToList();
         }
 
         [HttpGet("GetSigns")]
@@ -31,13 +35,13 @@ namespace ClinicBackEnd.Controllers
             {
                 bool IsReachEnd = false;
                 List<Sign> Signs = null;
-                int count = _clinicDbContext.Signs.Count();
+                int count = SignsController.Signs.Count();
 
                 if (count > Skip + Take)
-                    Signs = _clinicDbContext.Signs.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
+                    Signs = SignsController.Signs.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
                 else if (count > Skip)
                 {
-                    Signs = _clinicDbContext.Signs.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
+                    Signs = SignsController.Signs.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
                     IsReachEnd = true;
                 }
                 else
@@ -67,6 +71,11 @@ namespace ClinicBackEnd.Controllers
             {
                 return Ok(new { message = "Something went wrong", ErrorHappen = true });
             }
+        }
+
+        public static void AddSigns(List<Sign> signs)
+        {
+            SignsController.Signs.AddRange(signs);
         }
     }
 }

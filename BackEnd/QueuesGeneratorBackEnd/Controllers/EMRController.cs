@@ -104,6 +104,12 @@ namespace ClinicBackEnd.Controllers
                 if(newAllergies.Count > 0 || newSigns.Count > 0 || newSymptoms.Count > 0 || newDiagnoses.Count > 0 || newMedicines.Count > 0)
                 _clinicDbContext.SaveChanges();
 
+                AllergiesController.AddAllergies(newAllergies);
+                DiagnosesController.AddDiagnoses(newDiagnoses);
+                MedicinesController.AddMedicines(newMedicines);
+                SignsController.AddSigns(newSigns);
+                SymptomsController.AddSymptoms(newSymptoms);
+
                 PatientHistory patientHistory = new PatientHistory { 
                     Note = savePatientHistory.Note, 
                     CheifComplaint = savePatientHistory.Complaint, 

@@ -17,11 +17,14 @@ namespace ClinicBackEnd.Controllers
 
         private readonly ClinicContext _clinicDbContext;
         private IConfiguration _configuration;
+        private static List<Diagnosis> Diagnoses;
 
         public DiagnosesController(ClinicContext clinicDbContext, IConfiguration configuration)
         {
             _clinicDbContext = clinicDbContext;
             _configuration = configuration;
+
+            Diagnoses = _clinicDbContext.Diagnoses.ToList();
         }
 
         [HttpGet("GetDiagnoses")]
@@ -31,13 +34,13 @@ namespace ClinicBackEnd.Controllers
             {
                 bool IsReachEnd = false;
                 List<Diagnosis> Diagnoses = null;
-                int count = _clinicDbContext.Diagnoses.Count();
+                int count = DiagnosesController.Diagnoses.Count();
 
                 if (count > Skip + Take)
-                    Diagnoses = _clinicDbContext.Diagnoses.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
+                    Diagnoses = DiagnosesController.Diagnoses.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
                 else if (count > Skip)
                 {
-                    Diagnoses = _clinicDbContext.Diagnoses.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
+                    Diagnoses = DiagnosesController.Diagnoses.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
                     IsReachEnd = true;
                 }
                 else
@@ -67,6 +70,11 @@ namespace ClinicBackEnd.Controllers
             {
                 return Ok(new { message = "Something went wrong", ErrorHappen = true });
             }
+        }
+
+        public static void AddDiagnoses(List<Diagnosis> diagnoses)
+        {
+            DiagnosesController.Diagnoses.AddRange(diagnoses);
         }
     }
 }

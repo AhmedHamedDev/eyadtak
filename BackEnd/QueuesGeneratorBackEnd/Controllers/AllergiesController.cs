@@ -17,11 +17,15 @@ namespace ClinicBackEnd.Controllers
 
         private readonly ClinicContext _clinicDbContext;
         private IConfiguration _configuration;
+        private static List<Allergie> Allergies;
 
         public AllergiesController(ClinicContext clinicDbContext, IConfiguration configuration)
         {
             _clinicDbContext = clinicDbContext;
             _configuration = configuration;
+
+            if(Allergies == null)
+                Allergies = _clinicDbContext.Allergies.ToList();
         }
 
         [HttpGet("GetAllergies")]
@@ -31,13 +35,13 @@ namespace ClinicBackEnd.Controllers
             {
                 bool IsReachEnd = false;
                 List<Allergie> Allergies = null;
-                int count = _clinicDbContext.Allergies.Count();
+                int count = AllergiesController.Allergies.Count();
 
                 if (count > Skip + Take)
-                    Allergies = _clinicDbContext.Allergies.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
+                    Allergies = AllergiesController.Allergies.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
                 else if (count > Skip)
                 {
-                    Allergies = _clinicDbContext.Allergies.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
+                    Allergies = AllergiesController.Allergies.OrderByDescending(x => x.NumberOfUse).Skip(Skip).Take(Take).ToList();
                     IsReachEnd = true;
                 }
                 else
@@ -67,6 +71,11 @@ namespace ClinicBackEnd.Controllers
             {
                 return Ok(new { message = "Something went wrong", ErrorHappen = true });
             }
+        }
+
+        public static void AddAllergies(List<Allergie> allergies)
+        {
+            AllergiesController.Allergies.AddRange(allergies);
         }
     }
 }
