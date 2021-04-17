@@ -1,12 +1,17 @@
 ﻿using DAL;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
 using Models.Domain;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Utilities.Pagination;
 
 namespace ClinicBackEnd.Controllers
 {
@@ -24,7 +29,7 @@ namespace ClinicBackEnd.Controllers
         }
 
         [HttpGet("GetDiagnoses")]
-        public IActionResult GetDiagnoses([FromQuery]string Name)
+        public IActionResult GetDiagnoses([FromQuery] string Name)
         {
             try
             {
@@ -47,7 +52,7 @@ namespace ClinicBackEnd.Controllers
         {
             try
             {
-                if(Id == 0 )
+                if (Id == 0)
                     return Ok(new { message = "Id can't be zero", ErrorHappen = true });
 
                 List<Diagnosis> Diagnoses = _clinicDbContext.PatientHistoryDiagnoses.Include(x => x.Diagnosis).Where(x => x.PatientHistoryId == Id).Select(x => x.Diagnosis).ToList();
@@ -83,7 +88,7 @@ namespace ClinicBackEnd.Controllers
         }
 
         [HttpGet("GetSigns")]
-        public IActionResult GetSigns([FromQuery]string Name)
+        public IActionResult GetSigns([FromQuery] string Name)
         {
             try
             {
@@ -141,9 +146,8 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
-
         [HttpGet("GetAllergies")]
-        public IActionResult GetAllergies([FromQuery]string Name)
+        public IActionResult GetAllergies([FromQuery] string Name)
         {
             try
             {
@@ -201,9 +205,8 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
-
         [HttpGet("GetMedicines")]
-        public IActionResult GetMedicines([FromQuery]string Name)
+        public IActionResult GetMedicines([FromQuery] string Name)
         {
             try
             {
@@ -230,7 +233,6 @@ namespace ClinicBackEnd.Controllers
                     return Ok(new { message = "Id can't be zero", ErrorHappen = true });
 
                 List<Medicine> Medicines = _clinicDbContext.PatientHistoryMedicines.Include(x => x.Medicine).Where(x => x.PatientHistoryId == Id).Select(x => x.Medicine).ToList();
-
 
                 return Ok(new { message = Medicines, ErrorHappen = false });
             }
@@ -263,7 +265,7 @@ namespace ClinicBackEnd.Controllers
         }
 
         [HttpGet("GetSymptoms")]
-        public IActionResult GetSymptoms([FromQuery]string Name)
+        public IActionResult GetSymptoms([FromQuery] string Name)
         {
             try
             {
@@ -289,7 +291,7 @@ namespace ClinicBackEnd.Controllers
                 if (Id == 0)
                     return Ok(new { message = "Id can't be zero", ErrorHappen = true });
 
-                List<Symptom> Symptoms = _clinicDbContext.PatientHistorySymptoms.Include(x=>x.Symptom).Where(x => x.PatientHistoryId == Id).Select(x=>x.Symptom).ToList();
+                List<Symptom> Symptoms = _clinicDbContext.PatientHistorySymptoms.Include(x => x.Symptom).Where(x => x.PatientHistoryId == Id).Select(x => x.Symptom).ToList();
 
                 return Ok(new { message = Symptoms, ErrorHappen = false });
             }
@@ -299,9 +301,8 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
-
         [HttpPost("AddSymptom")]
-        public IActionResult AddSymptom([FromBody]string Name)
+        public IActionResult AddSymptom([FromBody] string Name)
         {
             try
             {
@@ -322,12 +323,48 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
+        [HttpGet("patients")]
+        public async Task<IActionResult> GetPatients([FromQuery] PaginationFilter filter, string searchKeyword)
+        {
+            try
+            {
+                var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+
+                if (String.IsNullOrEmpty(searchKeyword) || searchKeyword == "null")
+                {
+                    var patientsQuery = _clinicDbContext.Users.AsQueryable();
+                    var skip = filter.PageNumber * filter.PageSize;
+                    var pagedData = await patientsQuery.Skip(skip)
+                                           .Take(filter.PageSize)
+                                           .ToListAsync();
+                    var totalRecords = patientsQuery.Count();
+                    var totalPages = ((double)totalRecords / (double)filter.PageSize);
+                    int roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
+                    return Ok(new PagedResponse<List<User>>(pagedData, validFilter.PageNumber, validFilter.PageSize
+                                                            , totalRecords, roundedTotalPages));
+                }
+                var patientsSearchQuery = _clinicDbContext.Users.Where(u => u.UserName.Contains(searchKeyword)).AsQueryable();
+                var searchTotalRecords = patientsSearchQuery.Count();
+                var searchTotalPages = ((double)searchTotalRecords / (double)validFilter.PageSize);
+                int searchRoundedTotalPages = Convert.ToInt32(Math.Ceiling(searchTotalPages));
+                var searchPagedData = await patientsSearchQuery.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                                                   .Take(validFilter.PageSize)
+                                                   .ToListAsync();
+                return Ok(new PagedResponse<List<User>>(searchPagedData, validFilter.PageNumber, validFilter.PageSize,
+                                                    searchTotalRecords, searchRoundedTotalPages));
+            }
+            catch (Exception e)
+            {
+                return NotFound(new Response<List<User>> { Data = null, IsSucceeded = false, Error = e.Message });
+            }
+        }
+
         [HttpGet("GetPatientInfo")]
         public IActionResult GetPatientInfo(int Id)
         {
             try
             {
-                var User = _clinicDbContext.Users.Select(x => new { Name = x.UserName, UserId = x.UserId}).FirstOrDefault(x => x.UserId == Id);
+                var User = _clinicDbContext.Users.Select(x => new { Name = x.UserName, UserId = x.UserId }).FirstOrDefault(x => x.UserId == Id);
 
                 return Ok(new { message = User, ErrorHappen = false });
             }
@@ -342,7 +379,7 @@ namespace ClinicBackEnd.Controllers
         {
             try
             {
-                var Notes = _clinicDbContext.PatientHistories.Where(x=>x.PatientId == Id).Select(x=>new { Note = x.Note, InsertDate = x.InsertDate}).ToList();
+                var Notes = _clinicDbContext.PatientHistories.Where(x => x.PatientId == Id).Select(x => new { Note = x.Note, InsertDate = x.InsertDate }).ToList();
 
                 return Ok(new { message = Notes, ErrorHappen = false });
             }

@@ -13581,23 +13581,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\t-amhamed\\.nuget\\packages\\": {},
+    "C:\\Users\\ahmed.ayaad\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Clinic\\Clinic\\Utilities\\Utilities.csproj",
+      "projectUniqueName": "C:\\Users\\ahmed.ayaad\\ma-projects\\.Net\\Clinic\\eyadtak\\Utilities\\Utilities.csproj",
       "projectName": "Utilities",
-      "projectPath": "D:\\Projects\\Clinic\\Clinic\\Utilities\\Utilities.csproj",
-      "packagesPath": "C:\\Users\\t-amhamed\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\Clinic\\Clinic\\Utilities\\obj\\",
+      "projectPath": "C:\\Users\\ahmed.ayaad\\ma-projects\\.Net\\Clinic\\eyadtak\\Utilities\\Utilities.csproj",
+      "packagesPath": "C:\\Users\\ahmed.ayaad\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ahmed.ayaad\\ma-projects\\.Net\\Clinic\\eyadtak\\Utilities\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\t-amhamed\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ahmed.ayaad\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13671,7 +13671,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
       }
     }
   }

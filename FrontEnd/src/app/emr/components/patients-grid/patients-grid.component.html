@@ -1,1 +1,70 @@
-<p>patients-grid works!</p>
+<p-table #table [currentPageReportTemplate]="pageReport" (onLazyLoad)="loadPatientsLazy($event)" [columns]="columns"
+  [value]="patients" [lazy]="true" [paginator]="true" [rows]="pageSize" [totalRecords]="totalRecords"
+  [showCurrentPageReport]="true" [rowsPerPageOptions]="rowsPerPageOptions" dataKey="id" [showCurrentPageReport]="true"
+  sortMode="single" filterDelay="0" [responsive]="true" class="datatable-container">
+  <ng-template pTemplate="caption">
+    <div class="p-fluid p-grid p-nogutter filters-grid">
+      <div class="p-col-12 p-md-4 p-lg-3">
+        <div class="p-inputgroup search">
+          <span class="p-inputgroup-addon"><i class="fa fa-search fa-lg"></i></span>
+          <input #input id="search-input" type="text" (change)="onSearch($event.target.value)"
+            placeholder="Search for a user" />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="colgroup" let-columns>
+    <colgroup>
+      <col *ngFor="let col of columns" [style.width]="col.width" />
+    </colgroup>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field" [pSortableColumnDisabled]="!col.sortable"
+        [ngSwitch]="col.field" [ngClass]="{ 'text-center': col.field === 'actionButtons' }">
+        <ng-container *ngSwitchDefault>
+          {{ col.header }}
+        </ng-container>
+        <p-sortIcon [field]="col.field" *ngIf="col.sortable"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex" class="table-row">
+      <td *ngFor="let col of columns" [ngClass]="{
+          'text-center p-px-0': col.field === 'actionButtons',
+          'text-truncate': col.field !== 'actionButtons'
+        }" [pTooltip]="rowData[col.field]" tooltipPosition="top" [tooltipDisabled]="col.field === 'actionButtons'"
+        [ngSwitch]="col.field">
+        <ng-container *ngSwitchCase="'isActive'">
+          <div>
+            <i *ngIf="rowData.active" class="fas fa-check-square"></i>
+            <i *ngIf="!rowData.active" class="fas fa-square"></i>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'actionButtons'">
+          <div style="margin-left: -85px"
+            class="only-show-on-hover p-d-lg-flex p-flex-row p-jc-center p-d-sm-none p-d-sm-none p-d-md-none">
+            <button (click)="onPatientSelect(rowData.userId)" pButton pTooltip="Details" tooltipPosition="top"
+              class="table-btn mr-4">
+              <i class="fas fa-pen" style="display: inline"></i>
+              <span>Details </span>
+            </button>
+          </div>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+          {{ rowData[col.field] }}
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage" let-columns>
+    <tr>
+      <td [attr.colspan]="columns.length" class="empty-message">
+        No patients found.
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

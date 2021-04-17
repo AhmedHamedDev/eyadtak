@@ -103,8 +103,8 @@ namespace ClientBackEnd.Controllers
                 _clinicDbContext.Users.Add(user);
                 _clinicDbContext.SaveChanges();
 
-                string token = _jwt.GenerateToken(user.UserId);
-                _email.SendAccountActivationEmail(user.UserEmail, _configuration.GetSection("Frontend:Url").Value + "/account/activate-account/?token=" + token);
+                //string token = _jwt.GenerateToken(user.UserId);
+                //_email.SendAccountActivationEmail(user.UserEmail, _configuration.GetSection("Frontend:Url").Value + "/account/activate-account/?token=" + token);
 
                 return Ok(new { message = "User Registerd Successfully", ErrorHappen = false });
             }
