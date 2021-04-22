@@ -1,14 +1,20 @@
 ﻿using ClientBackEnd.Controllers;
+
 using DAL;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
 using Models.Domain;
 using Models.DTO;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Utilities.Pagination;
 
 namespace ClinicBackEnd.Controllers
 {
@@ -25,16 +31,15 @@ namespace ClinicBackEnd.Controllers
             _configuration = configuration;
         }
 
-
         [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpGet("GetPatientInfo/{id}")]
         public IActionResult GetPatientInfo(int Id)
         {
             try
             {
-                var User = _clinicDbContext.Users.FirstOrDefault(x => x.UserId == Id && x.User_Role.Any(x=>x.RoleId == 3));
+                var User = _clinicDbContext.Users.FirstOrDefault(x => x.UserId == Id && x.User_Role.Any(x => x.RoleId == 3));
 
-                if(User == null)
+                if (User == null)
                     return Ok(new { message = "there is no such patient", ErrorHappen = true });
 
                 return Ok(new { message = new { Name = User.UserName, UserId = User.UserId, Email = User.UserEmail, Number = User.PhoneNumber }, ErrorHappen = false });
@@ -51,9 +56,9 @@ namespace ClinicBackEnd.Controllers
         {
             try
             {
-                var Notes = _clinicDbContext.PatientHistory.OrderByDescending(x=>x.InsertDate).Where(x => x.PatientId == Id).ToList();
+                var Notes = _clinicDbContext.PatientHistory.OrderByDescending(x => x.InsertDate).Where(x => x.PatientId == Id).ToList();
 
-                if(Notes == null)
+                if (Notes == null)
                     return Ok(new { message = "there is no such patient", ErrorHappen = true });
 
                 return Ok(new { message = Notes.Select(x => new { Note = x.Note, Date = x.InsertDate.ToString("dd/MM/yyyy") }).ToList(), ErrorHappen = false });
@@ -83,6 +88,42 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
+        [HttpGet("patients")]
+        public async Task<IActionResult> GetPatients([FromQuery] PaginationFilter filter, string searchKeyword)
+        {
+            try
+            {
+                var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+
+                if (String.IsNullOrEmpty(searchKeyword) || searchKeyword == "null")
+                {
+                    var patientsQuery = _clinicDbContext.Users.AsQueryable();
+                    var skip = filter.PageNumber * filter.PageSize;
+                    var pagedData = await patientsQuery.Skip(skip)
+                                           .Take(filter.PageSize)
+                                           .ToListAsync();
+                    var totalRecords = patientsQuery.Count();
+                    var totalPages = ((double)totalRecords / (double)filter.PageSize);
+                    int roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
+                    return Ok(new PagedResponse<List<User>>(pagedData, validFilter.PageNumber, validFilter.PageSize
+                                                            , totalRecords, roundedTotalPages));
+                }
+                var patientsSearchQuery = _clinicDbContext.Users.Where(u => u.UserName.Contains(searchKeyword)).AsQueryable();
+                var searchTotalRecords = patientsSearchQuery.Count();
+                var searchTotalPages = ((double)searchTotalRecords / (double)validFilter.PageSize);
+                int searchRoundedTotalPages = Convert.ToInt32(Math.Ceiling(searchTotalPages));
+                var searchPagedData = await patientsSearchQuery.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                                                   .Take(validFilter.PageSize)
+                                                   .ToListAsync();
+                return Ok(new PagedResponse<List<User>>(searchPagedData, validFilter.PageNumber, validFilter.PageSize,
+                                                    searchTotalRecords, searchRoundedTotalPages));
+            }
+            catch (Exception e)
+            {
+                return NotFound(new Response<List<User>> { Data = null, IsSucceeded = false, Error = e.Message });
+            }
+        }
+
         [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpPost("SavePatientHistory")]
         public IActionResult SavePatientHistory([FromBody] SavePatientHistory savePatientHistory)
@@ -95,7 +136,7 @@ namespace ClinicBackEnd.Controllers
                 List<Diagnosis> newDiagnoses = savePatientHistory.Diagnoses.Where(x => x.Id == 0).Select(x => new Diagnosis { Name = x.Name, NumberOfUse = 0 }).ToList();
                 List<Medicine> newMedicines = savePatientHistory.Medicines.Where(x => x.Id == 0).Select(x => new Medicine { Name = x.Name, NumberOfUse = 0 }).ToList();
 
-                if(newAllergies.Count > 0)
+                if (newAllergies.Count > 0)
                     _clinicDbContext.Allergies.AddRange(newAllergies);
                 if (newSigns.Count > 0)
                     _clinicDbContext.Signs.AddRange(newSigns);
@@ -106,8 +147,8 @@ namespace ClinicBackEnd.Controllers
                 if (newMedicines.Count > 0)
                     _clinicDbContext.Medicines.AddRange(newMedicines);
 
-                if(newAllergies.Count > 0 || newSigns.Count > 0 || newSymptoms.Count > 0 || newDiagnoses.Count > 0 || newMedicines.Count > 0)
-                _clinicDbContext.SaveChanges();
+                if (newAllergies.Count > 0 || newSigns.Count > 0 || newSymptoms.Count > 0 || newDiagnoses.Count > 0 || newMedicines.Count > 0)
+                    _clinicDbContext.SaveChanges();
 
                 AllergiesController.AddAllergies(newAllergies);
                 DiagnosesController.AddDiagnoses(newDiagnoses);
@@ -115,14 +156,15 @@ namespace ClinicBackEnd.Controllers
                 SignsController.AddSigns(newSigns);
                 SymptomsController.AddSymptoms(newSymptoms);
 
-                PatientHistory patientHistory = new PatientHistory { 
-                    Note = savePatientHistory.Note, 
-                    CheifComplaint = savePatientHistory.Complaint, 
-                    InsertDate = DateTime.Now, 
+                PatientHistory patientHistory = new PatientHistory
+                {
+                    Note = savePatientHistory.Note,
+                    CheifComplaint = savePatientHistory.Complaint,
+                    InsertDate = DateTime.Now,
                     PatientId = savePatientHistory.PatientId,
                 };
 
-                newAllergies.AddRange(savePatientHistory.Allergies.Where(x=>x.Id != 0).Select(x=>new Allergie { AllergieId = x.Id, Name = x.Name}));
+                newAllergies.AddRange(savePatientHistory.Allergies.Where(x => x.Id != 0).Select(x => new Allergie { AllergieId = x.Id, Name = x.Name }));
                 patientHistory.PatientHistoryAllergies = newAllergies.Select(x => new PatientHistoryAllergie { InsertTime = DateTime.Now, AllergieId = x.AllergieId, PatientHistoryId = patientHistory.PatientHistoryId }).ToList();
 
                 newSigns.AddRange(savePatientHistory.Signs.Where(x => x.Id != 0).Select(x => new Sign { SignId = x.Id, Name = x.Name }));
