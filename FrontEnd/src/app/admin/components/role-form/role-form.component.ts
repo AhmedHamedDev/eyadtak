@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { RolesService } from '../../services/roles.service';
 import { RolesComponent } from '../roles/roles.component';
 
@@ -10,7 +11,9 @@ import { RolesComponent } from '../roles/roles.component';
   templateUrl: './role-form.component.html',
   styleUrls: ['./role-form.component.css']
 })
-export class RoleFormComponent implements OnInit {
+export class RoleFormComponent implements OnInit, OnDestroy {
+
+  private subscripe1: Subscription;
 
   @ViewChild("content") content;
   closeResult = '';
@@ -20,6 +23,10 @@ export class RoleFormComponent implements OnInit {
   constructor( private rolesGridComp: RolesComponent, private modalService: NgbModal, private rolesService: RolesService,  private toastr: ToastrService,) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.subscripe1?.unsubscribe();
   }
 
   roleForm = new FormGroup({
@@ -47,7 +54,7 @@ export class RoleFormComponent implements OnInit {
   }
 
   addRole(){
-    this.rolesService.AddRole(this.roleForm.value, localStorage.getItem('token')).subscribe(response => {
+    this.subscripe1 = this.rolesService.AddRole(this.roleForm.value, localStorage.getItem('token')).subscribe(response => {
       if (response.errorHappen == true){
         this.toastr.error(response.message, "Sorry :(")
       }

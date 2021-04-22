@@ -130,7 +130,7 @@ namespace DAL
         public DbSet<Symptom> Symptoms { get; set; }
         public DbSet<Allergie> Allergies { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
-        public DbSet<PatientHistory> PatientHistories { get; set; }
+        public DbSet<PatientHistory> PatientHistory { get; set; }
         public DbSet<PatientHistoryAllergie> PatientHistoryAllergies { get; set; }
         public DbSet<PatientHistorySign> PatientHistorySigns { get; set; }
         public DbSet<PatientHistorySymptom> PatientHistorySymptoms { get; set; }

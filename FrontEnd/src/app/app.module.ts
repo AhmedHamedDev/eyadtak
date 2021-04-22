@@ -30,6 +30,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {TableModule} from 'primeng/table';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import {ChipsModule} from 'primeng/chips';
+import {MultiSelectModule} from 'primeng/multiselect';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -43,6 +46,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     CommonModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -54,17 +58,19 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     NgbAlertModule,
     KonvaModule,
     AccountModule,
-    FormsModule,
     ReactiveFormsModule,
     AdminModule,
     PanelModule,
     ButtonModule,
     InputTextareaModule,
     TableModule,
+    MultiSelectModule,
     ConfirmDialogModule,
+    ChipsModule,
+    ProgressSpinnerModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
-  exports:[PanelModule,ButtonModule,InputTextareaModule, TableModule, ConfirmDialogModule],
+  exports:[PanelModule,ButtonModule,InputTextareaModule, TableModule, ConfirmDialogModule, MultiSelectModule, ChipsModule, ProgressSpinnerModule],
   providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })

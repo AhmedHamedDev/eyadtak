@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IAfterGuiAttachedParams } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { Abilities } from 'src/app/shared/enums/Abilities';
 import { AuthSubjectService } from 'src/app/shared/services/auth-subject/auth-subject.service';
 import { RolesService } from '../../services/roles.service';
@@ -11,8 +12,10 @@ import { RolesComponent } from '../roles/roles.component';
   templateUrl: './role-actions.component.html',
   styleUrls: ['./role-actions.component.css']
 })
-export class RoleActionsComponent implements OnInit {
+export class RoleActionsComponent implements OnInit, OnDestroy {
 
+  private subscripe1: Subscription;
+  private subscripe2: Subscription;
 
   public params: any;
   abilities: number[];
@@ -20,8 +23,13 @@ export class RoleActionsComponent implements OnInit {
   
   constructor(private rolesGridComp: RolesComponent, private rolesService: RolesService, private toastr: ToastrService, private authSubjectService: AuthSubjectService) { }
 
+  ngOnDestroy(): void {
+    this.subscripe1?.unsubscribe();
+    this.subscripe2?.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.authSubjectService.getSubject().subscribe(res => {
+    this.subscripe1 = this.authSubjectService.getSubject().subscribe(res => {
       this.abilities = res.abilitiesIds;
     })
   }
@@ -39,7 +47,7 @@ export class RoleActionsComponent implements OnInit {
   }
 
   deleteRole(){
-    this.rolesService.DeleteRole(this.params.data.roleId, localStorage.getItem("token")).subscribe(response => {
+    this.subscripe2 = this.rolesService.DeleteRole(this.params.data.roleId, localStorage.getItem("token")).subscribe(response => {
       if (response.errorHappen == true){
         this.toastr.error(response.message, "Sorry :(")
       }

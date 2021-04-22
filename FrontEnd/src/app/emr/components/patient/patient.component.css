@@ -1,6 +1,7 @@
 .container{
     margin-top: 3vh;
     margin-bottom: 3vh;
+    min-height: 80vh;
 }
 
 .userInfoLable{
@@ -16,3 +17,4 @@ td{
     word-break:break-all !important;
     white-space: normal !important;
   }
+
