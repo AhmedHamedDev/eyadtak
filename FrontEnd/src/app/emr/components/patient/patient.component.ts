@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { Abilities } from 'src/app/shared/enums/Abilities';
+import { AuthSubjectService } from 'src/app/shared/services/auth-subject/auth-subject.service';
 import { Allergy } from '../../models/Allergy';
 import { Diagnosis } from '../../models/Diagnosis';
 import { Medicine } from '../../models/Medicine';
@@ -26,6 +28,9 @@ import { SymptomsService } from '../../services/symptoms-service/symptoms.servic
   styleUrls: ['./patient.component.css']
 })
 export class PatientComponent implements OnInit, OnDestroy {
+
+  abilities: number[];
+  Abilities = Abilities;
 
   rowGroupMetadataMedicine: any;
   rowGroupMetadataSymptom: any;
@@ -71,7 +76,21 @@ export class PatientComponent implements OnInit, OnDestroy {
 
   timeout: any = null;
 
-  private routeSub: Subscription;
+  private subscripe1: Subscription;
+  private subscripe2: Subscription;
+  private subscripe3: Subscription;
+  private subscripe4: Subscription;
+  private subscripe5: Subscription;
+  private subscripe6: Subscription;
+  private subscripe7: Subscription;
+  private subscripe8: Subscription;
+  private subscripe9: Subscription;
+  private subscripe10: Subscription;
+  private subscripe11: Subscription;
+  private subscripe12: Subscription;
+  private subscripe13: Subscription;
+  private subscripe14: Subscription;
+  private subscripe15: Subscription;
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -88,93 +107,112 @@ export class PatientComponent implements OnInit, OnDestroy {
     private diagnosesSubject: DiagnosesSubjectService,
     private medicinesService: MedicinesService,
     private medicinesSubject: MedicinesSubjectService,
+    private authSubjectService: AuthSubjectService, 
   ) { }
 
   ngOnDestroy() {
-    this.routeSub.unsubscribe();
+    this.subscripe1?.unsubscribe();
+    this.subscripe2?.unsubscribe();
+    this.subscripe3?.unsubscribe();
+    this.subscripe4?.unsubscribe();
+    this.subscripe5?.unsubscribe();
+    this.subscripe6?.unsubscribe();
+    this.subscripe7?.unsubscribe();
+    this.subscripe8?.unsubscribe();
+    this.subscripe9?.unsubscribe();
+    this.subscripe10?.unsubscribe();
+    this.subscripe11?.unsubscribe();
+    this.subscripe12?.unsubscribe();
+    this.subscripe13?.unsubscribe();
+    this.subscripe14?.unsubscribe();
+    this.subscripe15?.unsubscribe();
   }
 
   ngOnInit(): void {
 
-    this.routeSub = this.route.params.subscribe(params => {
+    this.authSubjectService.getSubject().subscribe(res => {
+      this.abilities = res.abilitiesIds;
+    })
+
+    this.subscripe1 = this.route.params.subscribe(params => {
       this.patientId = params['id'];
 
-      this.emrService.GetPatientInfo(params['id']).subscribe(resp => {
+      this.subscripe2 = this.emrService.GetPatientInfo(params['id']).subscribe(resp => {
         if (resp.errorHappen == true)
           this.toastr.error(resp.message, "Sorry :(")
         else if (resp.errorHappen == false)
           this.userInfo = resp.message;
       })
 
-      this.emrService.GetPatientHistoryNotes(params['id']).subscribe(resp => {
+      this.subscripe3 = this.emrService.GetPatientHistoryNotes(params['id']).subscribe(resp => {
         if (resp.errorHappen == true)
           this.toastr.error(resp.message, "Sorry :(")
         else if (resp.errorHappen == false)
           this.notes = resp.message;
       })
 
-      this.emrService.GetPatientHistoryChiefComplaints(params['id']).subscribe(resp => {
+      this.subscripe4 = this.emrService.GetPatientHistoryChiefComplaints(params['id']).subscribe(resp => {
         if (resp.errorHappen == true)
           this.toastr.error(resp.message, "Sorry :(")
         else if (resp.errorHappen == false)
           this.complaints = resp.message;
       })
 
-      this.symptomsService.GetPatientSymptoms(params['id']).subscribe(resp => {
+      this.subscripe5 = this.symptomsService.GetPatientSymptoms(params['id']).subscribe(resp => {
         if (resp.errorHappen == true)
           this.toastr.error(resp.message, "Sorry :(")
         else if (resp.errorHappen == false) {
           this.symptomsHistory = resp.message;
 
-          this.symptomsSubject.getSubject().subscribe(data => {
+          this.subscripe6 = this.symptomsSubject.getSubject().subscribe(data => {
               this.symptoms = data;
           })
         }
       })
 
-      this.allergiesService.GetPatientAllergies(params['id']).subscribe(resp => {
+      this.subscripe7 = this.allergiesService.GetPatientAllergies(params['id']).subscribe(resp => {
         if (resp.errorHappen == true)
           this.toastr.error(resp.message, "Sorry :(")
         else if (resp.errorHappen == false) {
           this.allergiesHistory = resp.message;
 
-          this.allergiesSubject.getSubject().subscribe(data => {
+          this.subscripe8 = this.allergiesSubject.getSubject().subscribe(data => {
             this.allergies = data;
           })
         }
       })
 
-      this.signsService.GetPatientSigns(params['id']).subscribe(resp => {
+      this.subscripe9 = this.signsService.GetPatientSigns(params['id']).subscribe(resp => {
         if (resp.errorHappen == true)
           this.toastr.error(resp.message, "Sorry :(")
         else if (resp.errorHappen == false) {
           this.signsHistory = resp.message;
 
-          this.signsSubject.getSubject().subscribe(data => {
+          this.subscripe10 = this.signsSubject.getSubject().subscribe(data => {
             this.signs = data;
           })
         }
       })
 
-      this.diagnosesService.GetPatientDiagnoses(params['id']).subscribe(resp => {
+      this.subscripe11 = this.diagnosesService.GetPatientDiagnoses(params['id']).subscribe(resp => {
         if (resp.errorHappen == true)
           this.toastr.error(resp.message, "Sorry :(")
         else if (resp.errorHappen == false) {
           this.diagnosesHistory = resp.message;
 
-          this.diagnosesSubject.getSubject().subscribe(data => {
+          this.subscripe12 = this.diagnosesSubject.getSubject().subscribe(data => {
             this.diagnoses = data;
           })
         }
       })
 
-      this.medicinesService.GetPatientMedicines(params['id']).subscribe(resp => {
+      this.subscripe13 = this.medicinesService.GetPatientMedicines(params['id']).subscribe(resp => {
         if (resp.errorHappen == true)
           this.toastr.error(resp.message, "Sorry :(")
         else if (resp.errorHappen == false) {
           this.medicinesHistory = resp.message;
 
-          this.medicinesSubject.getSubject().subscribe(data => {
+          this.subscripe14 = this.medicinesSubject.getSubject().subscribe(data => {
             this.medicines = data;
           })
         }
@@ -632,7 +670,7 @@ export class PatientComponent implements OnInit, OnDestroy {
           Symptoms: this.selectedSymptoms
         }
 
-        this.emrService.SavePatientHistory(data).subscribe(resp => {
+        this.subscripe15 = this.emrService.SavePatientHistory(data).subscribe(resp => {
           if (resp.errorHappen == true)
             this.toastr.error(resp.message, "Sorry :(")
           else if (resp.errorHappen == false)

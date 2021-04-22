@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using ClientBackEnd.Controllers;
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,7 @@ namespace ClinicBackEnd.Controllers
             Signs = _clinicDbContext.Signs.ToList();
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpGet("GetSigns")]
         public IActionResult GetSigns([FromQuery] int Skip, [FromQuery] int Take)
         {
@@ -55,6 +57,7 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpGet("GetPatientSigns/{id}")]
         public IActionResult GetPatientSigns(int Id)
         {

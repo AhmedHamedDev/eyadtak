@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using ClientBackEnd.Controllers;
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ namespace ClinicBackEnd.Controllers
         }
 
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpGet("GetPatientInfo/{id}")]
         public IActionResult GetPatientInfo(int Id)
         {
@@ -43,6 +45,7 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpGet("GetPatientHistoryNotes/{id}")]
         public IActionResult GetPatientHistoryNotes(int Id)
         {
@@ -61,6 +64,7 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpGet("GetPatientHistoryChiefComplaints/{id}")]
         public IActionResult GetPatientHistoryChiefComplaints(int Id)
         {
@@ -79,6 +83,7 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpPost("SavePatientHistory")]
         public IActionResult SavePatientHistory([FromBody] SavePatientHistory savePatientHistory)
         {

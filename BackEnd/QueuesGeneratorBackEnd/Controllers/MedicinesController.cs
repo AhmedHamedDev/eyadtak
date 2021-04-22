@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using ClientBackEnd.Controllers;
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,7 @@ namespace ClinicBackEnd.Controllers
             Medicines = _clinicDbContext.Medicines.ToList();
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpGet("GetMedicines")]
         public IActionResult GetMedicines([FromQuery] int Skip, [FromQuery] int Take)
         {
@@ -55,6 +57,7 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpGet("GetPatientMedicines/{id}")]
         public IActionResult GetPatientMedicines(int Id)
         {
