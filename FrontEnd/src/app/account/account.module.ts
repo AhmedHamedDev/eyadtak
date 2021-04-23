@@ -12,6 +12,9 @@ import { RecoverPasswordComponent } from './components/recover-password/recover-
 import { BeforeRegisterComponent } from './components/before-register/before-register.component';
 import { SidebarComponent } from '../shared/components/sidebar/sidebar.component';
 import { NavbarComponent } from '../shared/components/navbar/navbar.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -21,6 +24,9 @@ import { NavbarComponent } from '../shared/components/navbar/navbar.component';
     AccountRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    InputTextModule,
+    ButtonModule,
+    DropdownModule
   ],
   providers: [SidebarComponent, NavbarComponent],
 })

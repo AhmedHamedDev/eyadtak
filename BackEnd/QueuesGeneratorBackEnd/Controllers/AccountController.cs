@@ -90,6 +90,7 @@ namespace ClientBackEnd.Controllers
                     Active = false,
                     RegisterDate = DateTime.Now,
                     RecoveryCode = -1,
+                    GenderId = userRegisterDto.GenderId,
                     PhoneNumber = userRegisterDto.PhoneNumber
                 };
 

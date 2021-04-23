@@ -3,5 +3,6 @@ export class RegisterUser{
     public password: string;
     public username: string;
     public roleId: number;
+    public genderId: number;
     public phoneNumber: number;
 }

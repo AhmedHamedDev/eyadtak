@@ -24,8 +24,9 @@ export class AccountService {
     return this.myclient.get(`${this.baseUrl}/Account/Logout`, {headers:{'token':token}})
   }
 
-  Register(user: RegisterUser) : Observable<any>{
-    return this.myclient.post(`${this.baseUrl}/Account/Register`, {Name: user.username ,Email: user.email, Password: user.password, RoleId: +user.roleId, PhoneNumber: user.phoneNumber})
+  Register(user: any) : Observable<any>{
+    debugger
+    return this.myclient.post(`${this.baseUrl}/Account/Register`, {Name: user.username ,Email: user.email, Password: user.password, RoleId: +user.roleId.roleId, GenderId: +user.genderId.genderId, PhoneNumber: user.phoneNumber})
   }
 
   ActivateAccount(token :string) : Observable<any>{

@@ -15,6 +15,9 @@ namespace Models.Domain
         public bool Active { get; set; }
         public DateTime RegisterDate { get; set; }
 
+        public int GenderId { get; set; }
+        public Gender Gender { get; set; }
+
         public ICollection<User_Role> User_Role { get; set; }
         public ICollection<PatientHistory> PatientHistories { get; set; }
 

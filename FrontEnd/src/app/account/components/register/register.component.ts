@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { RolesService } from 'src/app/admin/services/roles.service';
+import { Gender } from 'src/app/shared/models/Gender';
 import { Role } from 'src/app/shared/models/Role';
 import { AccountService } from '../../services/account/account.service';
 
@@ -17,6 +18,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private Register: Subscription;
   private GetRolesDropDwon: Subscription;
   Roles: Role[];
+  Genders: Gender[];
   roleSelected: number = -1;
 
   constructor(
@@ -32,6 +34,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     password: new FormControl('', [Validators.required, Validators.minLength(5)]),
     confirmPassword: new FormControl('', [Validators.required]),
     roleId: new FormControl('', [Validators.required]),
+    genderId: new FormControl('', [Validators.required]),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern('[+()0-9]+')]),
   }, this.pwdMatchValidator);
 
@@ -40,6 +43,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   get password() { return this.registerForm.get('password'); }
   get confirmPassword() { return this.registerForm.get('confirmPassword'); }
   get roleId() { return this.registerForm.get('roleId'); }
+  get genderId() { return this.registerForm.get('genderId'); }
   get phoneNumber() { return this.registerForm.get('phoneNumber'); }
 
 
@@ -58,6 +62,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.registerForm.controls.roleId.setValue(this.roleSelected);
       }
     })
+
+    this.Genders = [
+      {genderId: 1, genderName: "Male"},
+      {genderId: 2, genderName: "Female"}
+    ];
   }
 
   pwdMatchValidator(frm: FormGroup) {
@@ -66,19 +75,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   register() {
-    this.toggle = true;
-    this.registerForm.value.gender = Number.parseInt(this.registerForm.value.gender);
-    this.Register = this.authService.Register(this.registerForm.value)
-      .subscribe(response => {
-        this.toggle = false;
-        if (response.errorHappen == true) {
-            this.toastr.error(response.message, 'Validation Error!');
-        }
-        else {
-          this.toastr.success('Register done successfully', 'Success');
-          this.router.navigateByUrl('/account/login');
-        }
-      })
+    if(this.registerForm.valid){
+      this.toggle = true;
+      this.Register = this.authService.Register(this.registerForm.value)
+        .subscribe(response => {
+          this.toggle = false;
+          if (response.errorHappen == true) {
+              this.toastr.error(response.message, 'Validation Error!');
+          }
+          else {
+            this.toastr.success('Register done successfully', 'Success');
+            this.router.navigateByUrl('/account/login');
+          }
+        })
+    }
   }
 
   ngOnDestroy() {
