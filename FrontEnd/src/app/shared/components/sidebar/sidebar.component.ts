@@ -33,7 +33,7 @@ export class SidebarComponent implements OnInit {
       res.level0?.forEach(lvl0Element => {
         let lvl1 = level1.filter(x => x.parentId == lvl0Element.id);
         lvl1.forEach(lvl1Element => {
-          if ( this.Abilities.includes(lvl1Element.abilityId) && !added.includes(lvl0Element.id)){
+          if ( this.Abilities?.includes(lvl1Element.abilityId) && !added?.includes(lvl0Element.id)){
             this.level0.push(lvl0Element);
             added.push(lvl0Element.id)
           }

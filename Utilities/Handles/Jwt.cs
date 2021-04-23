@@ -30,7 +30,7 @@ namespace Utilities.Handles
                 {
                     new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddDays(1000),
+                Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature)
             };
 

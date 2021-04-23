@@ -34,7 +34,7 @@ namespace ClientBackEnd.Controllers
         [HttpGet("NotAuthoriced")]
         public IActionResult NotAuthoriced()
         {
-            return Ok(new { message = "Not Authorized", ErrorHappen = true });
+            return Ok(new { message = "Not Authorized, please login again", ErrorHappen = true });
         }
 
         [HttpPost("Login")]
