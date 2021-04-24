@@ -2,12 +2,12 @@
     background-position: center;
     background: url("../../../../assets/images/SignupBackground.jpg") 50% 50% no-repeat fixed;
     box-shadow:inset 0 0 0 2000px rgba(0, 0, 0, 0.7);
-    height: 84vh;
+    min-height: 84vh;
     background-size: cover;
   }
 
   .container{
-    height: 80%;
+    min-height: 80%;
     padding-top: 3%;
     padding-left: 10%;
     padding-right: 10%;

@@ -1,35 +1,40 @@
-<div class="bg-img">
-    <div class="content">
-      <h2 class="login-header">Login</h2>
-      <form [formGroup]="loginForm">
-        <div class="field">
-          <span class="fa fa-envelope"></span>
-          <input formControlName="email" type="text" placeholder="Email">
+   <div class="bg-img">
+    <div class="container">
+  
+      <form [formGroup]="loginForm" class="p-fluid p-formgrid p-grid">
+  
+        <div style="text-align: center; margin-bottom: 2%;" class="p-field p-col-12">
+          <h2 class="login-header">Login</h2>
         </div>
-        <p style="color: red;" *ngIf="email.touched && email.hasError('email') && !email.hasError('required')">
-          Please enter a valid email address
-        </p>
-        <p style="color: red;" *ngIf="email.touched && email.hasError('required')">
-          Email is <strong>required</strong>
-        </p>
-        <div class="field space">
-          <span class="fa fa-lock"></span>
-          <input formControlName="password" type="password" class="pass-key" placeholder="Password">
+  
+        <div [class.margin-bottom-none] = "email.touched && (email.hasError('email') || email.hasError('required'))" style="margin-top: 20px;" class="p-field p-col-12">
+          <span class="p-input-icon-left">
+            <i class="fa fa-envelope"></i>
+            <input [ngClass]="{'ng-invalid': email.touched && (email.hasError('email') || email.hasError('required')), 'ng-dirty' : email.touched && (email.hasError('email') || email.hasError('required'))}" type="email" formControlName="email" pInputText placeholder="Email Address">
+          </span>
+          <small *ngIf="email.touched && email.hasError('email') && !email.hasError('required')" class="p-error">Please Enter a Valid Email Address</small>
+          <small *ngIf="email.touched && email.hasError('required')" class="p-error">Email is Required</small>
         </div>
-        <p style="color: red;" *ngIf="password.touched && password.hasError('required') && !password.hasError('minlength')">
-          password <strong>required</strong>
-        </p>
-        <p style="color: red;" *ngIf="password.touched && password.hasError('minlength')">
-          password must be at least <strong>5 charcters</strong>
-        </p>
-        <div class="field login-btn">
-          <button (click)="login()" [disabled]="!loginForm.valid || toggle" type="button">{{toggle ? 'Loadding...':'Login'}}</button>
+  
+        <div [class.margin-bottom-none] = "password.touched && (password.hasError('required') || password.hasError('minlength'))" style="margin-top: 20px;" class="p-field p-col-12">
+          <span class="p-input-icon-left">
+            <i class="fa fa-lock"></i>
+            <input [ngClass]="{'ng-invalid': password.touched && (password.hasError('required') || password.hasError('minlength')), 'ng-dirty' : password.touched && (password.hasError('required') || password.hasError('minlength'))}" type="password" formControlName="password" pInputText placeholder="password">
+          </span>
+          <small *ngIf="password.touched && password.hasError('required') && !password.hasError('minlength')" class="p-error">Password is Required</small>
+          <small *ngIf="password.touched && password.hasError('minlength')" class="p-error">Password Must Be At Least 5 Charcters</small>
         </div>
+  
+        <div style="text-align: center; margin-top: 2%;" class="p-field p-col-12">
+          <p-button (click)="login()" [disabled]="!loginForm.valid || toggle" type="button" label="{{toggle ? 'Loadding...':'Login'}}" icon="pi pi-check"></p-button>
+        </div>
+        <div class="signup p-field p-col-12">
+          <div class="signup">Don't have account?
+            <a routerLink="/account/register">Signup Now</a>
+          </div>
+          <a routerLink="/account/forget-password">Forget your Password</a>
+        </div>
+  
       </form>
-      <div class="signup">Don't have account?
-        <a routerLink="/account/register">Signup Now</a>
-      </div>
-      <a routerLink="/account/forget-password">Forget your Password</a>
     </div>
   </div>
-  

@@ -37,12 +37,12 @@ namespace ClinicBackEnd.Controllers
         {
             try
             {
-                var User = _clinicDbContext.Users.FirstOrDefault(x => x.UserId == Id && x.User_Role.Any(x => x.RoleId == 3));
+                var User = _clinicDbContext.Users.Include(x=>x.Gender).FirstOrDefault(x => x.UserId == Id && x.User_Role.Any(x => x.RoleId == 3));
 
                 if (User == null)
                     return Ok(new { message = "there is no such patient", ErrorHappen = true });
 
-                return Ok(new { message = new { Name = User.UserName, UserId = User.UserId, Email = User.UserEmail, Number = User.PhoneNumber }, ErrorHappen = false });
+                return Ok(new { message = new { Name = User.UserName, UserId = User.UserId, Email = User.UserEmail, Number = User.PhoneNumber, Gender = User.Gender.GenderName }, ErrorHappen = false });
             }
             catch (Exception e)
             {
@@ -88,41 +88,85 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
-        [HttpGet("patients")]
-        public async Task<IActionResult> GetPatients([FromQuery] PaginationFilter filter, string searchKeyword)
+        [ServiceFilter(typeof(AuthorizedAbility))]
+        [HttpPost("GetPatients")]
+        public IActionResult GetPatients([FromBody] PatientsSearchCriteriaDTO patientsSearchCriteriaDto)
         {
             try
             {
-                var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+                var filterdPatients = _clinicDbContext.Users.Include(x=>x.Gender)
+                    .Where(x => x.User_Role.Any(x => x.RoleId == 3))
+                    .Select(x=>new { 
+                        Id = x.UserId,
+                        Name = x.UserName, 
+                        Email = x.UserEmail, 
+                        Number = x.PhoneNumber,
+                        GederId = x.GenderId, 
+                        Gender = x.Gender.GenderName, 
+                        Date = x.RegisterDate.ToString("dd/MM/yyyy") });
 
-                if (String.IsNullOrEmpty(searchKeyword) || searchKeyword == "null")
-                {
-                    var patientsQuery = _clinicDbContext.Users.AsQueryable();
-                    var skip = filter.PageNumber * filter.PageSize;
-                    var pagedData = await patientsQuery.Skip(skip)
-                                           .Take(filter.PageSize)
-                                           .ToListAsync();
-                    var totalRecords = patientsQuery.Count();
-                    var totalPages = ((double)totalRecords / (double)filter.PageSize);
-                    int roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
-                    return Ok(new PagedResponse<List<User>>(pagedData, validFilter.PageNumber, validFilter.PageSize
-                                                            , totalRecords, roundedTotalPages));
-                }
-                var patientsSearchQuery = _clinicDbContext.Users.Where(u => u.UserName.Contains(searchKeyword)).AsQueryable();
-                var searchTotalRecords = patientsSearchQuery.Count();
-                var searchTotalPages = ((double)searchTotalRecords / (double)validFilter.PageSize);
-                int searchRoundedTotalPages = Convert.ToInt32(Math.Ceiling(searchTotalPages));
-                var searchPagedData = await patientsSearchQuery.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-                                                   .Take(validFilter.PageSize)
-                                                   .ToListAsync();
-                return Ok(new PagedResponse<List<User>>(searchPagedData, validFilter.PageNumber, validFilter.PageSize,
-                                                    searchTotalRecords, searchRoundedTotalPages));
+                if (!string.IsNullOrWhiteSpace(patientsSearchCriteriaDto.Email))
+                    filterdPatients = filterdPatients.Where(x => x.Email.Contains(patientsSearchCriteriaDto.Email));
+
+                if (!string.IsNullOrWhiteSpace(patientsSearchCriteriaDto.Name))
+                    filterdPatients = filterdPatients.Where(x => x.Name.Contains(patientsSearchCriteriaDto.Name));
+
+                if (!string.IsNullOrWhiteSpace(patientsSearchCriteriaDto.Number))
+                    filterdPatients = filterdPatients.Where(x => x.Number.Contains(patientsSearchCriteriaDto.Number));
+
+                if (patientsSearchCriteriaDto.GenderId != 0)
+                    filterdPatients = filterdPatients.Where(x => x.GederId == patientsSearchCriteriaDto.GenderId);
+
+                int TotalRecords = filterdPatients.Count();
+
+                filterdPatients = filterdPatients.Skip(patientsSearchCriteriaDto.Skip).Take(patientsSearchCriteriaDto.Take);
+
+                return Ok(new { message = new {Patients = filterdPatients.ToList(), TotalRecords = TotalRecords} , ErrorHappen = false });
             }
             catch (Exception e)
             {
-                return NotFound(new Response<List<User>> { Data = null, IsSucceeded = false, Error = e.Message });
+                return Ok(new { message = "Something went wrong", ErrorHappen = true });
             }
         }
+
+        //[HttpGet("patients")]
+        //public async Task<IActionResult> GetPatients([FromQuery] PaginationFilter filter, string searchKeyword)
+        //{
+        //    try
+        //    {
+        //        var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+
+        //        if (String.IsNullOrWhiteSpace(searchKeyword) || searchKeyword == null)
+        //        {
+        //            var patientsQuery = _clinicDbContext.Users.Where(x=>x.User_Role.Any(x=>x.RoleId == 3)).AsQueryable();
+        //            var skip = filter.PageNumber * filter.PageSize;
+        //            var pagedData = await patientsQuery.Skip(skip)
+        //                                   .Take(filter.PageSize)
+        //                                   .ToListAsync();
+        //            var totalRecords = patientsQuery.Count();
+        //            var totalPages = ((double)totalRecords / (double)filter.PageSize);
+        //            int roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
+        //            return Ok(new PagedResponse<List<User>>(pagedData, validFilter.PageNumber, validFilter.PageSize
+        //                                                    , totalRecords, roundedTotalPages));
+        //        }
+        //        else
+        //        {
+        //            var patientsSearchQuery = _clinicDbContext.Users.Where(u => u.UserName.Contains(searchKeyword) && u.User_Role.Any(x => x.RoleId == 3)).AsQueryable();
+        //            var searchTotalRecords = patientsSearchQuery.Count();
+        //            var searchTotalPages = ((double)searchTotalRecords / (double)validFilter.PageSize);
+        //            int searchRoundedTotalPages = Convert.ToInt32(Math.Ceiling(searchTotalPages));
+        //            var searchPagedData = await patientsSearchQuery.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+        //                                               .Take(validFilter.PageSize)
+        //                                               .ToListAsync();
+        //            return Ok(new PagedResponse<List<User>>(searchPagedData, validFilter.PageNumber, validFilter.PageSize,
+        //                                                searchTotalRecords, searchRoundedTotalPages));
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return NotFound(new Response<List<User>> { Data = null, IsSucceeded = false, Error = e.Message });
+        //    }
+        //}
 
         [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpPost("SavePatientHistory")]

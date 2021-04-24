@@ -35,6 +35,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {InputTextModule} from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import {TooltipModule} from 'primeng/tooltip';
 
 
 @NgModule({
@@ -72,9 +73,10 @@ import { DropdownModule } from 'primeng/dropdown';
     InputTextModule,
     ProgressSpinnerModule,
     DropdownModule,
+    TooltipModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
-  exports:[PanelModule,ButtonModule,InputTextareaModule, TableModule, DropdownModule, ConfirmDialogModule, MultiSelectModule, InputTextModule, ChipsModule, ProgressSpinnerModule],
+  exports:[PanelModule,ButtonModule,InputTextareaModule, TableModule, DropdownModule, ConfirmDialogModule, MultiSelectModule, InputTextModule, ChipsModule, ProgressSpinnerModule,TooltipModule],
   providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })

@@ -19,7 +19,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private GetRolesDropDwon: Subscription;
   Roles: Role[];
   Genders: Gender[];
-  roleSelected: number = -1;
 
   constructor(
     private authService: AccountService,
@@ -55,11 +54,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
       else if (response.errorHappen == false){
         this.Roles = response.message;
-        this.roleSelected = +this.route.snapshot.queryParams.role
-        if(isNaN(this.roleSelected))
-          this.roleSelected = -1
-        else
-          this.registerForm.controls.roleId.setValue(this.roleSelected);
+        this.registerForm.controls.roleId.setValue(this.Roles.filter(x=>x.roleId == +this.route.snapshot.queryParams.role)[0]);
       }
     })
 

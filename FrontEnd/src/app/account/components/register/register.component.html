@@ -55,7 +55,7 @@
           <i class="fa fa-gender"></i>
           <p-dropdown formControlName="genderId" [ngClass]="{'ng-invalid': genderId.touched && genderId.hasError('required'), 'ng-dirty' : genderId.touched && genderId.hasError('required')}" [options]="Genders" placeholder="Select a Gender" optionLabel="genderName"></p-dropdown>
         </span>
-        <small *ngIf="genderId.touched && genderId.hasError('required')" class="p-error">Genger is Required</small>
+        <small *ngIf="genderId.touched && genderId.hasError('required')" class="p-error">Gender is Required</small>
       </div>
 
       <div [class.margin-bottom-none] = "phoneNumber.touched && (phoneNumber.hasError('required') || phoneNumber.hasError('pattern'))" style="margin-top: 20px;" class="p-field p-col-6">

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PatientsSearchCriteria } from 'src/app/shared/models/patientsSearchCriteria';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -28,4 +29,9 @@ export class EmrService {
   SavePatientHistory(data): Observable<any> {
     return this.myclient.post<any>(`${this.baseUrl}/EMR/SavePatientHistory`, data, {headers:{'token': this.token}});
   }
+
+  GetPatients(patientsSearchCriteria: PatientsSearchCriteria): Observable<any> {
+    return this.myclient.post<any>(`${this.baseUrl}/EMR/GetPatients`, patientsSearchCriteria, {headers:{'token': this.token}});
+  }
+
 }

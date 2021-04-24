@@ -21,5 +21,6 @@ export enum Abilities {
   Get_Symptoms = 20,
   Get_Patient_Symptoms = 21, 
   Get_Medicines = 22,
-  Get_Patient_Medicines = 23
+  Get_Patient_Medicines = 23,
+  Get_Patients = 24
 }

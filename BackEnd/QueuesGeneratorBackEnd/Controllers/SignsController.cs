@@ -26,7 +26,8 @@ namespace ClinicBackEnd.Controllers
             _clinicDbContext = clinicDbContext;
             _configuration = configuration;
 
-            Signs = _clinicDbContext.Signs.ToList();
+            if (Signs == null)
+                Signs = _clinicDbContext.Signs.ToList();
         }
 
         [ServiceFilter(typeof(AuthorizedAbility))]
