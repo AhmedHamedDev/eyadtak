@@ -34,7 +34,7 @@
               "./node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css",
               "./node_modules/ag-grid-community/dist/styles/ag-theme-alpine-dark.css",
               "./node_modules/primeicons/primeicons.css",
-              "./node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "./node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css",
               "./node_modules/primeng/resources/primeng.min.css",
               "./node_modules/primeflex/primeflex.css",
               "src/styles.css"

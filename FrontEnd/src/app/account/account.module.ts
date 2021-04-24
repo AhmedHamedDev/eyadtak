@@ -15,6 +15,7 @@ import { NavbarComponent } from '../shared/components/navbar/navbar.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ReactiveFormsModule,
     InputTextModule,
     ButtonModule,
-    DropdownModule
+    DropdownModule,
+    CardModule
   ],
   providers: [SidebarComponent, NavbarComponent],
 })

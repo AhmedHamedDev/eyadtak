@@ -25,7 +25,7 @@
           <small *ngIf="password.touched && password.hasError('minlength')" class="p-error">Password Must Be At Least 5 Charcters</small>
         </div>
   
-        <div style="text-align: center; margin-top: 2%;" class="p-field p-col-12">
+        <div style="text-align: center; margin-top: 5%;" class="p-field p-col-12">
           <p-button (click)="login()" [disabled]="!loginForm.valid || toggle" type="button" label="{{toggle ? 'Loadding...':'Login'}}" icon="pi pi-check"></p-button>
         </div>
         <div class="signup p-field p-col-12">

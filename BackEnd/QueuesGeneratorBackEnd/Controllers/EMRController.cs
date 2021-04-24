@@ -129,45 +129,6 @@ namespace ClinicBackEnd.Controllers
             }
         }
 
-        //[HttpGet("patients")]
-        //public async Task<IActionResult> GetPatients([FromQuery] PaginationFilter filter, string searchKeyword)
-        //{
-        //    try
-        //    {
-        //        var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-
-        //        if (String.IsNullOrWhiteSpace(searchKeyword) || searchKeyword == null)
-        //        {
-        //            var patientsQuery = _clinicDbContext.Users.Where(x=>x.User_Role.Any(x=>x.RoleId == 3)).AsQueryable();
-        //            var skip = filter.PageNumber * filter.PageSize;
-        //            var pagedData = await patientsQuery.Skip(skip)
-        //                                   .Take(filter.PageSize)
-        //                                   .ToListAsync();
-        //            var totalRecords = patientsQuery.Count();
-        //            var totalPages = ((double)totalRecords / (double)filter.PageSize);
-        //            int roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
-        //            return Ok(new PagedResponse<List<User>>(pagedData, validFilter.PageNumber, validFilter.PageSize
-        //                                                    , totalRecords, roundedTotalPages));
-        //        }
-        //        else
-        //        {
-        //            var patientsSearchQuery = _clinicDbContext.Users.Where(u => u.UserName.Contains(searchKeyword) && u.User_Role.Any(x => x.RoleId == 3)).AsQueryable();
-        //            var searchTotalRecords = patientsSearchQuery.Count();
-        //            var searchTotalPages = ((double)searchTotalRecords / (double)validFilter.PageSize);
-        //            int searchRoundedTotalPages = Convert.ToInt32(Math.Ceiling(searchTotalPages));
-        //            var searchPagedData = await patientsSearchQuery.Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-        //                                               .Take(validFilter.PageSize)
-        //                                               .ToListAsync();
-        //            return Ok(new PagedResponse<List<User>>(searchPagedData, validFilter.PageNumber, validFilter.PageSize,
-        //                                                searchTotalRecords, searchRoundedTotalPages));
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return NotFound(new Response<List<User>> { Data = null, IsSucceeded = false, Error = e.Message });
-        //    }
-        //}
-
         [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpPost("SavePatientHistory")]
         public IActionResult SavePatientHistory([FromBody] SavePatientHistory savePatientHistory)

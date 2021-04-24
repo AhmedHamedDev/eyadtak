@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TooltipModule } from 'primeng/tooltip';
 
 import { EmrRoutingModule } from './emr-routing.module';
 import { PatientComponent } from './components/patient/patient.component';
@@ -30,7 +29,6 @@ import { DropdownModule } from 'primeng/dropdown';
     MultiSelectModule,
     ChipsModule,
     ProgressSpinnerModule,
-    TooltipModule,
     DropdownModule
   ]
 })

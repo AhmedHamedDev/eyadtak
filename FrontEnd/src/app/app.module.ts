@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 
 import { AccountModule } from "./account/account.module";
 
-import { KonvaModule } from "ng2-konva";
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
@@ -16,12 +14,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgGridModule } from 'ag-grid-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {NgbPaginationModule, NgbAlertModule, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotAuthorizedComponent } from './shared/components/not-authorized/not-authorized.component';
 import { AdminModule } from './admin/admin.module';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 import { PanelModule } from 'primeng/panel';
@@ -35,7 +31,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {InputTextModule} from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
-import {TooltipModule} from 'primeng/tooltip';
+import {CardModule} from 'primeng/card';
 
 
 @NgModule({
@@ -57,9 +53,6 @@ import {TooltipModule} from 'primeng/tooltip';
     AgGridModule.withComponents([]),
     ToastrModule.forRoot(),
     NgbModule,
-    NgbPaginationModule, 
-    NgbAlertModule,
-    KonvaModule,
     AccountModule,
     ReactiveFormsModule,
     AdminModule,
@@ -73,10 +66,9 @@ import {TooltipModule} from 'primeng/tooltip';
     InputTextModule,
     ProgressSpinnerModule,
     DropdownModule,
-    TooltipModule,
-    NgMultiSelectDropDownModule.forRoot()
+    CardModule
   ],
-  exports:[PanelModule,ButtonModule,InputTextareaModule, TableModule, DropdownModule, ConfirmDialogModule, MultiSelectModule, InputTextModule, ChipsModule, ProgressSpinnerModule,TooltipModule],
+  exports:[PanelModule,ButtonModule,InputTextareaModule, TableModule, DropdownModule, ConfirmDialogModule, MultiSelectModule, InputTextModule, ChipsModule, ProgressSpinnerModule, CardModule],
   providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })
