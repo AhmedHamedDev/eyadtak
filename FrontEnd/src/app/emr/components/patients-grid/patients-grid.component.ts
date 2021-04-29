@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {Subject, Subscription} from 'rxjs';
-import {debounceTime,distinctUntilChanged, skip, take,} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 import { Gender } from 'src/app/shared/models/Gender';
 
 import { Patient } from 'src/app/shared/models/Patients';
-import { PatientsSearchCriteria } from 'src/app/shared/models/patientsSearchCriteria';
+import { PatientsSearchCriteria } from '../../../shared/models/PatientsSearchCriteria';
 import { EmrService } from '../../services/emr-service/emr.service';
 
 @Component({

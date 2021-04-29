@@ -34,3 +34,15 @@ D:\Development_Applications\Dev\BM_P2\EFG.VacationManager\BackEnd\DAL\obj\Releas
 D:\Development_Applications\Dev\BM_P2\EFG.VacationManager\BackEnd\DAL\obj\Release\netstandard2.1\DAL.csproj.CopyComplete
 D:\Development_Applications\Dev\BM_P2\EFG.VacationManager\BackEnd\DAL\obj\Release\netstandard2.1\DAL.dll
 D:\Development_Applications\Dev\BM_P2\EFG.VacationManager\BackEnd\DAL\obj\Release\netstandard2.1\DAL.pdb
+D:\Projects\Clinic\Clinic\BackEnd\DAL\bin\Release\netstandard2.1\DAL.deps.json
+D:\Projects\Clinic\Clinic\BackEnd\DAL\bin\Release\netstandard2.1\DAL.dll
+D:\Projects\Clinic\Clinic\BackEnd\DAL\bin\Release\netstandard2.1\DAL.pdb
+D:\Projects\Clinic\Clinic\BackEnd\DAL\bin\Release\netstandard2.1\Models.dll
+D:\Projects\Clinic\Clinic\BackEnd\DAL\bin\Release\netstandard2.1\Models.pdb
+D:\Projects\Clinic\Clinic\BackEnd\DAL\obj\Release\netstandard2.1\DAL.csprojAssemblyReference.cache
+D:\Projects\Clinic\Clinic\BackEnd\DAL\obj\Release\netstandard2.1\DAL.AssemblyInfoInputs.cache
+D:\Projects\Clinic\Clinic\BackEnd\DAL\obj\Release\netstandard2.1\DAL.AssemblyInfo.cs
+D:\Projects\Clinic\Clinic\BackEnd\DAL\obj\Release\netstandard2.1\DAL.csproj.CoreCompileInputs.cache
+D:\Projects\Clinic\Clinic\BackEnd\DAL\obj\Release\netstandard2.1\DAL.csproj.CopyComplete
+D:\Projects\Clinic\Clinic\BackEnd\DAL\obj\Release\netstandard2.1\DAL.dll
+D:\Projects\Clinic\Clinic\BackEnd\DAL\obj\Release\netstandard2.1\DAL.pdb

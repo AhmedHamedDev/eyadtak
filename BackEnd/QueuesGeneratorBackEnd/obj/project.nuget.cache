@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "K8T5ha7Vt3y6683btMF77ItDWsjwtawZ/Ch5uJuiTHO9A48DcojoiTHvPp+gZOqCaQ+jKEhy37zbxfBjHekJ3A==",
+  "dgSpecHash": "5ssZCVx0yrwqDKBR8WL0stZpQuwxsDnVfXOYqja7/Q83vm+/zQdW90BrTBEplvhxzD9JyqV8v9iBtub0WeGe4A==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Clinic\\Clinic\\BackEnd\\QueuesGeneratorBackEnd\\ClinicBackEnd.csproj",
   "expectedPackageFiles": [
@@ -48,6 +48,7 @@
     "C:\\Users\\t-amhamed\\.nuget\\packages\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "C:\\Users\\t-amhamed\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\t-amhamed\\.nuget\\packages\\microsoft.netcore.targets\\1.1.3\\microsoft.netcore.targets.1.1.3.nupkg.sha512",
+    "C:\\Users\\t-amhamed\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512",
     "C:\\Users\\t-amhamed\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\t-amhamed\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\t-amhamed\\.nuget\\packages\\mimekit\\2.11.0\\mimekit.2.11.0.nupkg.sha512",

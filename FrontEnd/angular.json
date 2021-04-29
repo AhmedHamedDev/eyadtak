@@ -14,7 +14,6 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/ClinicFrontEnd",
-            // "outputPath": "\\\\10.4.4.120\\c$\\inetpub\\wwwroot\\ClinicFrontEnd",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",

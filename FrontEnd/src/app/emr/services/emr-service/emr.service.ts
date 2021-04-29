@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PatientsSearchCriteria } from 'src/app/shared/models/patientsSearchCriteria';
+import { PatientsSearchCriteria } from '../../../shared/models/PatientsSearchCriteria';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

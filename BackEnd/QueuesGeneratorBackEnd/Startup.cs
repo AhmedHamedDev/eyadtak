@@ -33,7 +33,7 @@ namespace ClientBackEnd
             services.AddDbContext<ClinicContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ClinicDbConnectionString")));
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
-                builder.WithOrigins("http://localhost:4200")
+                builder.WithOrigins("http://localhost:4200", "https://eyadtak.herokuapp.com")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
