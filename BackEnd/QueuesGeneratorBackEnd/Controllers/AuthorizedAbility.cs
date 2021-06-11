@@ -75,6 +75,7 @@ namespace EyadtakBackEnd.Controllers
                 context.Result = new RedirectToRouteResult(
                   new RouteValueDictionary { { "controller", "Account" }, { "action", "NotAuthoriced" } });
                 return;
+                throw e;
             }
         }
     }

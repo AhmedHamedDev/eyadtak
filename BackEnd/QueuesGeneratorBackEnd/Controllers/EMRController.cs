@@ -47,6 +47,7 @@ namespace EyadtakBackEnd.Controllers
             catch (Exception e)
             {
                 return Ok(new { message = "Something went Wrong While getting User Info", ErrorHappen = true });
+                throw e;
             }
         }
 
@@ -66,6 +67,7 @@ namespace EyadtakBackEnd.Controllers
             catch (Exception e)
             {
                 return Ok(new { message = "Something went wrong", ErrorHappen = true });
+                throw e;
             }
         }
 
@@ -85,6 +87,7 @@ namespace EyadtakBackEnd.Controllers
             catch (Exception e)
             {
                 return Ok(new { message = "Something went wrong", ErrorHappen = true });
+                throw e;
             }
         }
 
@@ -126,6 +129,7 @@ namespace EyadtakBackEnd.Controllers
             catch (Exception e)
             {
                 return Ok(new { message = "Something went wrong", ErrorHappen = true });
+                throw e;
             }
         }
 
@@ -220,6 +224,7 @@ namespace EyadtakBackEnd.Controllers
             catch (Exception e)
             {
                 return Ok(new { message = "Something went wrong", ErrorHappen = true });
+                throw e;
             }
         }
     }

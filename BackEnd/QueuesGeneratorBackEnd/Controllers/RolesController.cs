@@ -35,9 +35,10 @@ namespace EyadtakBackEnd.Controllers
 
                 return Ok(new { message = roles, ErrorHappen = false });
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return Ok(new { message = "Error Happen While Getting Data", ErrorHappen = true });
+                throw e;
             }
         }
 
@@ -54,9 +55,10 @@ namespace EyadtakBackEnd.Controllers
 
                 return Ok(new { message = roles, ErrorHappen = false });
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return Ok(new { message = "Error Happen While Getting Data", ErrorHappen = true });
+                throw e;
             }
         }
 
@@ -80,9 +82,10 @@ namespace EyadtakBackEnd.Controllers
 
                 return Ok(role);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest();
+                throw e;
             }
         }
 
