@@ -52,7 +52,7 @@
   .openSideBar{
       display: block;
       position: fixed;
-      top: 8vh;
+      top: 45vh;
       left: 0;
 
       width: 0;
@@ -65,7 +65,7 @@
   .fa-bars{
     color: #e9ecef;
     position: fixed;
-    top: 10.3vh;
+    top: 47.3vh;
     left: 5px;
     z-index: 999;
   }

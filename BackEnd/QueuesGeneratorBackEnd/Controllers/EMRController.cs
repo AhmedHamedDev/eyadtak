@@ -1,4 +1,4 @@
-﻿using ClientBackEnd.Controllers;
+﻿using EyadtakBackEnd.Controllers;
 
 using DAL;
 
@@ -16,18 +16,18 @@ using System.Threading.Tasks;
 
 using Utilities.Pagination;
 
-namespace ClinicBackEnd.Controllers
+namespace EyadtakBackEnd.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class EMRController : ControllerBase
     {
-        private readonly ClinicContext _clinicDbContext;
+        private readonly EyadtakContext _eyadtakDbContext;
         private IConfiguration _configuration;
 
-        public EMRController(ClinicContext clinicDbContext, IConfiguration configuration)
+        public EMRController(EyadtakContext eyadtakDbContext, IConfiguration configuration)
         {
-            _clinicDbContext = clinicDbContext;
+            _eyadtakDbContext = eyadtakDbContext;
             _configuration = configuration;
         }
 
@@ -37,7 +37,7 @@ namespace ClinicBackEnd.Controllers
         {
             try
             {
-                var User = _clinicDbContext.Users.Include(x=>x.Gender).FirstOrDefault(x => x.UserId == Id && x.User_Role.Any(x => x.RoleId == 3));
+                var User = _eyadtakDbContext.Users.Include(x=>x.Gender).FirstOrDefault(x => x.UserId == Id && x.User_Role.Any(x => x.RoleId == 3));
 
                 if (User == null)
                     return Ok(new { message = "there is no such patient", ErrorHappen = true });
@@ -56,7 +56,7 @@ namespace ClinicBackEnd.Controllers
         {
             try
             {
-                var Notes = _clinicDbContext.PatientHistory.OrderByDescending(x => x.InsertDate).Where(x => x.PatientId == Id).ToList();
+                var Notes = _eyadtakDbContext.PatientHistory.OrderByDescending(x => x.InsertDate).Where(x => x.PatientId == Id).ToList();
 
                 if (Notes == null)
                     return Ok(new { message = "there is no such patient", ErrorHappen = true });
@@ -75,7 +75,7 @@ namespace ClinicBackEnd.Controllers
         {
             try
             {
-                var Notes = _clinicDbContext.PatientHistory.OrderByDescending(x => x.InsertDate).Where(x => x.PatientId == Id).ToList();
+                var Notes = _eyadtakDbContext.PatientHistory.OrderByDescending(x => x.InsertDate).Where(x => x.PatientId == Id).ToList();
 
                 if (Notes == null)
                     return Ok(new { message = "there is no such patient", ErrorHappen = true });
@@ -94,7 +94,7 @@ namespace ClinicBackEnd.Controllers
         {
             try
             {
-                var filterdPatients = _clinicDbContext.Users.Include(x=>x.Gender)
+                var filterdPatients = _eyadtakDbContext.Users.Include(x=>x.Gender)
                     .Where(x => x.User_Role.Any(x => x.RoleId == 3))
                     .Select(x=>new { 
                         Id = x.UserId,
@@ -106,13 +106,13 @@ namespace ClinicBackEnd.Controllers
                         Date = x.RegisterDate.ToString("dd/MM/yyyy") });
 
                 if (!string.IsNullOrWhiteSpace(patientsSearchCriteriaDto.Email))
-                    filterdPatients = filterdPatients.Where(x => x.Email.Contains(patientsSearchCriteriaDto.Email));
+                    filterdPatients = filterdPatients.Where(x => x.Email.ToLower().Contains(patientsSearchCriteriaDto.Email.ToLower().Trim()));
 
                 if (!string.IsNullOrWhiteSpace(patientsSearchCriteriaDto.Name))
-                    filterdPatients = filterdPatients.Where(x => x.Name.Contains(patientsSearchCriteriaDto.Name));
+                    filterdPatients = filterdPatients.Where(x => x.Name.ToLower().Contains(patientsSearchCriteriaDto.Name.ToLower().Trim()));
 
                 if (!string.IsNullOrWhiteSpace(patientsSearchCriteriaDto.Number))
-                    filterdPatients = filterdPatients.Where(x => x.Number.Contains(patientsSearchCriteriaDto.Number));
+                    filterdPatients = filterdPatients.Where(x => x.Number.ToLower().Contains(patientsSearchCriteriaDto.Number.ToLower().Trim()));
 
                 if (patientsSearchCriteriaDto.GenderId != 0)
                     filterdPatients = filterdPatients.Where(x => x.GederId == patientsSearchCriteriaDto.GenderId);
@@ -142,18 +142,18 @@ namespace ClinicBackEnd.Controllers
                 List<Medicine> newMedicines = savePatientHistory.Medicines.Where(x => x.Id == 0).Select(x => new Medicine { Name = x.Name, NumberOfUse = 0 }).ToList();
 
                 if (newAllergies.Count > 0)
-                    _clinicDbContext.Allergies.AddRange(newAllergies);
+                    _eyadtakDbContext.Allergies.AddRange(newAllergies);
                 if (newSigns.Count > 0)
-                    _clinicDbContext.Signs.AddRange(newSigns);
+                    _eyadtakDbContext.Signs.AddRange(newSigns);
                 if (newSymptoms.Count > 0)
-                    _clinicDbContext.Symptoms.AddRange(newSymptoms);
+                    _eyadtakDbContext.Symptoms.AddRange(newSymptoms);
                 if (newDiagnoses.Count > 0)
-                    _clinicDbContext.Diagnoses.AddRange(newDiagnoses);
+                    _eyadtakDbContext.Diagnoses.AddRange(newDiagnoses);
                 if (newMedicines.Count > 0)
-                    _clinicDbContext.Medicines.AddRange(newMedicines);
+                    _eyadtakDbContext.Medicines.AddRange(newMedicines);
 
                 if (newAllergies.Count > 0 || newSigns.Count > 0 || newSymptoms.Count > 0 || newDiagnoses.Count > 0 || newMedicines.Count > 0)
-                    _clinicDbContext.SaveChanges();
+                    _eyadtakDbContext.SaveChanges();
 
                 AllergiesController.AddAllergies(newAllergies);
                 DiagnosesController.AddDiagnoses(newDiagnoses);
@@ -184,35 +184,35 @@ namespace ClinicBackEnd.Controllers
                 newMedicines.AddRange(savePatientHistory.Medicines.Where(x => x.Id != 0).Select(x => new Medicine { MedicineId = x.Id, Name = x.Name }));
                 patientHistory.PatientHistoryMedicines = newMedicines.Select(x => new PatientHistoryMedicine { InsertTime = DateTime.Now, MedicineId = x.MedicineId, PatientHistoryId = patientHistory.PatientHistoryId }).ToList();
 
-                _clinicDbContext.PatientHistory.Add(patientHistory);
-                _clinicDbContext.SaveChanges();
+                _eyadtakDbContext.PatientHistory.Add(patientHistory);
+                _eyadtakDbContext.SaveChanges();
 
                 Task.Run(() =>
                 {
-                    var options = new DbContextOptionsBuilder<ClinicContext>().UseSqlServer(_configuration.GetConnectionString("ClinicDbConnectionString")).Options;
-                    var _clinicDbContext = new ClinicContext(options);
+                    var options = new DbContextOptionsBuilder<EyadtakContext>().UseSqlServer(_configuration.GetConnectionString("EyadtakDbConnectionString")).Options;
+                    var _eyadtakDbContext = new EyadtakContext(options);
 
-                    var allergies = _clinicDbContext.Allergies.Where(x => newAllergies.Select(x => x.AllergieId).Contains(x.AllergieId)).ToList();
+                    var allergies = _eyadtakDbContext.Allergies.Where(x => newAllergies.Select(x => x.AllergieId).Contains(x.AllergieId)).ToList();
                     foreach (var allergie in allergies)
                         allergie.NumberOfUse += 1;
 
-                    var signs = _clinicDbContext.Signs.Where(x => newSigns.Select(x => x.SignId).Contains(x.SignId)).ToList();
+                    var signs = _eyadtakDbContext.Signs.Where(x => newSigns.Select(x => x.SignId).Contains(x.SignId)).ToList();
                     foreach (var sign in signs)
                         sign.NumberOfUse += 1;
 
-                    var symptoms = _clinicDbContext.Symptoms.Where(x => newSymptoms.Select(x => x.SymptomId).Contains(x.SymptomId)).ToList();
+                    var symptoms = _eyadtakDbContext.Symptoms.Where(x => newSymptoms.Select(x => x.SymptomId).Contains(x.SymptomId)).ToList();
                     foreach (var symptom in symptoms)
                         symptom.NumberOfUse += 1;
 
-                    var diagnoses = _clinicDbContext.Diagnoses.Where(x => newDiagnoses.Select(x => x.DiagnosisId).Contains(x.DiagnosisId)).ToList();
+                    var diagnoses = _eyadtakDbContext.Diagnoses.Where(x => newDiagnoses.Select(x => x.DiagnosisId).Contains(x.DiagnosisId)).ToList();
                     foreach (var diagnosis in diagnoses)
                         diagnosis.NumberOfUse += 1;
 
-                    var medicines = _clinicDbContext.Medicines.Where(x => newMedicines.Select(x => x.MedicineId).Contains(x.MedicineId)).ToList();
+                    var medicines = _eyadtakDbContext.Medicines.Where(x => newMedicines.Select(x => x.MedicineId).Contains(x.MedicineId)).ToList();
                     foreach (var medicine in medicines)
                         medicine.NumberOfUse += 1;
 
-                    _clinicDbContext.SaveChanges();
+                    _eyadtakDbContext.SaveChanges();
                 });
 
                 return Ok(new { message = "Patient history saved successfully", ErrorHappen = false });

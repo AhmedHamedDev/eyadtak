@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
+import { Abilities } from 'src/app/shared/enums/Abilities';
+import { AuthSubjectService } from 'src/app/shared/services/auth-subject/auth-subject.service';
 import { environment } from 'src/environments/environment';
 import { Allergy } from '../../models/Allergy';
 import { AllergiesService } from '../allergies-service/allergies.service';
@@ -15,8 +17,12 @@ export class AllergiesSubjectService {
   private static data: Allergy[] = [];
   private static subject = new BehaviorSubject(AllergiesSubjectService.data);
 
-  constructor(private allergiesService: AllergiesService, private toastr: ToastrService,) {
-    this.LoadAllergies(0);
+  constructor(private allergiesService: AllergiesService, private toastr: ToastrService,private authSubjectService: AuthSubjectService,) {
+    this.authSubjectService.getSubject().subscribe(res => {
+      if(res.abilitiesIds?.includes(Abilities.Logout)){
+        this.LoadAllergies(0);
+      }
+    })
   }
 
   private LoadAllergies(skip: number) {

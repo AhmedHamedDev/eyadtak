@@ -6,9 +6,9 @@ using System;
 
 namespace DAL
 {
-    public class ClinicContext : DbContext
+    public class EyadtakContext : DbContext
     {
-        public ClinicContext(DbContextOptions<ClinicContext> options)
+        public EyadtakContext(DbContextOptions<EyadtakContext> options)
                 : base(options)
         {
         }

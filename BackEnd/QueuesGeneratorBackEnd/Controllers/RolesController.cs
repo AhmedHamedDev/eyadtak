@@ -9,16 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using Models.Domain;
 using Models.DTO;
 
-namespace ClientBackEnd.Controllers
+namespace EyadtakBackEnd.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class RolesController : ControllerBase
     {
-        private readonly ClinicContext _clinicDbContext;
-        public RolesController(ClinicContext clinicDbContext)
+        private readonly EyadtakContext _eyadtakDbContext;
+        public RolesController(EyadtakContext eyadtakDbContext)
         {
-            _clinicDbContext = clinicDbContext;
+            _eyadtakDbContext = eyadtakDbContext;
         }
 
         [ServiceFilter(typeof(AuthorizedAbility))]
@@ -27,7 +27,7 @@ namespace ClientBackEnd.Controllers
         {
             try
             {
-                var roles = await _clinicDbContext.Roles.ToListAsync();
+                var roles = await _eyadtakDbContext.Roles.ToListAsync();
                 if (roles == null)
                 {
                     return Ok(new { message = "Not Found", ErrorHappen = true });
@@ -46,7 +46,7 @@ namespace ClientBackEnd.Controllers
         {
             try
             {
-                var roles = await _clinicDbContext.Roles.Where(x=>x.RoleId != 1).ToListAsync();
+                var roles = await _eyadtakDbContext.Roles.Where(x=>x.RoleId != 1).ToListAsync();
                 if (roles == null)
                 {
                     return Ok(new { message = "Not Found", ErrorHappen = true });
@@ -71,7 +71,7 @@ namespace ClientBackEnd.Controllers
 
             try
             {
-                var role = await _clinicDbContext.Roles.FirstOrDefaultAsync(x => x.RoleId == roleId);
+                var role = await _eyadtakDbContext.Roles.FirstOrDefaultAsync(x => x.RoleId == roleId);
 
                 if (role == null)
                 {
@@ -99,8 +99,8 @@ namespace ClientBackEnd.Controllers
                 }
 
                 Role roleToAdd = new Role() { RoleName = model.Name };
-                _clinicDbContext.Roles.Add(roleToAdd);
-                var roleId = await _clinicDbContext.SaveChangesAsync();
+                _eyadtakDbContext.Roles.Add(roleToAdd);
+                var roleId = await _eyadtakDbContext.SaveChangesAsync();
                 if (roleId > 0)
                 {
                     return Ok(new { message = "Role Added Successfully" ,RoleId = roleToAdd.RoleId, ErrorHappen = false });
@@ -129,9 +129,9 @@ namespace ClientBackEnd.Controllers
 
             try
             {
-                Role roleToDelete = _clinicDbContext.Roles.FirstOrDefault(x => x.RoleId == id);
-                _clinicDbContext.Roles.Remove(roleToDelete);
-                result = await _clinicDbContext.SaveChangesAsync();
+                Role roleToDelete = _eyadtakDbContext.Roles.FirstOrDefault(x => x.RoleId == id);
+                _eyadtakDbContext.Roles.Remove(roleToDelete);
+                result = await _eyadtakDbContext.SaveChangesAsync();
                 if (result == 0)
                 {
                     return Ok(new { message = "Not Found", ErrorHappen = true });
@@ -156,10 +156,10 @@ namespace ClientBackEnd.Controllers
                     return BadRequest();
                 }
 
-                Role roleToUpdate = _clinicDbContext.Roles.FirstOrDefault(x => x.RoleId == model.RoleId);
+                Role roleToUpdate = _eyadtakDbContext.Roles.FirstOrDefault(x => x.RoleId == model.RoleId);
                 roleToUpdate.RoleName = model.RoleName;
-                _clinicDbContext.Roles.Update(roleToUpdate);
-                await _clinicDbContext.SaveChangesAsync();
+                _eyadtakDbContext.Roles.Update(roleToUpdate);
+                await _eyadtakDbContext.SaveChangesAsync();
 
                 return Ok();
             }

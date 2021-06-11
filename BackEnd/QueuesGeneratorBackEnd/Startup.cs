@@ -14,9 +14,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Utilities.Contracts;
 using Utilities.Handles;
-using ClientBackEnd.Controllers;
+using EyadtakBackEnd.Controllers;
+using Sentry.AspNetCore;
 
-namespace ClientBackEnd
+namespace EyadtakBackEnd
 {
     public class Startup
     {
@@ -30,7 +31,7 @@ namespace ClientBackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ClinicContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ClinicDbConnectionString")));
+            services.AddDbContext<EyadtakContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EyadtakDbConnectionString")));
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.WithOrigins("http://localhost:4200", "https://eyadtak.herokuapp.com")

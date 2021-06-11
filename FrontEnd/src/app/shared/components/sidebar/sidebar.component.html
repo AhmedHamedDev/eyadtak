@@ -10,6 +10,6 @@
 </div>
 
 <!-- Use any element to open the sidenav -->
-<span class="openSideBar" (click)="openNav()">
+<span *ngIf="abilities?.includes(Abilities.Logout)" class="openSideBar" (click)="openNav()">
     <span class="fa fa-bars"></span>
 </span>

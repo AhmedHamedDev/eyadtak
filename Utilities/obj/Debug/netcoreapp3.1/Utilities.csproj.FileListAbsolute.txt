@@ -61,3 +61,5 @@ C:\Users\hp\Desktop\Eyadtak\eyadtak\Utilities\obj\Debug\netcoreapp3.1\Utilities.
 C:\Users\hp\Desktop\Eyadtak\eyadtak\Utilities\obj\Debug\netcoreapp3.1\Utilities.csproj.CoreCompileInputs.cache
 C:\Users\hp\Desktop\Eyadtak\eyadtak\Utilities\obj\Debug\netcoreapp3.1\Utilities.dll
 C:\Users\hp\Desktop\Eyadtak\eyadtak\Utilities\obj\Debug\netcoreapp3.1\Utilities.pdb
+D:\Projects\Clinic\Clinic\Utilities\bin\Debug\netcoreapp3.1\Assets\EmailHtml\ActivateAccount.html
+D:\Projects\Clinic\Clinic\Utilities\bin\Debug\netcoreapp3.1\Assets\EmailHtml\ForgetPassword.html

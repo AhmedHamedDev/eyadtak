@@ -1,4 +1,4 @@
-﻿using ClientBackEnd.Controllers;
+﻿using EyadtakBackEnd.Controllers;
 using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,24 +9,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ClinicBackEnd.Controllers
+namespace EyadtakBackEnd.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class DiagnosesController : ControllerBase
     {
 
-        private readonly ClinicContext _clinicDbContext;
+        private readonly EyadtakContext _eyadtakDbContext;
         private IConfiguration _configuration;
         private static List<Diagnosis> Diagnoses;
 
-        public DiagnosesController(ClinicContext clinicDbContext, IConfiguration configuration)
+        public DiagnosesController(EyadtakContext eyadtakDbContext, IConfiguration configuration)
         {
-            _clinicDbContext = clinicDbContext;
+            _eyadtakDbContext = eyadtakDbContext;
             _configuration = configuration;
 
             if(Diagnoses == null)
-                Diagnoses = _clinicDbContext.Diagnoses.ToList();
+                Diagnoses = _eyadtakDbContext.Diagnoses.ToList();
         }
 
         [ServiceFilter(typeof(AuthorizedAbility))]
@@ -66,7 +66,7 @@ namespace ClinicBackEnd.Controllers
                 if (Id == 0)
                     return Ok(new { message = "Id can't be zero", ErrorHappen = true });
 
-                var Diagnoses = _clinicDbContext.PatientHistoryDiagnoses.Include(x => x.Diagnosis).Include(x => x.PatientHistory).Where(x => x.PatientHistory.PatientId == Id).Select(x => new { Name = x.Diagnosis.Name, Id = x.DiagnosisId, Date = x.PatientHistory.InsertDate.ToString("dd/MM/yyyy") }).ToList();
+                var Diagnoses = _eyadtakDbContext.PatientHistoryDiagnoses.Include(x => x.Diagnosis).Include(x => x.PatientHistory).Where(x => x.PatientHistory.PatientId == Id).Select(x => new { Name = x.Diagnosis.Name, Id = x.DiagnosisId, Date = x.PatientHistory.InsertDate.ToString("dd/MM/yyyy") }).ToList();
 
                 return Ok(new { message = Diagnoses, ErrorHappen = false });
             }

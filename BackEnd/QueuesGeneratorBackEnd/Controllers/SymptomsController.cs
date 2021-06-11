@@ -1,4 +1,4 @@
-﻿using ClientBackEnd.Controllers;
+﻿using EyadtakBackEnd.Controllers;
 using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,24 +9,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ClinicBackEnd.Controllers
+namespace EyadtakBackEnd.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class SymptomsController : ControllerBase
     {
 
-        private readonly ClinicContext _clinicDbContext;
+        private readonly EyadtakContext _eyadtakDbContext;
         private IConfiguration _configuration;
         private static List<Symptom> Symptoms;
 
-        public SymptomsController(ClinicContext clinicDbContext, IConfiguration configuration)
+        public SymptomsController(EyadtakContext eyadtakDbContext, IConfiguration configuration)
         {
-            _clinicDbContext = clinicDbContext;
+            _eyadtakDbContext = eyadtakDbContext;
             _configuration = configuration;
 
             if(Symptoms == null)
-                Symptoms = _clinicDbContext.Symptoms.ToList();
+                Symptoms = _eyadtakDbContext.Symptoms.ToList();
         }
 
         [ServiceFilter(typeof(AuthorizedAbility))]
@@ -66,7 +66,7 @@ namespace ClinicBackEnd.Controllers
                 if (Id == 0)
                     return Ok(new { message = "Id can't be zero", ErrorHappen = true });
 
-                var Symptoms = _clinicDbContext.PatientHistorySymptoms.Include(x => x.Symptom).Include(x => x.PatientHistory).Where(x => x.PatientHistory.PatientId == Id).Select(x => new { Name = x.Symptom.Name, Id = x.SymptomId, Date = x.PatientHistory.InsertDate.ToString("dd/MM/yyyy") }).ToList();
+                var Symptoms = _eyadtakDbContext.PatientHistorySymptoms.Include(x => x.Symptom).Include(x => x.PatientHistory).Where(x => x.PatientHistory.PatientId == Id).Select(x => new { Name = x.Symptom.Name, Id = x.SymptomId, Date = x.PatientHistory.InsertDate.ToString("dd/MM/yyyy") }).ToList();
 
                 return Ok(new { message = Symptoms, ErrorHappen = false });
             }

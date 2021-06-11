@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ClientBackEnd
+namespace EyadtakBackEnd
 {
     public class Program
     {
@@ -20,6 +20,7 @@ namespace ClientBackEnd
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseSentry();
                     webBuilder.UseStartup<Startup>();
                 });
     }

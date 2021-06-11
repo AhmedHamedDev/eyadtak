@@ -10,28 +10,32 @@ import { environment } from 'src/environments/environment';
 export class EmrService {
 
   private baseUrl: string = environment.apiEndpoint;
-  private token: string = localStorage.getItem("token");
 
   constructor(private myclient: HttpClient) { }
 
   GetPatientInfo(patientId): Observable<any> {
-    return this.myclient.get<any>(`${this.baseUrl}/EMR/GetPatientInfo/${patientId}`, {headers:{'token': this.token}});
+    let token: string = localStorage.getItem("token");
+    return this.myclient.get<any>(`${this.baseUrl}/EMR/GetPatientInfo/${patientId}`, {headers:{'token': token}});
   }
 
   GetPatientHistoryNotes(patientId): Observable<any> {
-    return this.myclient.get<any>(`${this.baseUrl}/EMR/GetPatientHistoryNotes/${patientId}`, {headers:{'token': this.token}});
+    let token: string = localStorage.getItem("token");
+    return this.myclient.get<any>(`${this.baseUrl}/EMR/GetPatientHistoryNotes/${patientId}`, {headers:{'token': token}});
   }
 
   GetPatientHistoryChiefComplaints(patientId): Observable<any> {
-    return this.myclient.get<any>(`${this.baseUrl}/EMR/GetPatientHistoryChiefComplaints/${patientId}`, {headers:{'token': this.token}});
+    let token: string = localStorage.getItem("token");
+    return this.myclient.get<any>(`${this.baseUrl}/EMR/GetPatientHistoryChiefComplaints/${patientId}`, {headers:{'token': token}});
   }
 
   SavePatientHistory(data): Observable<any> {
-    return this.myclient.post<any>(`${this.baseUrl}/EMR/SavePatientHistory`, data, {headers:{'token': this.token}});
+    let token: string = localStorage.getItem("token");
+    return this.myclient.post<any>(`${this.baseUrl}/EMR/SavePatientHistory`, data, {headers:{'token': token}});
   }
 
   GetPatients(patientsSearchCriteria: PatientsSearchCriteria): Observable<any> {
-    return this.myclient.post<any>(`${this.baseUrl}/EMR/GetPatients`, patientsSearchCriteria, {headers:{'token': this.token}});
+    let token: string = localStorage.getItem("token");
+    return this.myclient.post<any>(`${this.baseUrl}/EMR/GetPatients`, patientsSearchCriteria, {headers:{'token': token}});
   }
 
 }

@@ -1,4 +1,4 @@
-﻿using ClientBackEnd.Controllers;
+﻿using EyadtakBackEnd.Controllers;
 using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,24 +9,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ClinicBackEnd.Controllers
+namespace EyadtakBackEnd.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class AllergiesController : ControllerBase
     {
 
-        private readonly ClinicContext _clinicDbContext;
+        private readonly EyadtakContext _eyadtakDbContext;
         private IConfiguration _configuration;
         private static List<Allergie> Allergies;
 
-        public AllergiesController(ClinicContext clinicDbContext, IConfiguration configuration)
+        public AllergiesController(EyadtakContext eyadtakDbContext, IConfiguration configuration)
         {
-            _clinicDbContext = clinicDbContext;
+            _eyadtakDbContext = eyadtakDbContext;
             _configuration = configuration;
 
             if(Allergies == null)
-                Allergies = _clinicDbContext.Allergies.ToList();
+                Allergies = _eyadtakDbContext.Allergies.ToList();
         }
 
         [ServiceFilter(typeof(AuthorizedAbility))]
@@ -66,7 +66,7 @@ namespace ClinicBackEnd.Controllers
                 if (Id == 0)
                     return Ok(new { message = "Id can't be zero", ErrorHappen = true });
 
-                var Allergies = _clinicDbContext.PatientHistoryAllergies.Include(x => x.Allergie).Include(x => x.PatientHistory).Where(x => x.PatientHistory.PatientId == Id).Select(x => new { Name = x.Allergie.Name, Id = x.AllergieId, Date = x.PatientHistory.InsertDate.ToString("dd/MM/yyyy") }).ToList();
+                var Allergies = _eyadtakDbContext.PatientHistoryAllergies.Include(x => x.Allergie).Include(x => x.PatientHistory).Where(x => x.PatientHistory.PatientId == Id).Select(x => new { Name = x.Allergie.Name, Id = x.AllergieId, Date = x.PatientHistory.InsertDate.ToString("dd/MM/yyyy") }).ToList();
 
                 return Ok(new { message = Allergies, ErrorHappen = false });
             }

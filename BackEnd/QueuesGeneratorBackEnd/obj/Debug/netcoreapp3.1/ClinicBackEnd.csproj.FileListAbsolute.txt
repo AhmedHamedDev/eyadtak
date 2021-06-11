@@ -287,3 +287,5 @@ C:\Users\hp\Desktop\Eyadtak\eyadtak\BackEnd\QueuesGeneratorBackEnd\obj\Debug\net
 C:\Users\hp\Desktop\Eyadtak\eyadtak\BackEnd\QueuesGeneratorBackEnd\obj\Debug\netcoreapp3.1\ClinicBackEnd.dll
 C:\Users\hp\Desktop\Eyadtak\eyadtak\BackEnd\QueuesGeneratorBackEnd\obj\Debug\netcoreapp3.1\ClinicBackEnd.pdb
 C:\Users\hp\Desktop\Eyadtak\eyadtak\BackEnd\QueuesGeneratorBackEnd\obj\Debug\netcoreapp3.1\ClinicBackEnd.genruntimeconfig.cache
+D:\Projects\Clinic\Clinic\BackEnd\QueuesGeneratorBackEnd\bin\Debug\netcoreapp3.1\Assets\EmailHtml\ActivateAccount.html
+D:\Projects\Clinic\Clinic\BackEnd\QueuesGeneratorBackEnd\bin\Debug\netcoreapp3.1\Assets\EmailHtml\ForgetPassword.html

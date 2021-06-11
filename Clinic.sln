@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "BackEnd\Models\Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "BackEnd\DAL\DAL.csproj", "{D98D4228-D9EE-4038-A1F6-D47F759AB0DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicBackEnd", "BackEnd\QueuesGeneratorBackEnd\ClinicBackEnd.csproj", "{D602B7A3-D5FB-4F25-BA0E-E7624E40839D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EyadtakBackEnd", "BackEnd\QueuesGeneratorBackEnd\EyadtakBackEnd.csproj", "{D602B7A3-D5FB-4F25-BA0E-E7624E40839D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{F89E91CE-DC39-43D7-A705-7A4E931E8A0F}"
 EndProject

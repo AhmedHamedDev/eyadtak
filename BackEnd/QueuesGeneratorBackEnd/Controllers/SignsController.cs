@@ -1,4 +1,4 @@
-﻿using ClientBackEnd.Controllers;
+﻿using EyadtakBackEnd.Controllers;
 using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,25 +9,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ClinicBackEnd.Controllers
+namespace EyadtakBackEnd.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class SignsController : ControllerBase
     {
 
-        private readonly ClinicContext _clinicDbContext;
+        private readonly EyadtakContext _eyadtakDbContext;
         private IConfiguration _configuration;
         private static List<Sign> Signs;
 
 
-        public SignsController(ClinicContext clinicDbContext, IConfiguration configuration)
+        public SignsController(EyadtakContext eyadtakDbContext, IConfiguration configuration)
         {
-            _clinicDbContext = clinicDbContext;
+            _eyadtakDbContext = eyadtakDbContext;
             _configuration = configuration;
 
             if (Signs == null)
-                Signs = _clinicDbContext.Signs.ToList();
+                Signs = _eyadtakDbContext.Signs.ToList();
         }
 
         [ServiceFilter(typeof(AuthorizedAbility))]
@@ -67,7 +67,7 @@ namespace ClinicBackEnd.Controllers
                 if (Id == 0)
                     return Ok(new { message = "Id can't be zero", ErrorHappen = true });
 
-                var Signs = _clinicDbContext.PatientHistorySigns.Include(x => x.Sign).Include(x => x.PatientHistory).Where(x => x.PatientHistory.PatientId == Id).Select(x => new { Name = x.Sign.Name, Id = x.SignId, Date = x.PatientHistory.InsertDate.ToString("dd/MM/yyyy") }).ToList();
+                var Signs = _eyadtakDbContext.PatientHistorySigns.Include(x => x.Sign).Include(x => x.PatientHistory).Where(x => x.PatientHistory.PatientId == Id).Select(x => new { Name = x.Sign.Name, Id = x.SignId, Date = x.PatientHistory.InsertDate.ToString("dd/MM/yyyy") }).ToList();
 
                 return Ok(new { message = Signs, ErrorHappen = false });
             }

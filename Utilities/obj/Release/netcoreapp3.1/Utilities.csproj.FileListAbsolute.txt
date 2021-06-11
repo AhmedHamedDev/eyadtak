@@ -16,6 +16,8 @@ D:\Development_Applications\Dev\BM_P2\EFG.VacationManager\Utilities\obj\Release\
 D:\Development_Applications\Dev\BM_P2\EFG.VacationManager\Utilities\obj\Release\netcoreapp3.1\Utilities.csproj.CoreCompileInputs.cache
 D:\Development_Applications\Dev\BM_P2\EFG.VacationManager\Utilities\obj\Release\netcoreapp3.1\Utilities.dll
 D:\Development_Applications\Dev\BM_P2\EFG.VacationManager\Utilities\obj\Release\netcoreapp3.1\Utilities.pdb
+D:\Projects\Clinic\Clinic\Utilities\bin\Release\netcoreapp3.1\Assets\EmailHtml\ActivateAccount.html
+D:\Projects\Clinic\Clinic\Utilities\bin\Release\netcoreapp3.1\Assets\EmailHtml\ForgetPassword.html
 D:\Projects\Clinic\Clinic\Utilities\bin\Release\netcoreapp3.1\Utilities.deps.json
 D:\Projects\Clinic\Clinic\Utilities\bin\Release\netcoreapp3.1\Utilities.dll
 D:\Projects\Clinic\Clinic\Utilities\bin\Release\netcoreapp3.1\Utilities.pdb

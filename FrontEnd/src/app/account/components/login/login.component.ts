@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.authSubjectService.next({abilitiesIds: response.abilitiesIds, name: response.userName, email: response.userEmail});
           this.navbarComp.refresh();
           this.sidebarComp.refresh();
-          this.router.navigateByUrl('/admin/holidays');
+          this.router.navigateByUrl('/emr/patients');
         }
       })
   }

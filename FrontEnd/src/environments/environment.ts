@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://localhost:31239',
-  take: 6
+  apiEndpoint: 'https://eyadtak-backend.herokuapp.com',
+  take: 300
 };
 
 /*

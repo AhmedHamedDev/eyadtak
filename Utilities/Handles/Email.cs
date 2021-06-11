@@ -19,7 +19,7 @@ namespace Utilities.Handles
         }
         public void SendRecoveryPasswordEmail(string ReseverEmail, int RecoveryCode, string CallBackUrl)
         {
-            var pathToFile = _configuration.GetSection("EmailFilesPath:ForgetPassword").Value;
+            var pathToFile = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey) + "/Assets/EmailHtml/ForgetPassword.html";
 
             string builder = string.Empty ;
 
@@ -43,7 +43,7 @@ namespace Utilities.Handles
 
         public void SendAccountActivationEmail(string ReseverEmail, string CallBackUrl)
         {
-            var pathToFile = _configuration.GetSection("EmailFilesPath:ActivateAccount").Value;
+            var pathToFile = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey) + "/Assets/EmailHtml/ActivateAccount.html";
 
             string builder = string.Empty;
 

@@ -13,18 +13,18 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Concurrent;
 
-namespace ClientBackEnd.Controllers
+namespace EyadtakBackEnd.Controllers
 {
     public class AuthorizedAbility : Attribute, IActionFilter
     {
         private IJwt _jwt;
-        private readonly ClinicContext _clinicDbContext;
+        private readonly EyadtakContext _eyadtakDbContext;
         public static ConcurrentDictionary<int, List<string>> userAbilities = new ConcurrentDictionary<int, List<string>>();
 
-        public AuthorizedAbility(IJwt jwt, ClinicContext clinicDbContext)
+        public AuthorizedAbility(IJwt jwt, EyadtakContext eyadtakDbContext)
         {
             _jwt = jwt;
-            _clinicDbContext = clinicDbContext;
+            _eyadtakDbContext = eyadtakDbContext;
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
@@ -57,7 +57,7 @@ namespace ClientBackEnd.Controllers
                     abilities = userAbilities[userId];
                 else
                 {
-                    abilities = _clinicDbContext.Users_Roles.Where(x => x.UserId == userId).Include(x => x.Role).SelectMany(x => x.Role.Role_Ability).Select(x => x.Ability.Url).ToList();
+                    abilities = _eyadtakDbContext.Users_Roles.Where(x => x.UserId == userId).Include(x => x.Role).SelectMany(x => x.Role.Role_Ability).Select(x => x.Ability.Url).ToList();
                     userAbilities.TryAdd(userId, abilities);
                 }
 

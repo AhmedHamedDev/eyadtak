@@ -26,4 +26,13 @@
     <Folder Include="Assets\EmailHtml\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Assets\EmailHtml\ActivateAccount.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\EmailHtml\ForgetPassword.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

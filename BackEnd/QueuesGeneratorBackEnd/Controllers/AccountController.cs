@@ -12,20 +12,20 @@ using Models.DTO;
 using Utilities.Contracts;
 using Utilities.Supplies;
 
-namespace ClientBackEnd.Controllers
+namespace EyadtakBackEnd.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly ClinicContext _clinicDbContext;
+        private readonly EyadtakContext _eyadtakDbContext;
         private IJwt _jwt;
         private IEmail _email;
         private IConfiguration _configuration;
 
-        public AccountController(ClinicContext clinicDbContext, IJwt jwt, IEmail email, IConfiguration configuration)
+        public AccountController(EyadtakContext eyadtakDbContext, IJwt jwt, IEmail email, IConfiguration configuration)
         {
-            _clinicDbContext = clinicDbContext;
+            _eyadtakDbContext = eyadtakDbContext;
             _jwt = jwt;
             _email = email;
             _configuration = configuration;
@@ -42,7 +42,7 @@ namespace ClientBackEnd.Controllers
         {
             try
             {
-                User user = _clinicDbContext.Users.FirstOrDefault(x => x.UserEmail == userLoginDto.Email);
+                User user = _eyadtakDbContext.Users.FirstOrDefault(x => x.UserEmail == userLoginDto.Email);
 
                 if (user == null || Encription.Decrypt(user?.Password, "SecretCode_hamed") != userLoginDto.Password)
                 {
@@ -54,7 +54,7 @@ namespace ClientBackEnd.Controllers
                     return Ok(new { message = "Your account is not active yet, please check your email", ErrorHappen = true });
                 }
 
-                List<int> abilitiesIds = _clinicDbContext.Users_Roles.Where(x => x.UserId == user.UserId).Include(x => x.Role).SelectMany(x => x.Role.Role_Ability).Select(x => x.Ability.AbilityId).ToList();
+                List<int> abilitiesIds = _eyadtakDbContext.Users_Roles.Where(x => x.UserId == user.UserId).Include(x => x.Role).SelectMany(x => x.Role.Role_Ability).Select(x => x.Ability.AbilityId).ToList();
                 string token = _jwt.GenerateToken(user.UserId);
 
                 return Ok(new { Token = token, AbilitiesIds = abilitiesIds, userName = user.UserName, userEmail = user.UserEmail, ErrorHappen = false });
@@ -75,7 +75,7 @@ namespace ClientBackEnd.Controllers
                     return Ok(new { message = "Password can't be less than 5 char", ErrorHappen = true });
                 }
 
-                User userObj = _clinicDbContext.Users.FirstOrDefault(x => x.UserEmail == userRegisterDto.Email);
+                User userObj = _eyadtakDbContext.Users.FirstOrDefault(x => x.UserEmail == userRegisterDto.Email);
 
                 if (userObj != null)
                 {
@@ -101,17 +101,18 @@ namespace ClientBackEnd.Controllers
                     UserId = user.UserId
                 });
 
-                _clinicDbContext.Users.Add(user);
-                _clinicDbContext.SaveChanges();
+                _eyadtakDbContext.Users.Add(user);
+                _eyadtakDbContext.SaveChanges();
 
-                //string token = _jwt.GenerateToken(user.UserId);
-                //_email.SendAccountActivationEmail(user.UserEmail, _configuration.GetSection("Frontend:Url").Value + "/account/activate-account/?token=" + token);
+                string token = _jwt.GenerateToken(user.UserId);
+                _email.SendAccountActivationEmail(user.UserEmail, _configuration.GetSection("Frontend:Url").Value + "/account/activate-account/?token=" + token);
 
                 return Ok(new { message = "User Registerd Successfully", ErrorHappen = false });
             }
             catch (Exception e)
             {
-                return Ok(new { message = "Something went wrong", ErrorHappen = true });
+                return Ok(new { message = e.Message, ErrorHappen = true });
+                throw e;
             }
         }
 
@@ -144,10 +145,10 @@ namespace ClientBackEnd.Controllers
                 }
 
                 int userId = int.Parse(_jwt.GetId(token));
-                User user = _clinicDbContext.Users.FirstOrDefault(x => x.UserId == userId);
+                User user = _eyadtakDbContext.Users.FirstOrDefault(x => x.UserId == userId);
                 user.Active = true;
-                _clinicDbContext.Users.Update(user);
-                _clinicDbContext.SaveChanges();
+                _eyadtakDbContext.Users.Update(user);
+                _eyadtakDbContext.SaveChanges();
 
                 return Ok(new { message = "Activation done successfully", ErrorHappen = false });
             }
@@ -164,7 +165,7 @@ namespace ClientBackEnd.Controllers
             try
             {
                 int userId = (int)this.HttpContext.Items["userId"];
-                User userToChangeHisPassword = _clinicDbContext.Users.FirstOrDefault(x => x.UserId == userId);
+                User userToChangeHisPassword = _eyadtakDbContext.Users.FirstOrDefault(x => x.UserId == userId);
                 userToChangeHisPassword.Password = Encription.Decrypt(userToChangeHisPassword.Password, "SecretCode_hamed");
 
                 if (userToChangeHisPassword.Password != changePasswordDTO.OldPassword)
@@ -178,8 +179,8 @@ namespace ClientBackEnd.Controllers
                 }
 
                 userToChangeHisPassword.Password = Encription.Encrypt(changePasswordDTO.NewPassword, "SecretCode_hamed");
-                _clinicDbContext.Users.Update(userToChangeHisPassword);
-                _clinicDbContext.SaveChanges();
+                _eyadtakDbContext.Users.Update(userToChangeHisPassword);
+                _eyadtakDbContext.SaveChanges();
 
                 return Ok(new { message = "Password Changed Successfully", ErrorHappen = false });
             }
@@ -194,7 +195,7 @@ namespace ClientBackEnd.Controllers
         {
             try
             {
-                var user = _clinicDbContext.Users.FirstOrDefault(s => s.UserEmail.ToLower().Trim() == Email.ToLower().Trim());
+                var user = _eyadtakDbContext.Users.FirstOrDefault(s => s.UserEmail.ToLower().Trim() == Email.ToLower().Trim());
                 if (user == null)
                 {
                     return Ok(new { message = "Sorry this Email Does not Exsist", ErrorHappen = true });
@@ -202,7 +203,7 @@ namespace ClientBackEnd.Controllers
 
                 int code = new Random().Next(5000, 50000);
                 user.RecoveryCode = code;
-                _clinicDbContext.SaveChanges();
+                _eyadtakDbContext.SaveChanges();
 
                 string token = _jwt.GenerateToken(user.UserId);
                 _email.SendRecoveryPasswordEmail(user.UserEmail, code, _configuration.GetSection("Frontend:Url").Value + "/account/recover-password/?token=" + token);
@@ -223,7 +224,7 @@ namespace ClientBackEnd.Controllers
                 if (TokenIsValid)
                 {
                     int userId = int.Parse(_jwt.GetId(token));
-                    User user = _clinicDbContext.Users.FirstOrDefault(s => s.UserId == userId);
+                    User user = _eyadtakDbContext.Users.FirstOrDefault(s => s.UserId == userId);
 
                     if(user != null)
                         return Ok(new { message = user.UserEmail, ErrorHappen = false });
@@ -246,7 +247,7 @@ namespace ClientBackEnd.Controllers
         [HttpPost("RecoverPassword")]
         public ActionResult RecoverPassword([FromBody] RecoverPasswordDTO recoverPasswordDTO)
         {
-            User user = _clinicDbContext.Users.FirstOrDefault(s => s.UserEmail == recoverPasswordDTO.UserEmail);
+            User user = _eyadtakDbContext.Users.FirstOrDefault(s => s.UserEmail == recoverPasswordDTO.UserEmail);
             if (user == null)
             {
                 return Ok(new { message = "This Email does not Exsist", ErrorHappen = true });
@@ -261,8 +262,8 @@ namespace ClientBackEnd.Controllers
             }
             user.Password = Encription.Encrypt(recoverPasswordDTO.NewPassword, "SecretCode_hamed");
             user.RecoveryCode = -1;
-            _clinicDbContext.Update(user);
-            _clinicDbContext.SaveChanges();
+            _eyadtakDbContext.Update(user);
+            _eyadtakDbContext.SaveChanges();
             return Ok(new { message = "Password Changed Successfully", ErrorHappen = false });
         }
     }

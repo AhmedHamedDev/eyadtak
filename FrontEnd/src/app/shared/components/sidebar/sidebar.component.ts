@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Abilities } from '../../enums/Abilities';
 import { NavbarElement } from '../../models/Navbar';
 import { AuthSubjectService } from '../../services/auth-subject/auth-subject.service';
 import { NavbarSubjectService } from '../../services/navbar-subject/navbar-subject.service';
@@ -11,14 +12,15 @@ import { NavbarSubjectService } from '../../services/navbar-subject/navbar-subje
 export class SidebarComponent implements OnInit {
 
   level0: NavbarElement[] = [];
-  Abilities
+  Abilities = Abilities;
+  abilities: number[];
 
   constructor(private navbarSubjectService: NavbarSubjectService, private authSubjectService: AuthSubjectService) { }
 
   ngOnInit(): void {
 
     this.authSubjectService.getSubject().subscribe(res => {
-      this.Abilities = res.abilitiesIds;
+      this.abilities = res.abilitiesIds;
       
       this.refresh()
     })
@@ -33,7 +35,7 @@ export class SidebarComponent implements OnInit {
       res.level0?.forEach(lvl0Element => {
         let lvl1 = level1.filter(x => x.parentId == lvl0Element.id);
         lvl1.forEach(lvl1Element => {
-          if ( this.Abilities?.includes(lvl1Element.abilityId) && !added?.includes(lvl0Element.id)){
+          if ( this.abilities?.includes(lvl1Element.abilityId) && !added?.includes(lvl0Element.id)){
             this.level0.push(lvl0Element);
             added.push(lvl0Element.id)
           }
