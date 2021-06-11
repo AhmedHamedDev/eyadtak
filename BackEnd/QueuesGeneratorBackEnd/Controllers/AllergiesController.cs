@@ -78,6 +78,26 @@ namespace EyadtakBackEnd.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
+        [HttpGet("GetSessionAllergies/{id}")]
+        public IActionResult GetSessionAllergies(int Id)
+        {
+            try
+            {
+                if (Id == 0)
+                    return Ok(new { message = "Id can't be zero", ErrorHappen = true });
+
+                var Allergies = _eyadtakDbContext.PatientHistoryAllergies.Include(x => x.Allergie).Where(x => x.PatientHistoryId == Id).Select(x => new { Name = x.Allergie.Name, Id = x.AllergieId }).ToList();
+
+                return Ok(new { message = Allergies, ErrorHappen = false });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { message = "Something went wrong", ErrorHappen = true });
+                throw e;
+            }
+        }
+
         public static void AddAllergies(List<Allergie> allergies)
         {
             AllergiesController.Allergies.AddRange(allergies);

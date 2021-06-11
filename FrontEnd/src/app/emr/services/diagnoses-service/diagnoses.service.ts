@@ -12,9 +12,14 @@ export class DiagnosesService {
 
   constructor(private myclient: HttpClient) { }
 
-  GetPatientDiagnoses(patientId): Observable<any> {
+  GetPatientDiagnoses(patientId: number): Observable<any> {
     let token: string = localStorage.getItem("token");
     return this.myclient.get<any>(`${this.baseUrl}/Diagnoses/GetPatientDiagnoses/${patientId}`, {headers:{'token': token}});
+  }
+
+  GetSessionDiagnoses(sessionId: number): Observable<any> {
+    let token: string = localStorage.getItem("token");
+    return this.myclient.get<any>(`${this.baseUrl}/Diagnoses/GetSessionDiagnoses/${sessionId}`, {headers:{'token': token}});
   }
 
   GetDiagnoses(skip: number, take: number): Observable<any> {

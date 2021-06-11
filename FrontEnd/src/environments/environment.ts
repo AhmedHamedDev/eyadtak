@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'https://eyadtak-backend.herokuapp.com',
+  apiEndpoint: 'http://localhost:31239',
   take: 300
 };
 

@@ -18,6 +18,16 @@ export class EmrService {
     return this.myclient.get<any>(`${this.baseUrl}/EMR/GetPatientInfo/${patientId}`, {headers:{'token': token}});
   }
 
+  GetPatientSessions(patientId): Observable<any> {
+    let token: string = localStorage.getItem("token");
+    return this.myclient.get<any>(`${this.baseUrl}/EMR/GetPatientSessions/${patientId}`, {headers:{'token': token}});
+  }
+
+  GetSessionDetails(sessionId: number): Observable<any> {
+    let token: string = localStorage.getItem("token");
+    return this.myclient.get<any>(`${this.baseUrl}/EMR/GetSessionDetails/${sessionId}`, {headers:{'token': token}});
+  }
+
   GetPatientHistoryNotes(patientId): Observable<any> {
     let token: string = localStorage.getItem("token");
     return this.myclient.get<any>(`${this.baseUrl}/EMR/GetPatientHistoryNotes/${patientId}`, {headers:{'token': token}});

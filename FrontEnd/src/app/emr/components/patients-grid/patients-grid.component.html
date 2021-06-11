@@ -26,11 +26,13 @@
           </div>
 
           <div class="p-field p-col-4 margin-top">
-              <p-dropdown [(ngModel)]="selectedGender" [options]="Genders" placeholder="Select a Gender" optionLabel="genderName"></p-dropdown>
+            <p-dropdown [(ngModel)]="selectedGender" [options]="Genders" placeholder="Select a Gender"
+              optionLabel="genderName"></p-dropdown>
           </div>
 
           <div class="p-field p-col-4 margin-top">
-            <p-button (click)="search()" [disabled]="toggle"  type="button" label="{{toggle ? 'Loadding...':'Search'}}" icon="pi pi-check"></p-button>
+            <p-button (click)="search()" [disabled]="toggle" type="button" label="{{toggle ? 'Loadding...':'Search'}}"
+              icon="pi pi-check"></p-button>
           </div>
 
 
@@ -41,9 +43,10 @@
     <div class="p-col-12">
       <p-panel header="Patients" [toggleable]="true">
         <p-table #table [currentPageReportTemplate]="pageReport" [columns]="columns" [value]="patients"
-          [paginator]="true" [lazy]="true" (onLazyLoad)="loadPatients($event)" [loading]="toggle" [rows]="pageSize" [totalRecords]="totalRecords" [showCurrentPageReport]="true"
-          [rowsPerPageOptions]="rowsPerPageOptions" dataKey="id" [showCurrentPageReport]="true" sortMode="single"
-          filterDelay="0" [responsive]="true" class="datatable-container">
+          [paginator]="true" [lazy]="true" (onLazyLoad)="loadPatients($event)" [loading]="toggle" [rows]="pageSize"
+          [totalRecords]="totalRecords" [showCurrentPageReport]="true" [rowsPerPageOptions]="rowsPerPageOptions"
+          dataKey="id" [showCurrentPageReport]="true" sortMode="single" filterDelay="0" [responsive]="true"
+          class="datatable-container">
           <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
               <col *ngFor="let col of columns" [style.width]="col.width" />
@@ -68,10 +71,14 @@
                 <ng-container *ngSwitchCase="'actionButtons'">
                   <div style="margin-left: -85px"
                     class="only-show-on-hover p-d-lg-flex p-flex-row p-jc-center p-d-sm-none p-d-sm-none p-d-md-none">
-                    <button (click)="onPatientSelect(rowData.id)" pButton pTooltip="Details" tooltipPosition="top"
-                      class="table-btn mr-4">
+                    <button *ngIf="abilities?.includes(Abilities.Save_Patient_History)" (click)="onPatientSelectNewSession(rowData.id)" pButton pTooltip="New Session" tooltipPosition="top" class="table-btn mr-4">
                       <i class="fas fa-pen" style="display: inline"></i>
-                      <span>Details </span>
+                      <span>New Session</span>
+                    </button>
+
+                    <button *ngIf="abilities?.includes(Abilities.Get_Patient_Sessions)" (click)="onPatientSelectDetails(rowData.id)" pButton pTooltip="Details" tooltipPosition="top" class="table-btn mr-4 p-button-success">
+                      <i class="fas fa-pen" style="display: inline"></i>
+                      <span>Details</span>
                     </button>
                   </div>
                 </ng-container>

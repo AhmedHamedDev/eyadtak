@@ -12,9 +12,14 @@ export class AllergiesService {
 
   constructor(private myclient: HttpClient) { }
 
-  GetPatientAllergies(patientId): Observable<any> {
+  GetPatientAllergies(patientId: number): Observable<any> {
     let token: string = localStorage.getItem("token");
     return this.myclient.get<any>(`${this.baseUrl}/Allergies/GetPatientAllergies/${patientId}`, {headers:{'token': token}});
+  }
+
+  GetSessionAllergies(sessionId: number): Observable<any> {
+    let token: string = localStorage.getItem("token");
+    return this.myclient.get<any>(`${this.baseUrl}/Allergies/GetSessionAllergies/${sessionId}`, {headers:{'token': token}});
   }
 
   GetAllergies(skip: number, take: number): Observable<any> {

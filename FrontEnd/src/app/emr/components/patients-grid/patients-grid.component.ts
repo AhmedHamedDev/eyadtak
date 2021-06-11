@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {Subscription} from 'rxjs';
+import { Abilities } from 'src/app/shared/enums/Abilities';
 import { Gender } from 'src/app/shared/models/Gender';
 
 import { Patient } from 'src/app/shared/models/Patients';
+import { AuthSubjectService } from 'src/app/shared/services/auth-subject/auth-subject.service';
 import { PatientsSearchCriteria } from '../../../shared/models/PatientsSearchCriteria';
 import { EmrService } from '../../services/emr-service/emr.service';
 
@@ -21,13 +23,15 @@ export class PatientsGridComponent implements OnInit, OnDestroy{
   rowsPerPageOptions = [5, 25, 50];
   patients: Patient[];
   subscription: Subscription;
+  abilities: number[];
+  Abilities = Abilities;
 
   Genders: Gender[];
   selectedGender: Gender;
   toggle:boolean = false;
   patientSearchCriteria: PatientsSearchCriteria = new PatientsSearchCriteria();
   
-  constructor(private emrService: EmrService,private router:Router) {}
+  constructor(private emrService: EmrService,private router:Router, private authSubjectService: AuthSubjectService, ) {}
     
   ngOnInit(): void {
     this.setupTableSettings();
@@ -41,6 +45,10 @@ export class PatientsGridComponent implements OnInit, OnDestroy{
     this.patientSearchCriteria.skip = 0;
     this.patientSearchCriteria.take = this.pageSize;
     this.selectedGender = this.Genders[0];
+
+    this.authSubjectService.getSubject().subscribe(res => {
+      this.abilities = res.abilitiesIds;
+    })
   }
 
   setupTableSettings() {
@@ -53,8 +61,12 @@ export class PatientsGridComponent implements OnInit, OnDestroy{
     ];
   }
 
-  onPatientSelect(patientId) {
+  onPatientSelectNewSession(patientId) {
     this.router.navigate([`/emr/patient/`+patientId]);
+  }
+
+  onPatientSelectDetails(patientId) {
+    this.router.navigate([`/emr/sessions/`+patientId]);
   }
   
   loadPatients(eventData) {

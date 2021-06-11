@@ -12,9 +12,14 @@ export class MedicinesService {
 
   constructor(private myclient: HttpClient) { }
 
-  GetPatientMedicines(patientId): Observable<any> {
+  GetPatientMedicines(patientId: number): Observable<any> {
     let token: string = localStorage.getItem("token");
     return this.myclient.get<any>(`${this.baseUrl}/Medicines/GetPatientMedicines/${patientId}`, {headers:{'token': token}});
+  }
+
+  GetSessionMedicines(sessionId: number): Observable<any> {
+    let token: string = localStorage.getItem("token");
+    return this.myclient.get<any>(`${this.baseUrl}/Medicines/GetSessionMedicines/${sessionId}`, {headers:{'token': token}});
   }
 
   GetMedicines(skip: number, take: number): Observable<any> {

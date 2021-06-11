@@ -1,423 +1,441 @@
 <div class="container">
     <div class="p-grid">
+        <p-tabView style="height:60vh">
+            <p-tabPanel header="User Info">
 
-        <div *ngIf="abilities?.includes(Abilities.Get_Patient_Info)" class="p-col-12">
-            <p-panel header="User Info" [toggleable]="true" [collapsed]="true">
-                <div *ngIf="userInfo" class="p-grid">
-                    <div class="p-col-6">
-                        <label class="userInfoLable">Name: </label>
-                        <span> {{userInfo.name}} </span>
+                <div *ngIf="abilities?.includes(Abilities.Get_Patient_Info)" class="p-col-12">
+                    <div *ngIf="userInfo" class="p-grid">
+                        <div class="p-col-6">
+                            <label class="userInfoLable">Name: </label>
+                            <span> {{userInfo.name}} </span>
+                        </div>
+                        <div class="p-col-6">
+                            <label class="userInfoLable">Email: </label>
+                            <span> {{userInfo.email}} </span>
+                        </div>
+                        <div class="p-col-6">
+                            <label class="userInfoLable">Number: </label>
+                            <span> {{userInfo.number}} </span>
+                        </div>
+                        <div class="p-col-6">
+                            <label class="userInfoLable">Gender: </label>
+                            <span> {{userInfo.gender}} </span>
+                        </div>
                     </div>
-                    <div class="p-col-6">
-                        <label class="userInfoLable">Email: </label>
-                        <span> {{userInfo.email}} </span>
-                    </div>
-                    <div class="p-col-6">
-                        <label class="userInfoLable">Number: </label>
-                        <span> {{userInfo.number}} </span>
-                    </div>
-                    <div class="p-col-6">
-                        <label class="userInfoLable">Gender: </label>
-                        <span> {{userInfo.gender}} </span>
-                    </div>
+
+                    <!-- <div *ngIf="!userInfo" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div> -->
                 </div>
+            </p-tabPanel>
 
-                <div *ngIf="!userInfo" class="p-grid p-jc-center p-ai-center vertical-container">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
-                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
-                </div>
-            </p-panel>
-        </div>
-
-        <div *ngIf="abilities?.includes(Abilities.Get_Patient_History_Chief_Complaints)" class="p-col-12">
-            <p-panel header="Chief Complaints" [toggleable]="true" [collapsed]="true">
-                <div *ngIf="complaints" class="p-grid">
-                    <div class="p-col-12">
-                        <span class="p-float-label">
-                            <textarea [disabled]="disableChiefComplaint" [(ngModel)]="newComplaint" rows="5"
-                                style="width:100%;" pInputTextarea autoResize="autoResize"></textarea>
+            <p-tabPanel header="Chief Complaints">
+                <div *ngIf="abilities?.includes(Abilities.Get_Patient_History_Chief_Complaints)" class="p-col-12">
+                    <div *ngIf="complaints" class="p-grid">
+                        <div class="p-col-12">
                             <label for="float-input">Enter Chief Complaint</label>
-                        </span>
+                            <span class="p-float-label">
+                                <textarea [disabled]="disableChiefComplaint" [(ngModel)]="newComplaint" rows="5"  style="width:100%; padding: 10px;"></textarea>
+                                <!-- <label for="float-input">Enter Chief Complaint</label> -->
+                            </span>
+                        </div>
+                        <!-- <div class="p-col-12">
+                            <p-button label="Add Complaint" (onClick)="addChiefComplaint()" icon="pi pi-check">
+                            </p-button>
+                        </div> -->
+                        <!-- <div class="p-col-12">
+                            <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true"
+                                [value]="complaints">
+                                <ng-template pTemplate="colgroup">
+                                    <colgroup>
+                                        <col style="width:75%">
+                                        <col style="width:15%">
+                                        <col style="width:10%">
+                                    </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pResizableColumn pSortableColumn="complaint">Complaint <p-sortIcon
+                                                field="complain"></p-sortIcon>
+                                        </th>
+                                        <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date">
+                                            </p-sortIcon>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-complaint>
+                                    <tr>
+                                        <td>{{complaint.complaint}}</td>
+                                        <td>{{complaint.date}}</td>
+                                        <td>
+                                            <button *ngIf="complaint.isNew" pButton pRipple icon="pi pi-trash"
+                                                class="p-button-rounded p-button-warning"
+                                                (click)="deleteComplaint(complaint)"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div> -->
                     </div>
-                    <div class="p-col-12">
-                        <p-button label="Add Complaint" (onClick)="addChiefComplaint()" icon="pi pi-check"></p-button>
-                    </div>
-                    <div class="p-col-12">
-                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true"
-                            [value]="complaints">
-                            <ng-template pTemplate="colgroup">
-                                <colgroup>
-                                    <col style="width:75%">
-                                    <col style="width:15%">
-                                    <col style="width:10%">
-                                </colgroup>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pResizableColumn pSortableColumn="complaint">Complaint <p-sortIcon
-                                            field="complain"></p-sortIcon>
-                                    </th>
-                                    <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date">
-                                        </p-sortIcon>
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-complaint>
-                                <tr>
-                                    <td>{{complaint.complaint}}</td>
-                                    <td>{{complaint.date}}</td>
-                                    <td>
-                                        <button *ngIf="complaint.isNew" pButton pRipple icon="pi pi-trash"
-                                            class="p-button-rounded p-button-warning"
-                                            (click)="deleteComplaint(complaint)"></button>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
 
-                <div *ngIf="!complaints" class="p-grid p-jc-center p-ai-center vertical-container">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
-                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    <!-- <div *ngIf="!complaints" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div> -->
                 </div>
-            </p-panel>
-        </div>
+            </p-tabPanel>
 
-        <div *ngIf="abilities?.includes(Abilities.Get_Patient_History_Notes)" class="p-col-12">
-            <p-panel header="Notes" [toggleable]="true" [collapsed]="true">
-                <div *ngIf="notes" class="p-grid">
-                    <div class="p-col-12">
-                        <span class="p-float-label">
-                            <textarea [disabled]="disableNote" [(ngModel)]="newNote" rows="5" style="width:100%;"
-                                pInputTextarea autoResize="autoResize"></textarea>
+
+            <p-tabPanel header="Notes">
+                <div *ngIf="abilities?.includes(Abilities.Get_Patient_History_Notes)" class="p-col-12">
+                    <div *ngIf="notes" class="p-grid">
+                        <div class="p-col-12">
                             <label for="float-input">Enter Note</label>
-                        </span>
+                            <span class="p-float-label">
+                                <textarea [disabled]="disableNote" [(ngModel)]="newNote" rows="5" style="width:100%; padding: 10px;"></textarea>
+                                <!-- <label for="float-input">Enter Note</label> -->
+                            </span>
+                        </div>
+                        <!-- <div class="p-col-12">
+                            <p-button label="Add Note" (onClick)="addNote()" icon="pi pi-check"></p-button>
+                        </div> -->
+                        <!-- <div class="p-col-12">
+                            <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="notes">
+                                <ng-template pTemplate="colgroup">
+                                    <colgroup>
+                                        <col style="width:75%">
+                                        <col style="width:15%">
+                                        <col style="width:10%">
+                                    </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pResizableColumn pSortableColumn="note">Note <p-sortIcon field="note">
+                                            </p-sortIcon>
+                                        </th>
+                                        <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date">
+                                            </p-sortIcon>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-note>
+                                    <tr>
+                                        <td>{{note.note}}</td>
+                                        <td>{{note.date}}</td>
+                                        <td>
+                                            <button *ngIf="note.isNew" pButton pRipple icon="pi pi-trash"
+                                                class="p-button-rounded p-button-warning"
+                                                (click)="deleteNote(note)"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div> -->
                     </div>
-                    <div class="p-col-12">
-                        <p-button label="Add Note" (onClick)="addNote()" icon="pi pi-check"></p-button>
-                    </div>
-                    <div class="p-col-12">
-                        <p-table [scrollable]="true" scrollHeight="200px" [resizableColumns]="true" [value]="notes">
-                            <ng-template pTemplate="colgroup">
-                                <colgroup>
-                                    <col style="width:75%">
-                                    <col style="width:15%">
-                                    <col style="width:10%">
-                                </colgroup>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pResizableColumn pSortableColumn="note">Note <p-sortIcon field="note">
-                                        </p-sortIcon>
-                                    </th>
-                                    <th pResizableColumn pSortableColumn="date">Date <p-sortIcon field="date">
-                                        </p-sortIcon>
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-note>
-                                <tr>
-                                    <td>{{note.note}}</td>
-                                    <td>{{note.date}}</td>
-                                    <td>
-                                        <button *ngIf="note.isNew" pButton pRipple icon="pi pi-trash"
-                                            class="p-button-rounded p-button-warning"
-                                            (click)="deleteNote(note)"></button>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
+
+                    <!-- <div *ngIf="!notes" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div> -->
                 </div>
+            </p-tabPanel>
 
-                <div *ngIf="!notes" class="p-grid p-jc-center p-ai-center vertical-container">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
-                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+
+            <p-tabPanel header="Allergies">
+                <div *ngIf="abilities?.includes(Abilities.Get_Allergies) || abilities?.includes(Abilities.Get_Patient_Allergies)"
+                    class="p-col-12">
+                    <div *ngIf="allergiesHistory" class="p-grid">
+                        <div *ngIf="abilities?.includes(Abilities.Get_Allergies)" class="p-col-4">
+                            <p-multiSelect (onChange)="onSelectAllergy($event.value)"
+                                (onFilter)="filterAllergies($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
+                                [options]="allergies" [(ngModel)]="selectedAlleries" defaultLabel="Select an Allergy"
+                                optionLabel="name" display="chip"></p-multiSelect>
+                        </div>
+
+                        <div *ngIf="abilities?.includes(Abilities.Get_Allergies)" class="p-col-8">
+                            <p-chips [allowDuplicate]="false" (onAdd)="addAllergy($event.value)"
+                                (onRemove)="removeAllergy($event.value)" [(ngModel)]="allergiesChips" separator=",">
+                            </p-chips>
+                        </div>
+
+                        <!-- <div *ngIf="abilities?.includes(Abilities.Get_Patient_Allergies)" class="p-col-12">
+                            <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                                (onSort)="onSortAllergy()" scrollHeight="200px" [value]="allergiesHistory">
+                                <ng-template pTemplate="colgroup">
+                                    <colgroup>
+                                        <col style="width:100%">
+                                    </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pResizableColumn pSortableColumn="allergy">Allergy</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-allergy let-rowIndex="rowIndex"
+                                    let-expanded="expanded">
+                                    <tr *ngIf="rowGroupMetadataAllergy[allergy.date].index === rowIndex">
+                                        <td colspan="3">
+                                            <button type="button" pButton pRipple [pRowToggler]="allergy"
+                                                class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                            <span class="p-text-bold p-ml-2">{{allergy.date}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-allergy>
+                                    <tr>
+                                        <td>{{allergy.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div> -->
+                    </div>
+
+                    <!-- <div *ngIf="!allergiesHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div> -->
                 </div>
-            </p-panel>
-        </div>
+            </p-tabPanel>
 
-        <div *ngIf="abilities?.includes(Abilities.Get_Allergies) || abilities?.includes(Abilities.Get_Patient_Allergies)" class="p-col-12">
-            <p-panel header="Allergies" [toggleable]="true" [collapsed]="true">
-                <div *ngIf="allergiesHistory" class="p-grid">
-                    <div *ngIf="abilities?.includes(Abilities.Get_Allergies)" class="p-col-4">
-                        <p-multiSelect (onChange)="onSelectAllergy($event.value)"
-                            (onFilter)="filterAllergies($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
-                            [options]="allergies" [(ngModel)]="selectedAlleries" defaultLabel="Select an Allergy"
-                            optionLabel="name" display="chip"></p-multiSelect>
+
+            <p-tabPanel header="Signs">
+                <div *ngIf="abilities?.includes(Abilities.Get_Diagnoses) || abilities?.includes(Abilities.Get_Patient_Diagnoses)" class="p-col-12">
+                    <div *ngIf="signsHistory" class="p-grid">
+                        <div *ngIf="abilities?.includes(Abilities.Get_Diagnoses)" class="p-col-4">
+                            <p-multiSelect (onChange)="onSelectSign($event.value)"
+                                (onFilter)="filterSigns($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
+                                [options]="signs" [(ngModel)]="selectedSigns" defaultLabel="Select a Sign"
+                                optionLabel="name" display="chip"></p-multiSelect>
+                        </div>
+
+                        <div *ngIf="abilities?.includes(Abilities.Get_Diagnoses)" class="p-col-8">
+                            <p-chips [allowDuplicate]="false" (onAdd)="addSign($event.value)"
+                                (onRemove)="removeSign($event.value)" [(ngModel)]="signsChips" separator=","></p-chips>
+                        </div>
+
+                        <!-- <div *ngIf="abilities?.includes(Abilities.Get_Patient_Diagnoses)" class="p-col-12">
+                            <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                                (onSort)="onSortSign()" scrollHeight="200px" [value]="signsHistory">
+                                <ng-template pTemplate="colgroup">
+                                    <colgroup>
+                                        <col style="width:100%">
+                                    </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pResizableColumn pSortableColumn="sign">Sign</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-sign let-rowIndex="rowIndex" let-expanded="expanded">
+                                    <tr *ngIf="rowGroupMetadataSign[sign.date].index === rowIndex">
+                                        <td colspan="3">
+                                            <button type="button" pButton pRipple [pRowToggler]="sign"
+                                                class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                            <span class="p-text-bold p-ml-2">{{sign.date}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-sign>
+                                    <tr>
+                                        <td>{{sign.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div> -->
                     </div>
 
-                    <div *ngIf="abilities?.includes(Abilities.Get_Allergies)" class="p-col-8">
-                        <p-chips [allowDuplicate]="false" (onAdd)="addAllergy($event.value)"
-                            (onRemove)="removeAllergy($event.value)" [(ngModel)]="allergiesChips" separator=",">
-                        </p-chips>
-                    </div>
-
-                    <div *ngIf="abilities?.includes(Abilities.Get_Patient_Allergies)" class="p-col-12">
-                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
-                            (onSort)="onSortAllergy()" scrollHeight="200px" [value]="allergiesHistory">
-                            <ng-template pTemplate="colgroup">
-                                <colgroup>
-                                    <col style="width:100%">
-                                </colgroup>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pResizableColumn pSortableColumn="allergy">Allergy</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-allergy let-rowIndex="rowIndex" let-expanded="expanded">
-                                <tr *ngIf="rowGroupMetadataAllergy[allergy.date].index === rowIndex">
-                                    <td colspan="3">
-                                        <button type="button" pButton pRipple [pRowToggler]="allergy"
-                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
-                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                                        <span class="p-text-bold p-ml-2">{{allergy.date}}</span>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="rowexpansion" let-allergy>
-                                <tr>
-                                    <td>{{allergy.name}}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
+                    <!-- <div *ngIf="!signsHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div> -->
                 </div>
+            </p-tabPanel>
 
-                <div *ngIf="!allergiesHistory" class="p-grid p-jc-center p-ai-center vertical-container">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
-                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+
+            <p-tabPanel header="Symptoms">
+                <div *ngIf="abilities?.includes(Abilities.Get_Signs) || abilities?.includes(Abilities.Get_Patient_Signs)" class="p-col-12">
+                    <div *ngIf="symptomsHistory" class="p-grid">
+                        <div *ngIf="abilities?.includes(Abilities.Get_Signs)" class="p-col-4">
+                            <p-multiSelect (onChange)="onSelectSymptom($event.value)"
+                                (onFilter)="filterSymptoms($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
+                                [options]="symptoms" [(ngModel)]="selectedSymptoms" defaultLabel="Select a Symptom"
+                                optionLabel="name" display="chip"></p-multiSelect>
+                        </div>
+
+                        <div *ngIf="abilities?.includes(Abilities.Get_Signs)" class="p-col-8">
+                            <p-chips [allowDuplicate]="false" (onAdd)="addSymptom($event.value)"
+                                (onRemove)="removeSymptom($event.value)" [(ngModel)]="symptomsChips" separator=",">
+                            </p-chips>
+                        </div>
+
+                        <!-- <div *ngIf="abilities?.includes(Abilities.Get_Patient_Signs)" class="p-col-12">
+                            <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                                (onSort)="onSortSymptom()" scrollHeight="200px" [value]="symptomsHistory">
+                                <ng-template pTemplate="colgroup">
+                                    <colgroup>
+                                        <col style="width:100%">
+                                    </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pResizableColumn pSortableColumn="symptom">Symptom</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-symptom let-rowIndex="rowIndex"
+                                    let-expanded="expanded">
+                                    <tr *ngIf="rowGroupMetadataSymptom[symptom.date].index === rowIndex">
+                                        <td colspan="3">
+                                            <button type="button" pButton pRipple [pRowToggler]="symptom"
+                                                class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                            <span class="p-text-bold p-ml-2">{{symptom.date}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-symptom>
+                                    <tr>
+                                        <td>{{symptom.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div> -->
+                    </div>
+
+                    <!-- <div *ngIf="!symptomsHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div> -->
                 </div>
-            </p-panel>
-        </div>
+            </p-tabPanel>
 
-        <div *ngIf="abilities?.includes(Abilities.Get_Diagnoses) || abilities?.includes(Abilities.Get_Patient_Diagnoses)" class="p-col-12">
-            <p-panel header="Signs" [toggleable]="true" [collapsed]="true">
-                <div *ngIf="signsHistory" class="p-grid">
-                    <div *ngIf="abilities?.includes(Abilities.Get_Diagnoses)" class="p-col-4">
-                        <p-multiSelect (onChange)="onSelectSign($event.value)" (onFilter)="filterSigns($event.filter)"
-                            autoWidth="false" [style]="{'width':'100%'}" [options]="signs" [(ngModel)]="selectedSigns"
-                            defaultLabel="Select a Sign" optionLabel="name" display="chip"></p-multiSelect>
+            <p-tabPanel header="Diagnoses">
+
+                <div *ngIf="abilities?.includes(Abilities.Get_Symptoms) || abilities?.includes(Abilities.Get_Patient_Symptoms)"
+                    class="p-col-12">
+                    <div *ngIf="diagnosesHistory" class="p-grid">
+                        <div *ngIf="abilities?.includes(Abilities.Get_Symptoms)" class="p-col-4">
+                            <p-multiSelect (onChange)="onSelectDiagnosis($event.value)"
+                                (onFilter)="filterDiagnoses($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
+                                [options]="diagnoses" [(ngModel)]="selectedDiagnoses" defaultLabel="Select a Diagnosis"
+                                optionLabel="name" display="chip"></p-multiSelect>
+                        </div>
+
+                        <div *ngIf="abilities?.includes(Abilities.Get_Symptoms)" class="p-col-8">
+                            <p-chips [allowDuplicate]="false" (onAdd)="addDiagnosis($event.value)"
+                                (onRemove)="removeDiagnosis($event.value)" [(ngModel)]="diagnosesChips" separator=",">
+                            </p-chips>
+                        </div>
+
+                        <!-- <div *ngIf="abilities?.includes(Abilities.Get_Patient_Symptoms)" class="p-col-12">
+                            <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                                (onSort)="onSortDiagnosis()" scrollHeight="200px" [value]="diagnosesHistory">
+                                <ng-template pTemplate="colgroup">
+                                    <colgroup>
+                                        <col style="width:100%">
+                                    </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pResizableColumn pSortableColumn="diagnosis">Diagnosis</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-diagnosis let-rowIndex="rowIndex"
+                                    let-expanded="expanded">
+                                    <tr *ngIf="rowGroupMetadataDiagnosis[diagnosis.date].index === rowIndex">
+                                        <td colspan="3">
+                                            <button type="button" pButton pRipple [pRowToggler]="diagnosis"
+                                                class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                            <span class="p-text-bold p-ml-2">{{diagnosis.date}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-diagnosis>
+                                    <tr>
+                                        <td>{{diagnosis.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div> -->
                     </div>
 
-                    <div *ngIf="abilities?.includes(Abilities.Get_Diagnoses)" class="p-col-8">
-                        <p-chips [allowDuplicate]="false" (onAdd)="addSign($event.value)"
-                            (onRemove)="removeSign($event.value)" [(ngModel)]="signsChips" separator=","></p-chips>
-                    </div>
-
-                    <div *ngIf="abilities?.includes(Abilities.Get_Patient_Diagnoses)" class="p-col-12">
-                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
-                            (onSort)="onSortSign()" scrollHeight="200px" [value]="signsHistory">
-                            <ng-template pTemplate="colgroup">
-                                <colgroup>
-                                    <col style="width:100%">
-                                </colgroup>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pResizableColumn pSortableColumn="sign">Sign</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-sign let-rowIndex="rowIndex" let-expanded="expanded">
-                                <tr *ngIf="rowGroupMetadataSign[sign.date].index === rowIndex">
-                                    <td colspan="3">
-                                        <button type="button" pButton pRipple [pRowToggler]="sign"
-                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
-                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                                        <span class="p-text-bold p-ml-2">{{sign.date}}</span>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="rowexpansion" let-sign>
-                                <tr>
-                                    <td>{{sign.name}}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
+                    <!-- <div *ngIf="!diagnosesHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div> -->
                 </div>
+            </p-tabPanel>
 
-                <div *ngIf="!signsHistory" class="p-grid p-jc-center p-ai-center vertical-container">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
-                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+            <p-tabPanel header="Medication">
+
+                <div *ngIf="abilities?.includes(Abilities.Get_Medicines) || abilities?.includes(Abilities.Get_Patient_Medicines)"
+                    class="p-col-12">
+                    <div *ngIf="medicinesHistory" class="p-grid">
+                        <div *ngIf="abilities?.includes(Abilities.Get_Medicines)" class="p-col-4">
+                            <p-multiSelect (onChange)="onSelectMedicine($event.value)"
+                                (onFilter)="filterMedicines($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
+                                [options]="medicines" [(ngModel)]="selectedMedicines" defaultLabel="Select a Medicine"
+                                optionLabel="name" display="chip"></p-multiSelect>
+                        </div>
+
+                        <div *ngIf="abilities?.includes(Abilities.Get_Medicines)" class="p-col-8">
+                            <p-chips [allowDuplicate]="false" (onAdd)="addMedicine($event.value)"
+                                (onRemove)="removeMedicine($event.value)" [(ngModel)]="medicinesChips" separator=",">
+                            </p-chips>
+                        </div>
+
+                        <!-- <div *ngIf="abilities?.includes(Abilities.Get_Patient_Medicines)" class="p-col-12">
+                            <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
+                                (onSort)="onSortMedicine()" scrollHeight="200px" [value]="medicinesHistory">
+                                <ng-template pTemplate="colgroup">
+                                    <colgroup>
+                                        <col style="width:100%">
+                                    </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pResizableColumn pSortableColumn="medicine">Medicine</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-medicine let-rowIndex="rowIndex"
+                                    let-expanded="expanded">
+                                    <tr *ngIf="rowGroupMetadataMedicine[medicine.date].index === rowIndex">
+                                        <td colspan="3">
+                                            <button type="button" pButton pRipple [pRowToggler]="medicine"
+                                                class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                            <span class="p-text-bold p-ml-2">{{medicine.date}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-medicine>
+                                    <tr>
+                                        <td>{{medicine.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div> -->
+                    </div>
+
+                    <!-- <div *ngIf="!medicinesHistory" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div> -->
                 </div>
-            </p-panel>
-        </div>
-
-        <div *ngIf="abilities?.includes(Abilities.Get_Signs) || abilities?.includes(Abilities.Get_Patient_Signs)" class="p-col-12">
-            <p-panel header="Symptoms" [toggleable]="true" [collapsed]="true">
-                <div  *ngIf="symptomsHistory" class="p-grid">
-                    <div *ngIf="abilities?.includes(Abilities.Get_Signs)" class="p-col-4">
-                        <p-multiSelect (onChange)="onSelectSymptom($event.value)"
-                            (onFilter)="filterSymptoms($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
-                            [options]="symptoms" [(ngModel)]="selectedSymptoms" defaultLabel="Select a Symptom"
-                            optionLabel="name" display="chip"></p-multiSelect>
-                    </div>
-
-                    <div *ngIf="abilities?.includes(Abilities.Get_Signs)" class="p-col-8">
-                        <p-chips [allowDuplicate]="false" (onAdd)="addSymptom($event.value)"
-                            (onRemove)="removeSymptom($event.value)" [(ngModel)]="symptomsChips" separator=",">
-                        </p-chips>
-                    </div>
-
-                    <div *ngIf="abilities?.includes(Abilities.Get_Patient_Signs)" class="p-col-12">
-                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
-                            (onSort)="onSortSymptom()" scrollHeight="200px" [value]="symptomsHistory">
-                            <ng-template pTemplate="colgroup">
-                                <colgroup>
-                                    <col style="width:100%">
-                                </colgroup>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pResizableColumn pSortableColumn="symptom">Symptom</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-symptom let-rowIndex="rowIndex" let-expanded="expanded">
-                                <tr *ngIf="rowGroupMetadataSymptom[symptom.date].index === rowIndex">
-                                    <td colspan="3">
-                                        <button type="button" pButton pRipple [pRowToggler]="symptom"
-                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
-                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                                        <span class="p-text-bold p-ml-2">{{symptom.date}}</span>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="rowexpansion" let-symptom>
-                                <tr>
-                                    <td>{{symptom.name}}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
-
-                <div *ngIf="!symptomsHistory" class="p-grid p-jc-center p-ai-center vertical-container">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
-                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
-                </div>
-            </p-panel>
-        </div>
-
-        <div *ngIf="abilities?.includes(Abilities.Get_Symptoms) || abilities?.includes(Abilities.Get_Patient_Symptoms)" class="p-col-12">
-            <p-panel header="Diagnoses" [toggleable]="true" [collapsed]="true">
-                <div  *ngIf="diagnosesHistory" class="p-grid">
-                    <div *ngIf="abilities?.includes(Abilities.Get_Symptoms)" class="p-col-4">
-                        <p-multiSelect (onChange)="onSelectDiagnosis($event.value)"
-                            (onFilter)="filterDiagnoses($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
-                            [options]="diagnoses" [(ngModel)]="selectedDiagnoses" defaultLabel="Select a Diagnosis"
-                            optionLabel="name" display="chip"></p-multiSelect>
-                    </div>
-
-                    <div *ngIf="abilities?.includes(Abilities.Get_Symptoms)" class="p-col-8">
-                        <p-chips [allowDuplicate]="false" (onAdd)="addDiagnosis($event.value)"
-                            (onRemove)="removeDiagnosis($event.value)" [(ngModel)]="diagnosesChips" separator=",">
-                        </p-chips>
-                    </div>
-
-                    <div *ngIf="abilities?.includes(Abilities.Get_Patient_Symptoms)" class="p-col-12">
-                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
-                            (onSort)="onSortDiagnosis()" scrollHeight="200px" [value]="diagnosesHistory">
-                            <ng-template pTemplate="colgroup">
-                                <colgroup>
-                                    <col style="width:100%">
-                                </colgroup>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pResizableColumn pSortableColumn="diagnosis">Diagnosis</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-diagnosis let-rowIndex="rowIndex" let-expanded="expanded">
-                                <tr *ngIf="rowGroupMetadataDiagnosis[diagnosis.date].index === rowIndex">
-                                    <td colspan="3">
-                                        <button type="button" pButton pRipple [pRowToggler]="diagnosis"
-                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
-                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                                        <span class="p-text-bold p-ml-2">{{diagnosis.date}}</span>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="rowexpansion" let-diagnosis>
-                                <tr>
-                                    <td>{{diagnosis.name}}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
-
-                <div *ngIf="!diagnosesHistory" class="p-grid p-jc-center p-ai-center vertical-container">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
-                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
-                </div>
-            </p-panel>
-        </div>
-
-        <div *ngIf="abilities?.includes(Abilities.Get_Medicines) || abilities?.includes(Abilities.Get_Patient_Medicines)" class="p-col-12">
-            <p-panel header="Medication " [toggleable]="true" [collapsed]="true">
-                <div  *ngIf="medicinesHistory"  class="p-grid">
-                    <div *ngIf="abilities?.includes(Abilities.Get_Medicines)" class="p-col-4">
-                        <p-multiSelect (onChange)="onSelectMedicine($event.value)"
-                            (onFilter)="filterMedicines($event.filter)" autoWidth="false" [style]="{'width':'100%'}"
-                            [options]="medicines" [(ngModel)]="selectedMedicines" defaultLabel="Select a Medicine"
-                            optionLabel="name" display="chip"></p-multiSelect>
-                    </div>
-
-                    <div *ngIf="abilities?.includes(Abilities.Get_Medicines)" class="p-col-8">
-                        <p-chips [allowDuplicate]="false" (onAdd)="addMedicine($event.value)"
-                            (onRemove)="removeMedicine($event.value)" [(ngModel)]="medicinesChips" separator=",">
-                        </p-chips>
-                    </div>
-
-                    <div *ngIf="abilities?.includes(Abilities.Get_Patient_Medicines)" class="p-col-12">
-                        <p-table [scrollable]="true" sortField="date" dataKey="date" sortMode="single"
-                            (onSort)="onSortMedicine()" scrollHeight="200px" [value]="medicinesHistory">
-                            <ng-template pTemplate="colgroup">
-                                <colgroup>
-                                    <col style="width:100%">
-                                </colgroup>
-                            </ng-template>
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pResizableColumn pSortableColumn="medicine">Medicine</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-medicine let-rowIndex="rowIndex" let-expanded="expanded">
-                                <tr *ngIf="rowGroupMetadataMedicine[medicine.date].index === rowIndex">
-                                    <td colspan="3">
-                                        <button type="button" pButton pRipple [pRowToggler]="medicine"
-                                            class="p-button-text p-button-rounded p-button-plain p-mr-2"
-                                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                                        <span class="p-text-bold p-ml-2">{{medicine.date}}</span>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="rowexpansion" let-medicine>
-                                <tr>
-                                    <td>{{medicine.name}}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
-
-                <div *ngIf="!medicinesHistory" class="p-grid p-jc-center p-ai-center vertical-container">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
-                        strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
-                </div>
-            </p-panel>
-        </div>
+            </p-tabPanel>
+        </p-tabView>
 
         <div *ngIf="abilities?.includes(Abilities.Save_Patient_History)" class="p-col-12">
             <p-button label="Submit" (onClick)="submit()" icon="pi pi-check"></p-button>
         </div>
     </div>
 </div>
+
 
 
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text">

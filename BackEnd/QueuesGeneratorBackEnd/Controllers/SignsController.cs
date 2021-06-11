@@ -79,6 +79,26 @@ namespace EyadtakBackEnd.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
+        [HttpGet("GetSessionSigns/{id}")]
+        public IActionResult GetSessionSigns(int Id)
+        {
+            try
+            {
+                if (Id == 0)
+                    return Ok(new { message = "Id can't be zero", ErrorHappen = true });
+
+                var Signs = _eyadtakDbContext.PatientHistorySigns.Include(x => x.Sign).Where(x => x.PatientHistoryId == Id).Select(x => new { Name = x.Sign.Name, Id = x.SignId }).ToList();
+
+                return Ok(new { message = Signs, ErrorHappen = false });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { message = "Something went wrong", ErrorHappen = true });
+                throw e;
+            }
+        }
+
         public static void AddSigns(List<Sign> signs)
         {
             SignsController.Signs.AddRange(signs);

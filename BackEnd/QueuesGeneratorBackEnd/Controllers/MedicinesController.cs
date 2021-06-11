@@ -79,6 +79,26 @@ namespace EyadtakBackEnd.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizedAbility))]
+        [HttpGet("GetSessionMedicines/{id}")]
+        public IActionResult GetSessionMedicines(int Id)
+        {
+            try
+            {
+                if (Id == 0)
+                    return Ok(new { message = "Id can't be zero", ErrorHappen = true });
+
+                var Medicines = _eyadtakDbContext.PatientHistoryMedicines.Include(x => x.Medicine).Where(x => x.PatientHistoryId == Id).Select(x => new { Name = x.Medicine.Name, Id = x.MedicineId }).ToList();
+
+                return Ok(new { message = Medicines, ErrorHappen = false });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { message = "Something went wrong", ErrorHappen = true });
+                throw e;
+            }
+        }
+
         public static void AddMedicines(List<Medicine> medicines)
         {
             MedicinesController.Medicines.AddRange(medicines);

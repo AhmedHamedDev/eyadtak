@@ -13,10 +13,13 @@ import { ChipsModule } from 'primeng/chips';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {TabViewModule} from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
+import { PatientSessionsComponent } from './components/patient-sessions/patient-sessions.component';
+import { SessionDetailsComponent } from './components/session-details/session-details.component';
 
 @NgModule({
-  declarations: [PatientComponent, PatientsGridComponent],
+  declarations: [PatientComponent, PatientsGridComponent, PatientSessionsComponent, SessionDetailsComponent],
   imports: [
     FormsModule,
     CommonModule,
@@ -29,7 +32,8 @@ import { DropdownModule } from 'primeng/dropdown';
     MultiSelectModule,
     ChipsModule,
     ProgressSpinnerModule,
-    DropdownModule
+    DropdownModule,
+    TabViewModule
   ]
 })
 export class EmrModule {}

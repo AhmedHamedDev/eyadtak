@@ -1,0 +1,169 @@
+<div class="container">
+    <div class="p-grid">
+        <p-tabView style="height:60vh">
+            <p-tabPanel header="Chief Complaints">
+                <div *ngIf="abilities?.includes(Abilities.Get_Session_Details)" class="p-col-12">
+                    <div *ngIf="sessionDetails" class="p-grid">
+                        <div class="p-col-12">
+                            <textarea [disabled]="true" [(ngModel)]="sessionDetails.cheifComplaint" rows="5"  style="width:100%; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!sessionDetails" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+
+            <p-tabPanel header="Notes">
+                <div *ngIf="abilities?.includes(Abilities.Get_Session_Details)" class="p-col-12">
+                    <div *ngIf="sessionDetails" class="p-grid">
+                        <div class="p-col-12">
+                            <textarea [disabled]="true" [(ngModel)]="sessionDetails.note" rows="5"  style="width:100%; padding: 10px;"></textarea>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!sessionDetails" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+
+            <p-tabPanel header="Allergies">
+                <div *ngIf="abilities?.includes(Abilities.Get_Session_Allergies)" class="p-col-12">
+                    <div *ngIf="allergies" class="p-grid">
+                        <div class="p-col-12">
+                            <p-table [value]="allergies" >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="name">Name <p-sortIcon field="code"></p-sortIcon></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-session>
+                                    <tr>
+                                        <td>{{session.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!allergies" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="Signs">
+                <div *ngIf="abilities?.includes(Abilities.Get_Session_Signs)" class="p-col-12">
+                    <div *ngIf="signs" class="p-grid">
+                        <div class="p-col-12">
+                            <p-table [value]="signs" >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="name">Name <p-sortIcon field="code"></p-sortIcon></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-session>
+                                    <tr>
+                                        <td>{{session.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!signs" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="Symptoms">
+                <div *ngIf="abilities?.includes(Abilities.Get_Session_Symptoms)" class="p-col-12">
+                    <div *ngIf="symptoms" class="p-grid">
+                        <div class="p-col-12">
+                            <p-table [value]="symptoms" >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="name">Name <p-sortIcon field="code"></p-sortIcon></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-session>
+                                    <tr>
+                                        <td>{{session.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!symptoms" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="Diagnoses">
+                <div *ngIf="abilities?.includes(Abilities.Get_Session_Diagnoses)" class="p-col-12">
+                    <div *ngIf="diagnoses" class="p-grid">
+                        <div class="p-col-12">
+                            <p-table [value]="diagnoses" >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="name">Name <p-sortIcon field="code"></p-sortIcon></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-session>
+                                    <tr>
+                                        <td>{{session.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!diagnoses" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <p-tabPanel header="Medication">
+                <div *ngIf="abilities?.includes(Abilities.Get_Session_Medicines)" class="p-col-12">
+                    <div *ngIf="medicines" class="p-grid">
+                        <div class="p-col-12">
+                            <p-table [value]="medicines" >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="name">Name <p-sortIcon field="code"></p-sortIcon></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-session>
+                                    <tr>
+                                        <td>{{session.name}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!medicines" class="p-grid p-jc-center p-ai-center vertical-container">
+                        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner"
+                            strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    </div>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+
+
+    </div>
+</div>

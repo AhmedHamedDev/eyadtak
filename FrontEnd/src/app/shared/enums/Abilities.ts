@@ -23,5 +23,12 @@ export enum Abilities {
   Get_Medicines = 22,
   Get_Patient_Medicines = 23,
   Get_Patients = 24,
-  Patients_Page = 25
+  Patients_Page = 25,
+  Get_Patient_Sessions = 26,
+  Get_Session_Allergies = 27,
+  Get_Session_Diagnoses = 28,
+  Get_Session_Medicines = 29,
+  Get_Session_Signs = 30,
+  Get_Session_Symptoms = 31,
+  Get_Session_Details = 32
 }

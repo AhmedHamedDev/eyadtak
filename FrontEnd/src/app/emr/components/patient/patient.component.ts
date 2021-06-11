@@ -32,11 +32,11 @@ export class PatientComponent implements OnInit, OnDestroy {
   abilities: number[];
   Abilities = Abilities;
 
-  rowGroupMetadataMedicine: any;
-  rowGroupMetadataSymptom: any;
-  rowGroupMetadataAllergy: any;
-  rowGroupMetadataSign: any;
-  rowGroupMetadataDiagnosis: any;
+  // rowGroupMetadataMedicine: any;
+  // rowGroupMetadataSymptom: any;
+  // rowGroupMetadataAllergy: any;
+  // rowGroupMetadataSign: any;
+  // rowGroupMetadataDiagnosis: any;
 
   userInfo: any;
   patientId: number;
@@ -45,31 +45,31 @@ export class PatientComponent implements OnInit, OnDestroy {
   newComplaint: string;
   disableChiefComplaint: boolean = false;
 
-  notes: any[];
+  notes: any[] = [];
   newNote: string;
   disableNote: boolean = false;
 
-  allergiesHistory: Allergy[];
+  allergiesHistory: Allergy[] = [];
   allergies: Allergy[] = [];
   selectedAlleries: Allergy[] = [];
   allergiesChips: string[] = [];
 
-  signsHistory: Sign[];
+  signsHistory: Sign[] = [];
   signs: Sign[] = [];
   selectedSigns: Sign[] = [];
   signsChips: string[] = [];
 
-  symptomsHistory: Symptom[];
+  symptomsHistory: Symptom[] = [];
   symptoms: Symptom[] = [];
   selectedSymptoms: Symptom[] = [];
   symptomsChips: string[];
 
-  diagnosesHistory: Diagnosis[];
+  diagnosesHistory: Diagnosis[] = [];
   diagnoses: Diagnosis[] = [];
   selectedDiagnoses: Diagnosis[] = [];
   diagnosesChips: string[] = [];
 
-  medicinesHistory: Medicine[];
+  medicinesHistory: Medicine[] = [];
   medicines: Medicine[] = [];
   selectedMedicines: Medicine[] = [];
   medicinesChips: string[] = [];
@@ -144,87 +144,87 @@ export class PatientComponent implements OnInit, OnDestroy {
           this.userInfo = resp.message;
       })
 
-      this.subscripe3 = this.emrService.GetPatientHistoryNotes(params['id']).subscribe(resp => {
-        if (resp.errorHappen == true)
-          this.toastr.error(resp.message, "Sorry :(")
-        else if (resp.errorHappen == false)
-          this.notes = resp.message;
-      })
+      // this.subscripe3 = this.emrService.GetPatientHistoryNotes(params['id']).subscribe(resp => {
+      //   if (resp.errorHappen == true)
+      //     this.toastr.error(resp.message, "Sorry :(")
+      //   else if (resp.errorHappen == false)
+      //     this.notes = resp.message;
+      // })
 
-      this.subscripe4 = this.emrService.GetPatientHistoryChiefComplaints(params['id']).subscribe(resp => {
-        if (resp.errorHappen == true)
-          this.toastr.error(resp.message, "Sorry :(")
-        else if (resp.errorHappen == false)
-          this.complaints = resp.message;
-      })
+      // this.subscripe4 = this.emrService.GetPatientHistoryChiefComplaints(params['id']).subscribe(resp => {
+      //   if (resp.errorHappen == true)
+      //     this.toastr.error(resp.message, "Sorry :(")
+      //   else if (resp.errorHappen == false)
+      //     this.complaints = resp.message;
+      // })
 
-      this.subscripe5 = this.symptomsService.GetPatientSymptoms(params['id']).subscribe(resp => {
-        if (resp.errorHappen == true)
-          this.toastr.error(resp.message, "Sorry :(")
-        else if (resp.errorHappen == false) {
-          this.symptomsHistory = resp.message;
+      // this.subscripe5 = this.symptomsService.GetPatientSymptoms(params['id']).subscribe(resp => {
+      //   if (resp.errorHappen == true)
+      //     this.toastr.error(resp.message, "Sorry :(")
+      //   else if (resp.errorHappen == false) {
+      //     this.symptomsHistory = resp.message;
 
           this.subscripe6 = this.symptomsSubject.getSubject().subscribe(data => {
               this.symptoms = data;
           })
-        }
-      })
+      //   }
+      // })
 
-      this.subscripe7 = this.allergiesService.GetPatientAllergies(params['id']).subscribe(resp => {
-        if (resp.errorHappen == true)
-          this.toastr.error(resp.message, "Sorry :(")
-        else if (resp.errorHappen == false) {
-          this.allergiesHistory = resp.message;
+      // this.subscripe7 = this.allergiesService.GetPatientAllergies(params['id']).subscribe(resp => {
+      //   if (resp.errorHappen == true)
+      //     this.toastr.error(resp.message, "Sorry :(")
+      //   else if (resp.errorHappen == false) {
+      //     this.allergiesHistory = resp.message;
 
           this.subscripe8 = this.allergiesSubject.getSubject().subscribe(data => {
             this.allergies = data;
           })
-        }
-      })
+      //   }
+      // })
 
-      this.subscripe9 = this.signsService.GetPatientSigns(params['id']).subscribe(resp => {
-        if (resp.errorHappen == true)
-          this.toastr.error(resp.message, "Sorry :(")
-        else if (resp.errorHappen == false) {
-          this.signsHistory = resp.message;
+      // this.subscripe9 = this.signsService.GetPatientSigns(params['id']).subscribe(resp => {
+      //   if (resp.errorHappen == true)
+      //     this.toastr.error(resp.message, "Sorry :(")
+      //   else if (resp.errorHappen == false) {
+      //     this.signsHistory = resp.message;
 
           this.subscripe10 = this.signsSubject.getSubject().subscribe(data => {
             this.signs = data;
           })
-        }
-      })
+      //   }
+      // })
 
-      this.subscripe11 = this.diagnosesService.GetPatientDiagnoses(params['id']).subscribe(resp => {
-        if (resp.errorHappen == true)
-          this.toastr.error(resp.message, "Sorry :(")
-        else if (resp.errorHappen == false) {
-          this.diagnosesHistory = resp.message;
+      // this.subscripe11 = this.diagnosesService.GetPatientDiagnoses(params['id']).subscribe(resp => {
+      //   if (resp.errorHappen == true)
+      //     this.toastr.error(resp.message, "Sorry :(")
+      //   else if (resp.errorHappen == false) {
+      //     this.diagnosesHistory = resp.message;
 
           this.subscripe12 = this.diagnosesSubject.getSubject().subscribe(data => {
             this.diagnoses = data;
           })
-        }
-      })
+      //   }
+      // })
 
-      this.subscripe13 = this.medicinesService.GetPatientMedicines(params['id']).subscribe(resp => {
-        if (resp.errorHappen == true)
-          this.toastr.error(resp.message, "Sorry :(")
-        else if (resp.errorHappen == false) {
-          this.medicinesHistory = resp.message;
+      // this.subscripe13 = this.medicinesService.GetPatientMedicines(params['id']).subscribe(resp => {
+      //   if (resp.errorHappen == true)
+      //     this.toastr.error(resp.message, "Sorry :(")
+      //   else if (resp.errorHappen == false) {
+      //     this.medicinesHistory = resp.message;
 
           this.subscripe14 = this.medicinesSubject.getSubject().subscribe(data => {
             this.medicines = data;
           })
-        }
-      })
+      //   }
+      // })
 
     });
 
-    this.updateRowGroupMetaDataMedicine();
-    this.updateRowGroupMetaDataAllergy();
-    this.updateRowGroupMetaDataSymptom();
-    this.updateRowGroupMetaDataDiagnosis();
-    this.updateRowGroupMetaDataSign();
+    // this.updateRowGroupMetaDataMedicine();
+    // this.updateRowGroupMetaDataAllergy();
+    // this.updateRowGroupMetaDataSymptom();
+    // this.updateRowGroupMetaDataDiagnosis();
+    // this.updateRowGroupMetaDataSign();
   }
 
   formatDate(date, format) {
@@ -240,66 +240,66 @@ export class PatientComponent implements OnInit, OnDestroy {
 
   ////////////////////////////////////////////
 
-  addChiefComplaint() {
-    if (this.newComplaint != "" && this.newComplaint != null) {
-      this.confirmationService.confirm({
-        message: 'Are you sure that you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          this.complaints.unshift({ complaint: this.newComplaint, date: this.formatDate(new Date(), "dd/mm/yyyy"), isNew: true })
-          this.disableChiefComplaint = true;
-        },
-      });
-    }
-  }
+  // addChiefComplaint() {
+  //   if (this.newComplaint != "" && this.newComplaint != null) {
+  //     this.confirmationService.confirm({
+  //       message: 'Are you sure that you want to proceed?',
+  //       header: 'Confirmation',
+  //       icon: 'pi pi-exclamation-triangle',
+  //       accept: () => {
+  //         this.complaints.unshift({ complaint: this.newComplaint, date: this.formatDate(new Date(), "dd/mm/yyyy"), isNew: true })
+  //         this.disableChiefComplaint = true;
+  //       },
+  //     });
+  //   }
+  // }
 
-  deleteComplaint(Complaint) {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        let matches: any[] = this.complaints.filter(x => x.complaint == Complaint.complaint);
-        const index = this.complaints.indexOf(matches[0]);
-        if (index > -1) {
-          this.complaints.splice(index, 1);
-          this.disableChiefComplaint = false;
-        }
-      },
-    });
-  }
+  // deleteComplaint(Complaint) {
+  //   this.confirmationService.confirm({
+  //     message: 'Are you sure that you want to proceed?',
+  //     header: 'Confirmation',
+  //     icon: 'pi pi-exclamation-triangle',
+  //     accept: () => {
+  //       let matches: any[] = this.complaints.filter(x => x.complaint == Complaint.complaint);
+  //       const index = this.complaints.indexOf(matches[0]);
+  //       if (index > -1) {
+  //         this.complaints.splice(index, 1);
+  //         this.disableChiefComplaint = false;
+  //       }
+  //     },
+  //   });
+  // }
   ////////////////////////////////////////////
 
-  addNote() {
-    if (this.newNote != "" && this.newNote != null) {
-      this.confirmationService.confirm({
-        message: 'Are you sure that you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          this.notes.unshift({ note: this.newNote, date: this.formatDate(new Date(), "dd/mm/yyyy"), isNew: true })
-          this.disableNote = true;
-        },
-      });
-    }
-  }
+  // addNote() {
+  //   if (this.newNote != "" && this.newNote != null) {
+  //     this.confirmationService.confirm({
+  //       message: 'Are you sure that you want to proceed?',
+  //       header: 'Confirmation',
+  //       icon: 'pi pi-exclamation-triangle',
+  //       accept: () => {
+  //         this.notes.unshift({ note: this.newNote, date: this.formatDate(new Date(), "dd/mm/yyyy"), isNew: true })
+  //         this.disableNote = true;
+  //       },
+  //     });
+  //   }
+  // }
 
-  deleteNote(Note) {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        let matches: any[] = this.notes.filter(x => x.note == Note.note);
-        const index = this.notes.indexOf(matches[0]);
-        if (index > -1) {
-          this.notes.splice(index, 1);
-          this.disableNote = false;
-        }
-      },
-    });
-  }
+  // deleteNote(Note) {
+  //   this.confirmationService.confirm({
+  //     message: 'Are you sure that you want to proceed?',
+  //     header: 'Confirmation',
+  //     icon: 'pi pi-exclamation-triangle',
+  //     accept: () => {
+  //       let matches: any[] = this.notes.filter(x => x.note == Note.note);
+  //       const index = this.notes.indexOf(matches[0]);
+  //       if (index > -1) {
+  //         this.notes.splice(index, 1);
+  //         this.disableNote = false;
+  //       }
+  //     },
+  //   });
+  // }
   ////////////////////////////////////////////
 
   addAllergy(allergy) {
@@ -343,32 +343,32 @@ export class PatientComponent implements OnInit, OnDestroy {
   }
 
 
-  onSortAllergy() {
-    this.updateRowGroupMetaDataAllergy();
-  }
+  // onSortAllergy() {
+  //   this.updateRowGroupMetaDataAllergy();
+  // }
 
-  updateRowGroupMetaDataAllergy() {
-    this.rowGroupMetadataAllergy = {};
+  // updateRowGroupMetaDataAllergy() {
+  //   this.rowGroupMetadataAllergy = {};
 
-    if (this.allergiesHistory) {
-      for (let i = 0; i < this.allergiesHistory.length; i++) {
-        let rowData = this.allergiesHistory[i];
-        let representativeDate = rowData.date;
+  //   if (this.allergiesHistory) {
+  //     for (let i = 0; i < this.allergiesHistory.length; i++) {
+  //       let rowData = this.allergiesHistory[i];
+  //       let representativeDate = rowData.date;
 
-        if (i == 0) {
-          this.rowGroupMetadataAllergy[representativeDate] = { index: 0, size: 1 };
-        }
-        else {
-          let previousRowData = this.allergiesHistory[i - 1];
-          let previousRowGroup = previousRowData.date;
-          if (representativeDate === previousRowGroup)
-            this.rowGroupMetadataAllergy[representativeDate].size++;
-          else
-            this.rowGroupMetadataAllergy[representativeDate] = { index: i, size: 1 };
-        }
-      }
-    }
-  }
+  //       if (i == 0) {
+  //         this.rowGroupMetadataAllergy[representativeDate] = { index: 0, size: 1 };
+  //       }
+  //       else {
+  //         let previousRowData = this.allergiesHistory[i - 1];
+  //         let previousRowGroup = previousRowData.date;
+  //         if (representativeDate === previousRowGroup)
+  //           this.rowGroupMetadataAllergy[representativeDate].size++;
+  //         else
+  //           this.rowGroupMetadataAllergy[representativeDate] = { index: i, size: 1 };
+  //       }
+  //     }
+  //   }
+  // }
 
   ////////////////////////////////////////////
 
@@ -413,32 +413,32 @@ export class PatientComponent implements OnInit, OnDestroy {
     this.signsChips = [...this.signsChips];
   }
 
-  onSortSign() {
-    this.updateRowGroupMetaDataSign();
-  }
+  // onSortSign() {
+  //   this.updateRowGroupMetaDataSign();
+  // }
 
-  updateRowGroupMetaDataSign() {
-    this.rowGroupMetadataSign = {};
+  // updateRowGroupMetaDataSign() {
+  //   this.rowGroupMetadataSign = {};
 
-    if (this.signsHistory) {
-      for (let i = 0; i < this.signsHistory.length; i++) {
-        let rowData = this.signsHistory[i];
-        let representativeDate = rowData.date;
+  //   if (this.signsHistory) {
+  //     for (let i = 0; i < this.signsHistory.length; i++) {
+  //       let rowData = this.signsHistory[i];
+  //       let representativeDate = rowData.date;
 
-        if (i == 0) {
-          this.rowGroupMetadataSign[representativeDate] = { index: 0, size: 1 };
-        }
-        else {
-          let previousRowData = this.signsHistory[i - 1];
-          let previousRowGroup = previousRowData.date;
-          if (representativeDate === previousRowGroup)
-            this.rowGroupMetadataSign[representativeDate].size++;
-          else
-            this.rowGroupMetadataSign[representativeDate] = { index: i, size: 1 };
-        }
-      }
-    }
-  }
+  //       if (i == 0) {
+  //         this.rowGroupMetadataSign[representativeDate] = { index: 0, size: 1 };
+  //       }
+  //       else {
+  //         let previousRowData = this.signsHistory[i - 1];
+  //         let previousRowGroup = previousRowData.date;
+  //         if (representativeDate === previousRowGroup)
+  //           this.rowGroupMetadataSign[representativeDate].size++;
+  //         else
+  //           this.rowGroupMetadataSign[representativeDate] = { index: i, size: 1 };
+  //       }
+  //     }
+  //   }
+  // }
 
   ////////////////////////////////////////////
 
@@ -483,32 +483,32 @@ export class PatientComponent implements OnInit, OnDestroy {
     this.symptomsChips = [...this.symptomsChips];
   }
 
-  onSortSymptom() {
-    this.updateRowGroupMetaDataSymptom();
-  }
+  // onSortSymptom() {
+  //   this.updateRowGroupMetaDataSymptom();
+  // }
 
-  updateRowGroupMetaDataSymptom() {
-    this.rowGroupMetadataSymptom = {};
+  // updateRowGroupMetaDataSymptom() {
+  //   this.rowGroupMetadataSymptom = {};
 
-    if (this.symptomsHistory) {
-      for (let i = 0; i < this.symptomsHistory.length; i++) {
-        let rowData = this.symptomsHistory[i];
-        let representativeDate = rowData.date;
+  //   if (this.symptomsHistory) {
+  //     for (let i = 0; i < this.symptomsHistory.length; i++) {
+  //       let rowData = this.symptomsHistory[i];
+  //       let representativeDate = rowData.date;
 
-        if (i == 0) {
-          this.rowGroupMetadataSymptom[representativeDate] = { index: 0, size: 1 };
-        }
-        else {
-          let previousRowData = this.symptomsHistory[i - 1];
-          let previousRowGroup = previousRowData.date;
-          if (representativeDate === previousRowGroup)
-            this.rowGroupMetadataSymptom[representativeDate].size++;
-          else
-            this.rowGroupMetadataSymptom[representativeDate] = { index: i, size: 1 };
-        }
-      }
-    }
-  }
+  //       if (i == 0) {
+  //         this.rowGroupMetadataSymptom[representativeDate] = { index: 0, size: 1 };
+  //       }
+  //       else {
+  //         let previousRowData = this.symptomsHistory[i - 1];
+  //         let previousRowGroup = previousRowData.date;
+  //         if (representativeDate === previousRowGroup)
+  //           this.rowGroupMetadataSymptom[representativeDate].size++;
+  //         else
+  //           this.rowGroupMetadataSymptom[representativeDate] = { index: i, size: 1 };
+  //       }
+  //     }
+  //   }
+  // }
 
   ////////////////////////////////////////////
 
@@ -553,32 +553,32 @@ export class PatientComponent implements OnInit, OnDestroy {
     this.diagnosesChips = [...this.diagnosesChips];
   }
 
-  onSortDiagnosis() {
-    this.updateRowGroupMetaDataDiagnosis();
-  }
+  // onSortDiagnosis() {
+  //   this.updateRowGroupMetaDataDiagnosis();
+  // }
 
-  updateRowGroupMetaDataDiagnosis() {
-    this.rowGroupMetadataDiagnosis = {};
+  // updateRowGroupMetaDataDiagnosis() {
+  //   this.rowGroupMetadataDiagnosis = {};
 
-    if (this.diagnosesHistory) {
-      for (let i = 0; i < this.diagnosesHistory.length; i++) {
-        let rowData = this.diagnosesHistory[i];
-        let representativeDate = rowData.date;
+  //   if (this.diagnosesHistory) {
+  //     for (let i = 0; i < this.diagnosesHistory.length; i++) {
+  //       let rowData = this.diagnosesHistory[i];
+  //       let representativeDate = rowData.date;
 
-        if (i == 0) {
-          this.rowGroupMetadataDiagnosis[representativeDate] = { index: 0, size: 1 };
-        }
-        else {
-          let previousRowData = this.diagnosesHistory[i - 1];
-          let previousRowGroup = previousRowData.date;
-          if (representativeDate === previousRowGroup)
-            this.rowGroupMetadataDiagnosis[representativeDate].size++;
-          else
-            this.rowGroupMetadataDiagnosis[representativeDate] = { index: i, size: 1 };
-        }
-      }
-    }
-  }
+  //       if (i == 0) {
+  //         this.rowGroupMetadataDiagnosis[representativeDate] = { index: 0, size: 1 };
+  //       }
+  //       else {
+  //         let previousRowData = this.diagnosesHistory[i - 1];
+  //         let previousRowGroup = previousRowData.date;
+  //         if (representativeDate === previousRowGroup)
+  //           this.rowGroupMetadataDiagnosis[representativeDate].size++;
+  //         else
+  //           this.rowGroupMetadataDiagnosis[representativeDate] = { index: i, size: 1 };
+  //       }
+  //     }
+  //   }
+  // }
 
   ////////////////////////////////////////////
 
@@ -624,32 +624,32 @@ export class PatientComponent implements OnInit, OnDestroy {
     this.medicinesChips = [...this.medicinesChips];
   }
 
-  onSortMedicine() {
-    this.updateRowGroupMetaDataMedicine();
-  }
+  // onSortMedicine() {
+  //   this.updateRowGroupMetaDataMedicine();
+  // }
 
-  updateRowGroupMetaDataMedicine() {
-    this.rowGroupMetadataMedicine = {};
+  // updateRowGroupMetaDataMedicine() {
+  //   this.rowGroupMetadataMedicine = {};
 
-    if (this.medicinesHistory) {
-      for (let i = 0; i < this.medicinesHistory.length; i++) {
-        let rowData = this.medicinesHistory[i];
-        let representativeDate = rowData.date;
+  //   if (this.medicinesHistory) {
+  //     for (let i = 0; i < this.medicinesHistory.length; i++) {
+  //       let rowData = this.medicinesHistory[i];
+  //       let representativeDate = rowData.date;
 
-        if (i == 0) {
-          this.rowGroupMetadataMedicine[representativeDate] = { index: 0, size: 1 };
-        }
-        else {
-          let previousRowData = this.medicinesHistory[i - 1];
-          let previousRowGroup = previousRowData.date;
-          if (representativeDate === previousRowGroup)
-            this.rowGroupMetadataMedicine[representativeDate].size++;
-          else
-            this.rowGroupMetadataMedicine[representativeDate] = { index: i, size: 1 };
-        }
-      }
-    }
-  }
+  //       if (i == 0) {
+  //         this.rowGroupMetadataMedicine[representativeDate] = { index: 0, size: 1 };
+  //       }
+  //       else {
+  //         let previousRowData = this.medicinesHistory[i - 1];
+  //         let previousRowGroup = previousRowData.date;
+  //         if (representativeDate === previousRowGroup)
+  //           this.rowGroupMetadataMedicine[representativeDate].size++;
+  //         else
+  //           this.rowGroupMetadataMedicine[representativeDate] = { index: i, size: 1 };
+  //       }
+  //     }
+  //   }
+  // }
 
   ////////////////////////////////////////////
 
@@ -661,8 +661,8 @@ export class PatientComponent implements OnInit, OnDestroy {
       accept: () => {
         var data = {
           PatientId: +this.patientId,
-          Complaint: this.disableChiefComplaint == true ? this.newComplaint : null,
-          Note: this.disableNote == true ? this.newNote : null,
+          Complaint: this.disableChiefComplaint == false ? this.newComplaint : null,
+          Note: this.disableNote == false ? this.newNote : null,
           Signs: this.selectedSigns,
           Allergies: this.selectedAlleries,
           Diagnoses: this.selectedDiagnoses,

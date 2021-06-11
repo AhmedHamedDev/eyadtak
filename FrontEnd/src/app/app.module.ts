@@ -32,6 +32,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {InputTextModule} from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import {CardModule} from 'primeng/card';
+import {TabViewModule} from 'primeng/tabview';
+
 
 
 @NgModule({
@@ -57,6 +59,7 @@ import {CardModule} from 'primeng/card';
     ReactiveFormsModule,
     AdminModule,
     PanelModule,
+    TabViewModule,
     ButtonModule,
     InputTextareaModule,
     TableModule,
@@ -68,7 +71,7 @@ import {CardModule} from 'primeng/card';
     DropdownModule,
     CardModule
   ],
-  exports:[PanelModule,ButtonModule,InputTextareaModule, TableModule, DropdownModule, ConfirmDialogModule, MultiSelectModule, InputTextModule, ChipsModule, ProgressSpinnerModule, CardModule],
+  exports:[TabViewModule, PanelModule,ButtonModule,InputTextareaModule, TableModule, DropdownModule, ConfirmDialogModule, MultiSelectModule, InputTextModule, ChipsModule, ProgressSpinnerModule, CardModule],
   providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })

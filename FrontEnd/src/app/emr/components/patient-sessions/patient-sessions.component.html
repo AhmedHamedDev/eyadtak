@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="p-grid">
+  
+      <div class="p-col-12">
+
+        <p-table [value]="sessions" [paginator]="true" [rows]="10"  [rowsPerPageOptions]="[5,10,20]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="note">Note <p-sortIcon field="code"></p-sortIcon></th>
+                    <th pSortableColumn="date">Data <p-sortIcon field="code"></p-sortIcon></th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-session>
+                <tr>
+                    <td>{{session.note}} ....</td>
+                    <td>{{session.date}}</td>
+                    <td>
+                        <button *ngIf="abilities?.includes(Abilities.Get_Session_Details)" (click)="onSessionSelect(session.id)" pButton pTooltip="Details" tooltipPosition="top" class="table-btn mr-4 p-button-success">
+                            <i class="fas fa-pen" style="display: inline"></i>
+                            <span>Details</span>
+                          </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        
+      </div>
+      
+    </div>
+</div>

@@ -32,6 +32,24 @@ namespace EyadtakBackEnd.Controllers
         }
 
         [ServiceFilter(typeof(AuthorizedAbility))]
+        [HttpGet("GetPatientSessions/{id}")]
+        public IActionResult GetPatientSessions(int Id)
+        {
+            try
+            {
+                var sessions = _eyadtakDbContext.PatientHistory.Where(x => x.PatientId == Id).OrderByDescending(x=>x.PatientHistoryId)
+                    .Select(x=>new { Id = x.PatientHistoryId, Date = x.InsertDate.ToString("dd/MM/yyyy hh:mm"), Note = x.Note.Substring(0, 30)}).ToList();
+
+                return Ok(new { message = sessions, ErrorHappen = false });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { message = "Something went Wrong While getting User Sessions", ErrorHappen = true });
+                throw e;
+            }
+        }
+
+        [ServiceFilter(typeof(AuthorizedAbility))]
         [HttpGet("GetPatientInfo/{id}")]
         public IActionResult GetPatientInfo(int Id)
         {
@@ -63,6 +81,26 @@ namespace EyadtakBackEnd.Controllers
                     return Ok(new { message = "there is no such patient", ErrorHappen = true });
 
                 return Ok(new { message = Notes.Select(x => new { Note = x.Note, Date = x.InsertDate.ToString("dd/MM/yyyy") }).ToList(), ErrorHappen = false });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { message = "Something went wrong", ErrorHappen = true });
+                throw e;
+            }
+        }
+
+        [ServiceFilter(typeof(AuthorizedAbility))]
+        [HttpGet("GetSessionDetails/{id}")]
+        public IActionResult GetSessionDetails(int Id)
+        {
+            try
+            {
+                var session = _eyadtakDbContext.PatientHistory.FirstOrDefault(x => x.PatientHistoryId == Id);
+
+                if (session == null)
+                    return Ok(new { message = "there is no such session", ErrorHappen = true });
+
+                return Ok(new { message = new { Data= session.InsertDate.ToString("dd/MM/yyyy hh:mm"), Id = session.PatientHistoryId, Note = session.Note, CheifComplaint = session.CheifComplaint}, ErrorHappen = false });
             }
             catch (Exception e)
             {
